@@ -1,0 +1,44 @@
+{
+  "name": "iwish",
+  "version": "0.0.0",
+  "private": true,
+  "main": "_server/node_app/app.js",
+  "scripts": {
+    "start": "gulp def && node _server/dist/app.js --client angular",
+    "debug": "node-debug _server/node_app/app.js --client angular",
+    "install": "cd _server/node_app/ && npm install --unsafe-perm"
+  },
+  "devDependencies": {
+    "browser-sync": "1.3.0",
+    "del": "0.1.2",
+    "gulp": "3.8.10",
+    "gulp-autoprefixer": "0.0.8",
+    "gulp-cache": "0.2.2",
+    "gulp-changed": "1.0.0",
+    "gulp-csso": "0.2.9",
+    "gulp-flatten": "0.0.2",
+    "gulp-if": "1.2.1",
+    "gulp-imagemin": "1.0.0",
+    "gulp-jshint": "1.6.3",
+    "gulp-load-plugins": "0.5.3",
+    "gulp-minify-html": "0.1.4",
+    "gulp-replace": "0.4.0",
+    "gulp-ruby-sass": "0.7.1",
+    "gulp-size": "1.0.0",
+    "gulp-uglify": "0.3.1",
+    "gulp-uncss": "0.4.5",
+    "gulp-useref": "0.6.0",
+    "jasmine": "2.1.0",
+    "jshint-stylish": "0.4.0",
+    "lodash": "2.4.1",
+    "node-debug": "0.1.0",
+    "opn": "1.0.0",
+    "psi": "0.1.2",
+    "require-dir": "0.1.0",
+    "run-sequence": "0.3.6",
+     "optimist": "0.6.1"
+  },
+  "config": {
+      "unsafe-perm":true
+  }
+}
