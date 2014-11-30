@@ -13,6 +13,7 @@
     "del": "0.1.2",
     "gulp": "3.8.10",
     "gulp-autoprefixer": "0.0.8",
+    "gulp-bower": "0.0.7",
     "gulp-cache": "0.2.2",
     "gulp-changed": "1.0.0",
     "gulp-csso": "0.2.9",
@@ -33,12 +34,12 @@
     "lodash": "2.4.1",
     "node-debug": "0.1.0",
     "opn": "1.0.0",
+    "optimist": "0.6.1",
     "psi": "0.1.2",
     "require-dir": "0.1.0",
-    "run-sequence": "0.3.6",
-     "optimist": "0.6.1"
+    "run-sequence": "0.3.6"
   },
   "config": {
-      "unsafe-perm":true
+    "unsafe-perm": true
   }
 }

@@ -1,6 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
+var bower = require('gulp-bower');
 var $ = require('gulp-load-plugins')();
 var del = require('del');
 var runSequence = require('run-sequence');
@@ -30,6 +31,12 @@ var AUTOPREFIXER_BROWSERS = [
   'android >= 4.4',
   'bb >= 10'
 ];
+
+//install libs for client
+gulp.task('install-client', function() {
+  return bower({ directory: './bower_components', cwd: './' + clientAppPath })
+    .pipe(gulp.dest('lib/'))
+});
 
 // Image optimizing
 gulp.task('images', function () {
@@ -61,6 +68,9 @@ gulp.task('copy-server', function () {
   }).pipe(gulp.dest(serverBuildPath))
     .pipe($.size({title: 'copy'}));
 });
+
+// install vendors
+gulp.task('install', ['install-client']);
 
 // Check _client
 gulp.task('jshint-client', function () {
