@@ -7,6 +7,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+//DB
+//TODO: move DB init to separate module
+var mongoose = require('mongoose');
+
 var app = express();
 
 // getting client platform
@@ -53,7 +57,17 @@ if (app.get('env') === 'development') {
             error: err
         });
     });
+    //Start DB server at
+    mongoose.connect('mongodb://55.55.55.5/mongo');
 }
+
+//create model
+// mongoose.model('users', {name: String});
+// app.get('/users', function(req, res){
+//     mongoose.model('users').find(function(err, users) {
+//         res.send(users);
+//     });
+// });
 
 // production error handler
 // no stacktraces leaked to user

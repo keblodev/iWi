@@ -8,6 +8,9 @@
     "debug": "node-debug _server/node_app/app.js --client angular",
     "install": "cd _server/node_app/ && npm install --unsafe-perm"
   },
+  "dependencies": {
+    "mongoose": "3.8.19"
+  },
   "devDependencies": {
     "browser-sync": "1.3.0",
     "del": "0.1.2",
