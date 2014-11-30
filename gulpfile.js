@@ -2,6 +2,7 @@
 
 var gulp = require('gulp');
 var bower = require('gulp-bower');
+var jasmine = require('gulp-jasmine');
 var $ = require('gulp-load-plugins')();
 var del = require('del');
 var runSequence = require('run-sequence');
@@ -32,11 +33,18 @@ var AUTOPREFIXER_BROWSERS = [
   'bb >= 10'
 ];
 
-//install libs for client
-gulp.task('install-client', function() {
-  return bower({ directory: './bower_components', cwd: './' + clientAppPath })
-    .pipe(gulp.dest('lib/'))
+//runs tests for node_app
+gulp.task('test-node', function () {
+    return gulp.src('./spec/_server/node_app/**.js')
+        .pipe(jasmine());
 });
+//runs tests for client app
+gulp.task('test-client', function () {
+    return gulp.src('./spec/' + clientAppPath + '/**.js')
+        .pipe(jasmine());
+});
+//runs tests for client app and server
+gulp.task('test', ['test-node', 'test-client']);
 
 // Image optimizing
 gulp.task('images', function () {
@@ -69,6 +77,12 @@ gulp.task('copy-server', function () {
     .pipe($.size({title: 'copy'}));
 });
 
+
+//install libs for client
+gulp.task('install-client', function() {
+  return bower({ directory: './bower_components', cwd: './' + clientAppPath })
+    .pipe(gulp.dest('lib/'))
+});
 // install vendors
 gulp.task('install', ['install-client']);
 
@@ -195,7 +209,7 @@ gulp.task('serve:dist', ['def'], function () {
 
 // Build Production Files, the Default Task
 gulp.task('def', ['clean'], function (cb) {
-  runSequence('styles', ['jshint', 'images', 'fonts', 'copy'], 'html' , cb);
+  runSequence('styles', ['jshint', 'test', 'images', 'fonts', 'copy'], 'html' , cb);
 });
 
 // Run PageSpeed Insights
