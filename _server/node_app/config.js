@@ -1,18 +1,20 @@
+'use strict';
+
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
+// var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var optimist = require('optimist');
-
 var app = express();
 
 // getting client platform
-var client = (optimist.argv.client || 'angular') + '_app';
+// var optimist = require('optimist');
+// var client = (optimist.argv.client || 'angular') + '_app';
+
 //getting _client dir
-var clientDir = path.resolve('_client/_client_app', client);
+var clientDir = path.resolve('_client/dist');
 app.set('clientDir', clientDir);
 
 // view engine setup
@@ -25,7 +27,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+//A BIG security hole right here. TODO: figure out what assets should be shared
+app.use(express.static(clientDir));
 
 //setting routes
 var routes = require('./routes/index');
