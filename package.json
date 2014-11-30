@@ -6,7 +6,8 @@
   "scripts": {
     "start": "gulp def && node _server/dist/app.js --client angular",
     "debug": "node-debug _server/node_app/app.js --client angular",
-    "install": "cd _server/node_app/ && npm install --unsafe-perm"
+    "install": "cd _server/node_app/ && npm install --unsafe-perm",
+    "test": "gulp test"
   },
   "dependencies": {
     "mongoose": "3.8.19"
