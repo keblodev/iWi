@@ -9,7 +9,9 @@ var pagespeed = require('psi');
 var optimist = require('optimist');
 var reload = browserSync.reload;
 
+//default client: angular
 var clientName = (optimist.argv.client || "angular") + "_app";
+//default server: node
 var serverName = (optimist.argv.server || "node") + "_app";
 
 var clientAppPath =             "_client/client_app/" + clientName;
@@ -46,6 +48,7 @@ gulp.task('images', function () {
 gulp.task('copy-client', function () {
   return gulp.src([
     clientAppPath + '/**/*',
+    sharedClientResourcesPath + '/**/*'
   ], {
     dot: true
   }).pipe(gulp.dest(clientBuildPath))
@@ -105,7 +108,7 @@ gulp.task('styles', function () {
     .pipe(gulp.dest('.tmp/styles'))
     // Concatenate And Minify Styles
     .pipe($.if('*.css', $.csso()))
-    .pipe(gulp.dest(clientBuildPath + '/styles'))
+    .pipe(gulp.dest(clientBuildPath + '/stylesheets'))
     .pipe($.size({title: 'styles'}));
 });
 
@@ -152,40 +155,33 @@ gulp.task('jshint', ['jshint-client', 'jshint-server']);
 gulp.task('copy', ['copy-client', 'copy-server']);
 
 // Clean Output Directory
-gulp.task('clean', del.bind(null, ['.tmp', clientBuildPath, serverBuildPath]));
+gulp.task('clean', del.bind(null, ['.tmp', clientBuildPath, serverBuildPath, '.sass-cache']));
+
+
+gulp.task('browser-sync', function() {
+    browserSync({
+        https: true,
+        server: ['.tmp', clientAppPath],
+    });
+});
+
+gulp.task('reload', function() {
+    return gulp.src(clientAppPath)
+    .pipe(reload({stream: true, once: true}));
+});
 
 // Watch Files For Changes & Reload
-gulp.task('serve', ['styles'], function () {
-  browserSync({
-    notify: false,
-    // Run as an https by uncommenting 'https: true'
-    // Note: this uses an unsigned certificate which on first access
-    //       will present a certificate warning in the browser.
-    // https: true,
-    server: ['.tmp', clientAppPath]
-  });
+gulp.task('watch', ['styles', 'browser-sync'], function () {
 
   gulp.watch([clientAppPath + '/**/*.html'], reload);
   gulp.watch([sharedClientResourcesPath + '/stylesheets/**/*.{scss,css}'], ['styles', reload]);
-  gulp.watch([clientAppPath + '/scripts/**/*.js'], ['jshint']);
-  gulp.watch([sharedClientResourcesPath + 'app/images/**/*'], reload);
-});
-
-// Build and serve the output from the dist build
-gulp.task('serve:dist', ['def'], function () {
-  browserSync({
-    notify: false,
-    // Run as an https by uncommenting 'https: true'
-    // Note: this uses an unsigned certificate which on first access
-    //       will present a certificate warning in the browser.
-    // https: true,
-    server: 'dist'
-  });
+  gulp.watch([clientAppPath + '/**/*.js'], ['jshint']);
+  gulp.watch([sharedClientResourcesPath + '/images/**/*'], reload);
 });
 
 // Build Production Files, the Default Task
 gulp.task('def', ['clean'], function (cb) {
-  runSequence('styles', ['jshint', 'images', 'fonts', 'copy'], 'html' , cb);
+  runSequence('jshint', 'copy', ['styles', 'images', 'fonts'], 'html' , cb);
 });
 
 // Run PageSpeed Insights
