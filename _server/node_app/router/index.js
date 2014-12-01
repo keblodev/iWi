@@ -2,7 +2,7 @@
 
 module.exports = function (app) {
   app.use('/', require('./routes/home'));
-  app.use('/user', require('./routes/user'));
+  app.use('/users', require('./routes/users'));
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
@@ -34,5 +34,4 @@ module.exports = function (app) {
       error: {}
     });
   });
-
 };
