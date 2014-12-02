@@ -1,13 +1,14 @@
 'use strict';
 
 var gulp = require('gulp');
+var ngrok = require('ngrok');
 var bower = require('gulp-bower');
 var jasmine = require('gulp-jasmine');
 var $ = require('gulp-load-plugins')();
 var del = require('del');
 var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
-var pagespeed = require('psi');
+var psi = require('psi');
 var optimist = require('optimist');
 var reload = browserSync.reload;
 
@@ -36,12 +37,12 @@ var AUTOPREFIXER_BROWSERS = [
 ];
 
 //runs tests for node_app
-gulp.task('test-node', function () {
+gulp.task('test-node', ['jshint'], function () {
     return gulp.src('./spec/_server/node_app/**.js')
         .pipe(jasmine());
 });
 //runs tests for client app
-gulp.task('test-client', function () {
+gulp.task('test-client', ['jshint'], function () {
     return gulp.src('./spec/' + clientAppPath + '/**.js')
         .pipe(jasmine());
 });
@@ -205,19 +206,45 @@ gulp.task('watch', ['styles', 'browser-sync'], function () {
 
 // Build Production Files, the Default Task
 gulp.task('def', ['clean'], function (cb) {
-  runSequence('jshint', 'test', 'copy', ['styles', 'images', 'fonts'], 'html' , cb);
+  runSequence('test', 'copy', ['styles', 'images', 'fonts'], 'html' , cb);
 });
 
-// Run PageSpeed Insights
-// Update `url` below to the public URL for your site
-gulp.task('pagespeed', pagespeed.bind(null, {
-  // By default, we use the PageSpeed Insights
-  // free (no API key) tier. You can use a Google
-  // Developer API key if you have one. See
-  // http://goo.gl/RkN0vE for info key: 'YOUR_API_KEY'
-  url: 'https://example.com',
-  strategy: 'mobile'
-}));
+gulp.task('dev-build', ['clean'], function (cb) {
+  runSequence('copy', ['styles', 'images', 'fonts'], 'html' , cb);
+});
+
+
+// run proxy for application
+// TODO - create config for port, etc...
+var subdomain = 'iwishrga';
+gulp.task('ngrok-connect', function(cb){
+  ngrok.connect({
+    port: 3000,
+    //got authtoken when sigh up on ngrok
+    authtoken: '4PT9OzXbzx7ExXHB1i8E',
+    subdomain: subdomain
+  }, function(err, url) {
+    if (err) return cb(err);
+    cb();
+  });
+});
+
+gulp.task('ngrok-disconnect', function(){
+  ngrok.disconnect();
+});
+
+gulp.task('psi-desktop', function (cb) {
+  psi({
+    nokey: 'true',
+    url: 'https://' + subdomain + '.ngrok.com',
+    strategy: 'desktop',
+    threshold: 40
+  }, cb);
+});
+
+gulp.task('pagespeed', function(cb) {
+  runSequence('ngrok-connect', 'psi-desktop', 'ngrok-disconnect', cb);
+});
 
 // Load custom tasks from the `tasks` directory
 try { require('require-dir')('tasks'); } catch (err) {}
