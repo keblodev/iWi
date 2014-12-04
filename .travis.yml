@@ -3,3 +3,10 @@ node_js:
   - '0.11'
 before_install:
   - gem install sass
+  - npm install -g gulp
+  - npm install -g bower
+  - npm install
+  - gulp install-client
+  - gulp dev-build
+install:
+  - node _server/dist/app.js --client angular &
