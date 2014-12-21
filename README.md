@@ -1,4 +1,4 @@
-![alt tag](https://travis-ci.org/romanfromrome/iwish.svg?branch=master)
+[![alt tag](https://travis-ci.org/romanfromrome/iwish.svg?branch=master)](https://travis-ci.org/romanfromrome/iwish)
 iWish
 =======
 
