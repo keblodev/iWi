@@ -1,23 +1,33 @@
 'use strict';
 //TODO: add migrations folder
+if (process.env.NODE_ENV === 'production') {
+  var dbUser = process.env.MONGO_REMOTE_USER;
+  var dbPass = process.env.MONGO_REMOTE_PASS;
+  var dbLink = process.env.MONGO_REMOTE_LINK;
+
+  if (!dbUser || !dbPass || !dbLink) {
+    throw Error('Check your DB credentials in .env file! ' +
+      ' \n dbUser: ' + dbUser +
+      ' \n dbPass: ' + dbPass +
+      ' \n dbLink: ' + dbLink
+      );
+  }
+}
+
 
 //mongo
 var database = {
     development: {
       protocol : 'mongodb', // or "mysql", or "postgresql"
       query    : { pool: true },
-      host     : 'mongodb://localhost/iwish-test-db', //  mongodb://user:pass@host:port/dbname - motherfuckers at orm2 don't know shit
+      href     : 'mongodb://localhost/iwish-test-db', //  mongodb://user:pass@host:port/dbname - motherfuckers at orm2 don't know shit
       database : 'iwish-test-db',
       user     : '',
       password : ''
     },
     production: {
-      protocol : 'mongodb', // or "mysql", or "postgresql"
-      query    : { pool: true },
-      host     : 'mongodb://here_will_be_a_production_link/iwish-test-db', //  mongodb://user:pass@host:port/dbname - motherfuckers at orm2 don't know shit
-      database : 'iwish-test-db',
-      user     : '',
-      password : ''
+      protocol : 'mongodb',
+      href     : 'mongodb://' + dbUser + ':' + dbPass + '@' + dbLink, // also those guys in orm2 don't join provided login and password in to that url! mongodb://user:pass@host:port/dbname
     }
 };
 
