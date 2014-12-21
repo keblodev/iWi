@@ -8,3 +8,5 @@ npm-debug.log
 .DS_Store
 _client/.DS_Store
 _server/.DS_Store
+mongodb.log
+db/mongo/data/

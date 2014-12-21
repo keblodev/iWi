@@ -2,6 +2,7 @@
 
 var gulp = require('gulp');
 var ngrok = require('ngrok');
+var shell = require('gulp-shell')
 var bower = require('gulp-bower');
 var jasmine = require('gulp-jasmine');
 var $ = require('gulp-load-plugins')();
@@ -146,8 +147,6 @@ gulp.task('html', function () {
     // Concatenate And Minify JavaScript
     .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
     // Remove Any Unused CSS
-    // Note: If not using the Style Guide, you can delete it from
-    // the next line to only include styles your project uses.
     // .pipe($.if('*.css', $.uncss({
     //   html: [
     //     'app/index.html',
@@ -195,13 +194,17 @@ gulp.task('reload', function() {
     .pipe(reload({stream: true, once: true}));
 });
 
-// Watch Files For Changes & Reload
-gulp.task('watch', ['styles', 'browser-sync'], function () {
-
+// Watch Files For Changes on CLIENT & Reload
+gulp.task('watch-client', ['styles', 'browser-sync'], function () {
   gulp.watch([clientAppPath + '/**/*.html'], reload);
   gulp.watch([sharedClientResourcesPath + '/stylesheets/**/*.{scss,css}'], ['styles', reload]);
   gulp.watch([clientAppPath + '/**/*.js'], ['jshint']);
   gulp.watch([sharedClientResourcesPath + '/images/**/*'], reload);
+});
+
+// Watch Files For Changes on SERVER
+gulp.task('watch-serv', function () {
+  gulp.watch([serverAppPath + '/**/*.js'], ['jshint']);
 });
 
 // Build Production Files, the Default Task
@@ -245,6 +248,21 @@ gulp.task('psi-desktop', function (cb) {
 gulp.task('pagespeed', function(cb) {
   runSequence('ngrok-connect', 'psi-desktop', 'ngrok-disconnect', cb);
 });
+
+// Build Production Files and start server
+gulp.task('start-dev', ['def'],   shell.task([
+  'cd ' + serverBuildPath + ' && node app.js --client ' + (optimist.argv.client || "angular")])
+);
+
+// Debug Production Server
+gulp.task('debug-dist', ['def'], shell.task([
+  'cd ' + serverBuildPath + ' && node-debug app.js --client ' + (optimist.argv.client || "angular")])
+);
+
+// Debug Dev Server
+gulp.task('debug', shell.task([
+  'cd ' + serverAppPath + ' && node-debug app.js --client ' + (optimist.argv.client || "angular")])
+);
 
 // Load custom tasks from the `tasks` directory
 try { require('require-dir')('tasks'); } catch (err) {}

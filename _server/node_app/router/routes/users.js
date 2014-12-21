@@ -3,9 +3,11 @@
 var express = require('express');
 var router = express.Router();
 
-// GET /user
+// GET /users
 router.get('/', function(req, res) {
-  res.render('index', {title: 'USER main Page'});
+  req.models.users.find(function(err, users) {
+    res.send(users);
+  });
 });
 
 // GET /user/info
