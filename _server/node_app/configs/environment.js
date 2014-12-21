@@ -10,7 +10,6 @@ var logger          = require('morgan');
 var bodyParser      = require('body-parser');
 var express         = require('express');
 var serverSettings  = require('./server');
-var models          = require('../models/');
 var assignRoutes    = require('../router');
 //TODO uncomment when we'l have favicon
 // var favicon      = require('serve-favicon');
@@ -34,23 +33,8 @@ module.exports = function (app) {
   app.use(express.static(serverSettings.clientDir));
 
   // view engine setup
-
   app.set('views', path.resolve(serverSettings.serverDir, 'views'));
   app.set('view engine', 'jade');
 
-  // app.use(express.methodOverride());
-  app.use(function (req, res, next) {
-    models(function (err, db) {
-      if (err) {
-        return next(err);
-      }
-
-      req.models = db.models;
-      req.db     = db;
-
-      return next();
-    });
-  });
-
-  app = assignRoutes(app);
+  assignRoutes(app);
 };

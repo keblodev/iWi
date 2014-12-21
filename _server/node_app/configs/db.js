@@ -6,7 +6,7 @@ var database = {
     development: {
       protocol : 'mongodb', // or "mysql", or "postgresql"
       query    : { pool: true },
-      host     : 'mongodb://localhost/iwish-test-db', //  mongodb://user:pass@host:port/dbname - motherfuckers at orm2 don't know shit
+      href     : 'mongodb://localhost/iwish-test-db', //  mongodb://user:pass@host:port/dbname - motherfuckers at orm2 don't know shit
       database : 'iwish-test-db',
       user     : '',
       password : ''
@@ -14,7 +14,7 @@ var database = {
     production: {
       protocol : 'mongodb', // or "mysql", or "postgresql"
       query    : { pool: true },
-      host     : 'mongodb://here_will_be_a_production_link/iwish-test-db', //  mongodb://user:pass@host:port/dbname - motherfuckers at orm2 don't know shit
+      href     : 'mongodb://here_will_be_a_production_link/iwish-test-db', //  mongodb://user:pass@host:port/dbname - motherfuckers at orm2 don't know shit
       database : 'iwish-test-db',
       user     : '',
       password : ''
