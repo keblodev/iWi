@@ -10,3 +10,5 @@ _client/.DS_Store
 _server/.DS_Store
 mongodb.log
 db/mongo/data/
+gulp-ruby-sass/
+#TODO add gitingnore lines for .env
