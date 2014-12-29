@@ -20,15 +20,23 @@ var database = {
     development: {
       protocol : 'mongodb', // or "mysql", or "postgresql"
       query    : { pool: true },
-      href     : 'mongodb://localhost/iwish-test-db', //  mongodb://user:pass@host:port/dbname - motherfuckers at orm2 don't know shit
-      database : 'iwish-test-db',
+      href     : 'mongodb://localhost/iwish-dev-db', //  mongodb://user:pass@host:port/dbname - motherfuckers at orm2 don't know shit
+      database : 'iwish-dev-db',
       user     : '',
       password : ''
     },
     production: {
       protocol : 'mongodb',
       href     : 'mongodb://' + dbUser + ':' + dbPass + '@' + dbLink, // also those guys in orm2 don't join provided login and password in to that url! mongodb://user:pass@host:port/dbname
-    }
+    },
+    test: {
+      protocol : 'mongodb', // or "mysql", or "postgresql"
+      query    : { pool: true },
+      href     : 'mongodb://localhost/iwish-test', //  mongodb://user:pass@host:port/dbname - motherfuckers at orm2 don't know shit
+      database : 'iwish-test',
+      user     : '',
+      password : ''
+    },
 };
 
 //mysql
@@ -41,4 +49,4 @@ var database = {
 //     password : ''
 // };
 
-module.exports = database[process.env.NODE_ENV ? process.env.NODE_ENV : 'development'];
+module.exports = database[process.env.NODE_ENV ? process.env.NODE_ENV : 'test'];

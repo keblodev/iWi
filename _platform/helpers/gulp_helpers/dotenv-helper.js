@@ -51,9 +51,9 @@ module.exports = function() {
 
   self.setEnv = function(argv) {
         //default client: angular
-    var clientName = (argv.client || "angular") + "_app",
+    var clientName = (argv.client_app || "angular") + "_app",
         //default server: node
-        serverName = (argv.server || "node") + "_app",
+        serverName = (argv.server_app || "node") + "_app",
         clientAppPath =             path.resolve("_client/client_app/" + clientName),
         sharedClientResourcesPath = path.resolve("_client/shared_resources/"),
         clientBuildPath =           path.resolve("_client/dist"),

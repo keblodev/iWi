@@ -10,6 +10,11 @@ function setup(db, cb) {
   require('./posts/post')(orm, db);
   require('./posts/comment')(orm, db);
 
+  process.on('exit', function(){
+    console.log('closing DB connection...');
+    db.close();
+  });
+
   return cb(null, db);
 }
 

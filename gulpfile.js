@@ -4,7 +4,6 @@ var gulp = require('gulp');
 var ngrok = require('ngrok');
 var shell = require('gulp-shell')
 var bower = require('gulp-bower');
-var jasmine = require('gulp-jasmine');
 var $ = require('gulp-load-plugins')();
 var del = require('del');
 var runSequence = require('run-sequence');
@@ -13,6 +12,9 @@ var psi = require('psi');
 var optimist = require('optimist');
 var reload = browserSync.reload;
 var fs = require('fs');
+var mocha = require('gulp-mocha');
+
+require('coffee-script/register');
 
 var DotenvHelper = require('./_platform/helpers/gulp_helpers/dotenv-helper');
 
@@ -54,16 +56,13 @@ var AUTOPREFIXER_BROWSERS = [
 
 //runs tests for node_app
 gulp.task('test-node', ['jshint-server'], function () {
-    return gulp.src('./spec/_server/node_app/**/**.js')
-        .pipe(jasmine({
-          configPath: 'spec/_server/node_app/support/jasmine.json',
-          rootPath: serverAppPath
-        }));
+    return gulp.src('./spec/_server/' + serverName + '/**/**.coffee')
+        .pipe(mocha({reporter: 'nyan'}));
 });
 //runs tests for client app
 gulp.task('test-client', ['jshint-client'], function () {
-    return gulp.src('./spec/' + clientAppPath + '/**.js')
-        .pipe(jasmine());
+    return gulp.src('./spec/_client/client_app/' + clientName + '/**/**.coffee')
+        .pipe(mocha({reporter: 'nyan'}));
 });
 //runs tests for client app and server
 gulp.task('test', ['test-node', 'test-client']);
@@ -269,17 +268,17 @@ gulp.task('pagespeed', function(cb) {
 
 // Build Production Files and start server
 gulp.task('start-dev', ['def'],   shell.task([
-  'cd ' + serverBuildPath + ' && node app.js --client ' + (optimist.argv.client || "angular")])
+  'cd ' + serverBuildPath + ' && node app.js --client ' + (optimist.argv.client_app || "angular")])
 );
 
 // Debug Production Server
 gulp.task('debug-dist', ['def'], shell.task([
-  'cd ' + serverBuildPath + ' && node-debug app.js --client ' + (optimist.argv.client || "angular")])
+  'cd ' + serverBuildPath + ' && node-debug app.js --client ' + (optimist.argv.client_app || "angular")])
 );
 
 // Debug Dev Server
 gulp.task('debug', shell.task([
-  'cd ' + serverAppPath + ' && node-debug app.js --client ' + (optimist.argv.client || "angular")])
+  'cd ' + serverAppPath + ' && node-debug app.js --client ' + (optimist.argv.client_app || "angular")])
 );
 
 // Load custom tasks from the `tasks` directory
