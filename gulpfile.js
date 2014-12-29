@@ -12,18 +12,33 @@ var browserSync = require('browser-sync');
 var psi = require('psi');
 var optimist = require('optimist');
 var reload = browserSync.reload;
+var fs = require('fs');
 
-//default client: angular
-var clientName = (optimist.argv.client || "angular") + "_app";
-//default server: node
-var serverName = (optimist.argv.server || "node") + "_app";
+var DotenvHelper = require('./_platform/helpers/gulp_helpers/dotenv-helper');
 
-var clientAppPath =             "_client/client_app/" + clientName;
-var sharedClientResourcesPath = "_client/shared_resources/";
-var clientBuildPath =           "_client/dist";
+var dotenvHelper = new DotenvHelper()
+    dotenvHelper.getEnv();
 
-var serverAppPath =             "_server/" + serverName;
-var serverBuildPath =           "_server/dist";
+var clientName,
+    serverName,
+    clientAppPath,
+    sharedClientResourcesPath,
+    clientBuildPath,
+    serverAppPath,
+    serverBuildPath;
+
+  //default client: angular
+  clientName                = process.env.CLIENT_NAME;
+  //default server: node
+  serverName                = process.env.SERVER_NAME;
+
+  clientAppPath             = process.env.CLIENT_APP_PATH;
+  sharedClientResourcesPath = process.env.SHARED_CLIENT_RESOURCES_PATH;
+  clientBuildPath           = process.env.CLIENT_BUILD_PATH;
+
+  serverAppPath             = process.env.SERVER_APP_PATH;
+  serverBuildPath           = process.env.SERVER_BUILD_PATH;
+
 
 var AUTOPREFIXER_BROWSERS = [
   'ie >= 10',
@@ -38,12 +53,15 @@ var AUTOPREFIXER_BROWSERS = [
 ];
 
 //runs tests for node_app
-gulp.task('test-node', ['jshint'], function () {
-    return gulp.src('./spec/_server/node_app/**.js')
-        .pipe(jasmine());
+gulp.task('test-node', ['jshint-server'], function () {
+    return gulp.src('./spec/_server/node_app/**/**.js')
+        .pipe(jasmine({
+          configPath: 'spec/_server/node_app/support/jasmine.json',
+          rootPath: serverAppPath
+        }));
 });
 //runs tests for client app
-gulp.task('test-client', ['jshint'], function () {
+gulp.task('test-client', ['jshint-client'], function () {
     return gulp.src('./spec/' + clientAppPath + '/**.js')
         .pipe(jasmine());
 });
@@ -85,7 +103,7 @@ gulp.task('copy-server', function () {
 
 //install libs for client
 gulp.task('install-client', function() {
-  return bower({ directory: './bower_components', cwd: './' + clientAppPath })
+  return bower({ directory: './bower_components', cwd: clientAppPath })
     .pipe(gulp.dest('lib/'))
 });
 // install vendors

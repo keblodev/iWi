@@ -6,7 +6,7 @@ if (process.env.NODE_ENV === 'production') {
   var dbLink = process.env.MONGO_REMOTE_LINK;
 
   if (!dbUser || !dbPass || !dbLink) {
-    throw Error('Check your DB credentials in .env file! ' +
+    throw Error('Check your DB credentials in _server/node_app/.env file! ' +
       ' \n dbUser: ' + dbUser +
       ' \n dbPass: ' + dbPass +
       ' \n dbLink: ' + dbLink
