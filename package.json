@@ -7,7 +7,7 @@
     "start": "gulp start-dev",
     "debug": "gulp debug",
     "install": "cd _server/node_app/ && npm install --unsafe-perm",
-    "test": "gulp test && gulp pagespeed",
+    "test": "gulp test",
     "mongo-init": "mongod -f db/mongo/mongodb.conf",
     "mongo-migrate": "mongo-migrate create -cfg db/mongo/mongodb.conf"
   },
@@ -16,8 +16,11 @@
     "mongo-migrate": "0.1.0"
   },
   "devDependencies": {
+    "async": "^0.9.0",
     "browser-sync": "1.3.0",
+    "coffee-script": "1.8.0",
     "del": "0.1.2",
+    "dotenv": "0.4.0",
     "gulp": "3.8.10",
     "gulp-autoprefixer": "0.0.8",
     "gulp-bower": "0.0.7",
@@ -27,18 +30,18 @@
     "gulp-flatten": "0.0.2",
     "gulp-if": "1.2.1",
     "gulp-imagemin": "1.0.0",
-    "gulp-jasmine": "1.0.1",
     "gulp-jshint": "1.6.3",
     "gulp-load-plugins": "0.5.3",
     "gulp-minify-html": "0.1.4",
+    "gulp-mocha": "2.0.0",
     "gulp-replace": "0.4.0",
+    "gulp-requirejs-bundler": "^0.1.1",
     "gulp-ruby-sass": "0.7.1",
     "gulp-shell": "0.2.11",
     "gulp-size": "1.0.0",
     "gulp-uglify": "0.3.1",
     "gulp-uncss": "0.4.5",
     "gulp-useref": "0.6.0",
-    "jasmine": "2.1.0",
     "jshint-stylish": "0.4.0",
     "lodash": "2.4.1",
     "ngrok": "0.1.98",
@@ -46,8 +49,14 @@
     "opn": "1.0.0",
     "optimist": "0.6.1",
     "psi": "0.1.2",
+    "request": "^2.51.0",
     "require-dir": "0.1.0",
-    "run-sequence": "0.3.6"
+    "run-sequence": "0.3.6",
+    "should": "4.4.2",
+    "should-equal": "0.2.7",
+    "should-format": "0.0.5",
+    "supertest": "0.15.0",
+    "winston": "0.8.3"
   },
   "config": {
     "unsafe-perm": true

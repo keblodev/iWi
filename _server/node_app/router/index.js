@@ -13,6 +13,10 @@ module.exports = function (app) {
       req.models = db.models;
       req.db     = db;
 
+      app.closeDbConnection = function() {
+        db.close();
+      };
+
       return next();
     });
   });
@@ -22,6 +26,7 @@ module.exports = function (app) {
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
+    console.log('404 -|- path:' + req.originalUrl);
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
@@ -33,6 +38,7 @@ module.exports = function (app) {
 // will print stacktrace
   if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
+      console.log('500 -|- path:' + req.originalUrl);
       res.status(err.status || 500);
       res.render('error', {
         message: err.message,
@@ -40,14 +46,16 @@ module.exports = function (app) {
       });
     });
   }
-
-// production error handler
-// no stacktraces leaked to user
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: {}
+  else {
+  // production error handler
+  // no stacktraces leaked to user
+    app.use(function(err, req, res, next) {
+      console.log('500 -|-prod-|- path:' + req.originalUrl);
+      res.status(err.status || 500);
+      res.render('error', {
+        message: err.message,
+        error: {}
+      });
     });
-  });
+  }
 };

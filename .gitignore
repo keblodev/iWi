@@ -12,3 +12,4 @@ mongodb.log
 db/mongo/data/
 gulp-ruby-sass/
 #TODO add gitingnore lines for .env
+.env

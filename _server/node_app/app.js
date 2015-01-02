@@ -1,8 +1,8 @@
 'use strict';
 
 var express         = require('express');
-var path            = require('path');
 var serverSettings  = require('./configs/server');
+var path            = require('path');
 //var dbSettings      = require('./configs/db');
 var envSettings     = require('./configs/environment');
 
@@ -26,21 +26,21 @@ module.exports.start = function (done) {
 
   app.listen(serverSettings.port, function () {
     console.log( 'Listening on port ' + serverSettings.port );
-
     if (done) {
       return done(null, app);//, server);
     }
   }).on('error', function (e) {
     if (e.code === 'EADDRINUSE') {
-      console.log('Address in use. Is the server already running?'.red);
+      console.log('Address in use. Is the server already running?');
     }
     if (done) {
       return done(e);
     }
   });
+
 };
 
-// If someone ran: 'node server.js' then automatically start the server
+// This is starting the server
 if (path.basename(process.argv[1],'.js') === path.basename(__filename,'.js')) {
   module.exports.start();
 }

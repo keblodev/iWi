@@ -1,4 +1,6 @@
 language: node_js
+services:
+  - mongodb
 node_js:
   - '0.11'
 before_install:
@@ -10,3 +12,4 @@ before_install:
   - gulp dev-build
 install:
   - node _server/dist/app.js --client angular &
+  - gulp pagespeed
