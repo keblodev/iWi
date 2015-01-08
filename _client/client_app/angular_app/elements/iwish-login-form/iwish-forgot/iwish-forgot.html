@@ -1,0 +1,35 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/core-media-query/core-media-query.html">
+
+<polymer-element name="iwish-forgot" attributes="">
+  <template>
+    <link rel="stylesheet" href="iwish-forgot.css">
+
+    <div class="main {{ {wide: wide} | tokenList }}" flex layout vertical  >
+      <div class="core-header" slide-up>
+        <h1>
+          No prob. S*it happens:
+        </h1>
+      </div>
+      <div id="mainPanel" flex layout vertical slide-down>
+        <paper-input id="loginEmail" label="email" floatingLabel required error="input is required!"></paper-input>
+        <div id="mainContainer" layout vertical?="{{!wide}}">
+          <paper-button raised id="login-button" auto-vertical disabled?="{{!$.loginEmail.value.length}}">just give me my pass</paper-button>
+        </div>
+      </div>
+    </div>
+    <core-media-query query="min-width: {{responsiveWidth}}" queryMatches="{{wide}}"></core-media-query>
+  </template>
+  <script>
+    Polymer('iwish-forgot' , {
+      responsiveWidth: '33em',
+
+      publish: {
+        response: "ValuePassedBackToParent ok2 " + Math.random(10)
+      }
+    });
+  </script>
+</polymer-element>

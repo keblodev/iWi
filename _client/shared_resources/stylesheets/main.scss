@@ -1,0 +1,9 @@
+@import 'core.scss';
+
+$main_bg_color: #F8F8F8;
+
+body {
+  background: $main_bg_color;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
+}

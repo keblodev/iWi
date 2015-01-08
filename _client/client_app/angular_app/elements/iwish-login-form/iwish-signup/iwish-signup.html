@@ -1,0 +1,39 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../../bower_components/core-style/core-style.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/core-media-query/core-media-query.html">
+
+
+<polymer-element name="iwish-signup" attributes="">
+  <template>
+      <link rel="stylesheet" href="iwish-signup.css">
+
+      <div class="main {{ {wide: wide} | tokenList }}" flex layout vertical  >
+        <div class="core-header" slide-up>
+          <h1>
+            Just fill in few fields
+          </h1>
+        </div>
+        <div id="mainPanel" flex layout vertical slide-down>
+          <paper-input id="newUserName" label="name" floatingLabel required error="input is required!"></paper-input>
+          <paper-input id="newUserEmail" label="email" floatingLabel required error="input is required!"></paper-input>
+          <paper-input id="newUserPass" label="password" floatingLabel required error="input is required!"></paper-input>
+          <div id="mainContainer" layout vertical?="{{!wide}}">
+            <paper-button raised id="login-button" auto-vertical disabled?="{{!$.newUserName.value.length || !$.newUserEmail.value.length || !$.newUserPass.value.length}}">all done</paper-button>
+          </div>
+        </div>
+      </div>
+    <core-media-query query="min-width: {{responsiveWidth}}" queryMatches="{{wide}}"></core-media-query>
+  </template>
+  <script>
+    Polymer('iwish-signup' , {
+      responsiveWidth: '33em',
+
+      publish: {
+        response: "ValuePassedBackToParent ok " + Math.random(10)
+      }
+    });
+  </script>
+</polymer-element>

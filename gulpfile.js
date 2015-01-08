@@ -13,6 +13,7 @@ var optimist = require('optimist');
 var reload = browserSync.reload;
 var fs = require('fs');
 var mocha = require('gulp-mocha');
+var vulcanize = require('gulp-vulcanize');
 
 require('coffee-script/register');
 
@@ -101,10 +102,9 @@ gulp.task('copy-server', function () {
 
 
 //install libs for client
-gulp.task('install-client', function() {
-  return bower({ directory: './bower_components', cwd: clientAppPath })
-    .pipe(gulp.dest('lib/'))
-});
+gulp.task('install-client',  shell.task([
+  'cd ' + clientAppPath + ' && bower install -f'])
+);
 // install vendors
 gulp.task('install', ['install-client']);
 
@@ -137,8 +137,8 @@ gulp.task('fonts', function () {
 gulp.task('styles', function () {
   // For best performance, don't add Sass partials to `gulp.src`
   return gulp.src([
-      sharedClientResourcesPath + '/stylesheets/*.scss',
-      //clientAppPath + '/stylesheets/components/components.scss'
+      sharedClientResourcesPath + '/**/*.scss',
+      clientAppPath + '/**/*.scss'
     ])
     .pipe($.changed('styles', {extension: '.scss'}))
     .pipe($.rubySass({
@@ -148,18 +148,35 @@ gulp.task('styles', function () {
       .on('error', console.error.bind(console))
     )
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
-    .pipe(gulp.dest('.tmp/styles'))
+    .pipe(gulp.dest('.tmp/'))
     // Concatenate And Minify Styles
     .pipe($.if('*.css', $.csso()))
-    .pipe(gulp.dest(clientBuildPath + '/stylesheets'))
-    .pipe($.size({title: 'styles'}));
+    .pipe(gulp.dest(clientBuildPath))
+    .pipe($.size())
+});
+
+gulp.task('vulcanize', function(){
+  return gulp.src([
+    clientBuildPath + '/elements/elements.html'
+    ])
+    .pipe(vulcanize({
+        dest: '.tmp/',
+        strip: true,
+        inline: true
+    }))
+    .pipe(gulp.dest(clientBuildPath + '/elements'));
 });
 
 // Scan Your HTML For Assets & Optimize Them
+// TODO: It does not work with web components - investigate
 gulp.task('html', function () {
+  //TODO: it does not uglifies js and css
   var assets = $.useref.assets({searchPath: '{.tmp,app}'});
 
-  return gulp.src(clientBuildPath + '/**/*.html')
+  return gulp.src([
+    clientBuildPath + '/**/*.html',
+    clientBuildPath + '/**/*.js',
+    clientBuildPath + '/**/*.css'])
     .pipe(assets)
     // Concatenate And Minify JavaScript
     .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
@@ -226,11 +243,11 @@ gulp.task('watch-serv', function () {
 
 // Build Production Files, the Default Task
 gulp.task('def', ['clean'], function (cb) {
-  runSequence('test', 'copy', ['styles', 'images', 'fonts'], 'html' , cb);
+  runSequence('test', 'copy', ['styles', 'images', 'fonts'], 'vulcanize' , cb);
 });
 
 gulp.task('dev-build', ['clean'], function (cb) {
-  runSequence('copy', ['styles', 'images', 'fonts'], 'html' , cb);
+  runSequence('copy', ['styles', 'images', 'fonts'], 'vulcanize' , cb);
 });
 
 
@@ -267,6 +284,7 @@ gulp.task('pagespeed', function(cb) {
 });
 
 // Build Production Files and start server
+//TODO: add watch task
 gulp.task('start-dev', ['def'],   shell.task([
   'cd ' + serverBuildPath + ' && node app.js --client ' + (optimist.argv.client_app || "angular")])
 );

@@ -1,0 +1,64 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/core-media-query/core-media-query.html">
+
+<link rel="import" href="../../bower_components/core-animated-pages/core-animated-pages.html">
+<link rel="import" href="../../bower_components/core-animated-pages/transitions/cross-fade.html">
+<link rel="import" href="../../bower_components/core-animated-pages/transitions/slide-down.html">
+<link rel="import" href="../../bower_components/core-animated-pages/transitions/slide-up.html">
+
+<link rel="import" href="./iwish-login/iwish-login.html">
+<link rel="import" href="./iwish-forgot/iwish-forgot.html">
+<link rel="import" href="./iwish-signup/iwish-signup.html">
+
+<polymer-element name="iwish-login-form" attributes="">
+  <template>
+  <link rel="stylesheet" href="iwish-login-form.css">
+
+    <div class="main {{ {wide: wide} | tokenList }}" flex layout vertical  >
+      <div id="mainPanel" flex layout vertical slide-down>
+        <core-animated-pages selected="{{selected}}" transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition">
+          <section>
+            <iwish-login layout vertical center center-justified slide-down response="{{out}}"></iwish-login>
+          </section>
+          <section>
+            <iwish-signup layout vertical center center-justified slide-down response="{{out}}"></iwish-signup>
+          </section>
+          <section>
+            <iwish-forgot layout vertical center center-justified slide-down response="{{out}}"></iwish-forgot>
+          </section>
+        </core-animated-pages>
+      </div>
+
+    </div>
+    <core-media-query query="min-width: {{responsiveWidth}}" queryMatches="{{wide}}"></core-media-query>
+    <paper-button raised on-click="{{stuff}}" style="margin-bottom: 10px;">Next in login form</paper-button>
+  </template>
+  <script>
+
+    Polymer('iwish-login-form' , {
+      responsiveWidth: '33em',
+
+      publish: {
+        response: "ValuePassedBackToParent 1"
+      },
+
+      selected: 0,
+
+      out: null,
+      up : true,
+      max : 2,
+      stuff : function() {
+        if (this.up && this.selected === this.max || !this.up && this.selected === 0) {
+          this.up = !this.up;
+        }
+        if (this.up) {
+          this.selected += 1;
+        } else {
+          this.selected -= 1;
+        }
+      }
+    });
+
+  </script>
+</polymer-element>
