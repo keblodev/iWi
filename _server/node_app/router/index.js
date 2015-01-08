@@ -37,7 +37,7 @@ module.exports = function (app) {
 // development error handler
 // will print stacktrace
   if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
+    app.use(function(err, req, res) {
       console.log('500 -|- path:' + req.originalUrl);
       res.status(err.status || 500);
       res.render('error', {
@@ -49,7 +49,7 @@ module.exports = function (app) {
   else {
   // production error handler
   // no stacktraces leaked to user
-    app.use(function(err, req, res, next) {
+    app.use(function(err, req, res) {
       console.log('500 -|-prod-|- path:' + req.originalUrl);
       res.status(err.status || 500);
       res.render('error', {

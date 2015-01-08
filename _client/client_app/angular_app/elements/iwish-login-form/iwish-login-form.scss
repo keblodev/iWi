@@ -1,0 +1,183 @@
+/* Shadow DOM CSS Cheat Sheet */
+/* http://robdodson.me/blog/2014/04/10/shadow-dom-css-cheat-sheet */
+
+
+/* General */
+$border_radius: 3px;
+
+/* Login buttons colors*/
+
+$login_button_bg: #21D0C6;
+$sign_up_button_bg: #219CD0;
+$forgot_button_bg: #D04E21;
+$btn_font_clr: white;
+$disabled_login_button_bg: rgb(157, 157, 157);;
+
+/* Label colors*/
+
+$label_button_bg: #19CCFF;
+$label_font_clr: white;
+
+/* Input colors */
+$input_font: black;
+$input_bc_clr: white;
+
+
+$shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.26);
+
+h1 {
+  font-size: 3em;
+  font-weight: 300;
+}
+
+:host {
+  display: block;
+}
+
+.main {
+  display: inline-block !important;
+  min-width: 20em;
+  width: 100%;
+
+  h1 {
+    color: $label_font_clr;
+    display: inline-table;
+  }
+
+  .core-header {
+    background: $label_button_bg;
+    padding: 0px 20px;
+  }
+
+
+  core-animated-pages {
+    height: 42em;
+    width: 100%;
+
+    section > * {
+      height: 100%;
+    }
+  }
+
+  #mainContainer {
+    margin-top: 30px;
+  }
+
+  #mainPanel {
+
+  }
+
+  paper-button {
+    color: $btn_font_clr;
+    border-radius: 0;
+    padding: 1em 0;
+    margin: 0;
+
+    &#login-button {
+      background: $login_button_bg;
+      &[disabled] {
+        background-color: $disabled_login_button_bg;
+      }
+    }
+
+    &#sign-up-button {
+      background: $sign_up_button_bg;
+    }
+
+    &#forgot-button {
+      background: $forgot_button_bg;
+      float: right;
+    }
+    &::shadow {
+      paper-shadow::shadow {
+        .paper-shadow-bottom-z-1 {
+          box-shadow: $shadow;
+        }
+      }
+    }
+  }
+
+  paper-input {
+     margin: 0 10px;
+     height: 5em;
+
+     &::shadow {
+       paper-input-decorator {
+          color: $input_font;
+
+          .label-text {
+            color: #ACABAB;
+          }
+
+          &[focused]::shadow {
+          .label-text {
+            color: orange;
+          }
+          .focused-underline {
+            background-color: orange;
+          }
+         }
+        }
+     }
+  }
+
+  &.wide {
+    display: block;
+    margin: auto;
+    width: 99%;
+    max-width: 40em;
+
+    #mainPanel {
+      background: initial;
+    }
+
+    #mainContainer {
+      margin-top: 0px;
+    }
+
+    paper-input {
+
+     &::after {
+      display: block;
+      background-color: $input_bc_clr;
+      border: 0.6px solid $input_bc_clr;
+      border-radius: $border_radius;
+      bottom: 2.8em;
+      box-shadow: $shadow;
+      content: '';
+      height: 2.3em;
+      left: -0.7em;
+      position: relative;
+      width: 103.5%;
+      z-index: -1;
+      }
+
+      &::shadow {
+        paper-input-decorator::shadow {
+          .underline {
+            display: none;
+          }
+        }
+      }
+    }
+
+    paper-button {
+      display: inline-block;
+      padding: 0;
+      position: relative;
+      border-radius: $border_radius;
+
+      &:not(#forgot-button)  {
+        margin-right: 0.5em;
+      }
+
+      &::shadow {
+        paper-shadow::shadow {
+          .paper-shadow-bottom-z-1 {
+
+          }
+        }
+      }
+    }
+  }
+}

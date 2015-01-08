@@ -1,5 +1,11 @@
-'use strict';
+(function(document) {
+  'use strict';
 
-var adsdZaga = 3;
+  document.addEventListener('polymer-ready', function() {
+    // Perform some behaviour
+    console.log('Polymer is ready to rock!');
+  });
 
-console.log(adsdZaga);
+// wrap document so it plays nice with other libraries
+// http://www.polymer-project.org/platform/shadow-dom.html#wrappers
+})(wrap(document));

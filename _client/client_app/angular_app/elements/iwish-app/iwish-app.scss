@@ -1,0 +1,18 @@
+:host {
+  display: block;
+}
+
+body {
+  font-family: Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  margin: 0;
+}
+
+core-animated-pages {
+  overflow: hidden;
+  height: 42em;
+}
+
+
+core-animated-pages section > * {
+  height: 100%;
+}
