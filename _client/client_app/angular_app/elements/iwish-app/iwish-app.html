@@ -9,19 +9,23 @@
 <link rel="import" href="../../bower_components/core-media-query/core-media-query.html">
 
 <link rel="import" href="../iwish-login-form/iwish-login-form.html">
+<link rel="import" href="../iwish-dialog/iwish-dialog.html">
 
 <polymer-element name="iwish-app" attributes="">
   <template>
     <link rel="stylesheet" href="iwish-app.css">
 
-  <core-animated-pages selected="{{selected}}" transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition">
     <section>
-      <iwish-login-form layout vertical center center-justified slide-down response="{{out}}"></iwish-login-form>
+      <iwish-dialog layout vertical center center-justified slide-down></iwish-dialog>
     </section>
-    <section>
-      <iwish-login-form layout vertical center center-justified slide-down></iwish-login-form>
-    </section>
-  </core-animated-pages>
+    <core-animated-pages selected="{{selected}}" transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition">
+      <section>
+        <iwish-login-form layout vertical center center-justified slide-down response="{{out}}"></iwish-login-form>
+      </section>
+      <section>
+        <iwish-login-form layout vertical center center-justified slide-down></iwish-login-form>
+      </section>
+    </core-animated-pages>
     <paper-button raised on-click="{{stuff}}">Next view in app</paper-button>
   </template>
   <script>
