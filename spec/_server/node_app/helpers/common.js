@@ -87,7 +87,7 @@ common.getConnectionString = function (opts) {
       } else {
         return util.format("%s://%s:%s@%s/%s?%s",
           protocol, config.user, config.password,
-          config.host, config.database, query
+          config.host + ':27017', config.database, query
         ).replace(':@','@');
       }
     case 'sqlite':

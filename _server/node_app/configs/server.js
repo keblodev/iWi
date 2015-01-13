@@ -4,7 +4,7 @@ var path = require('path');
 
 //TODO: remove this once server and client can be built in single directory
 //or do a NODE_END dependency
-var basePath = path.resolve('../../');
+var basePath = path.resolve();
 
 var settings = {
   path       : path.normalize(path.join(__dirname, '..')),
