@@ -12,5 +12,5 @@ before_install:
   - gulp install-client
   - gulp dev-build
 install:
-  - node _server/dist/app.js --client angular &
+  - gulp start-serv &
   - gulp pagespeed

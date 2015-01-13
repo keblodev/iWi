@@ -2,8 +2,9 @@
 
 var gulp = require('gulp');
 var ngrok = require('ngrok');
-var shell = require('gulp-shell')
-var bower = require('gulp-bower');
+var shell = require('gulp-shell');
+// this guy is faling on Travis
+// var bower = require('gulp-bower');
 var $ = require('gulp-load-plugins')();
 var del = require('del');
 var runSequence = require('run-sequence');
@@ -14,13 +15,22 @@ var reload = browserSync.reload;
 var fs = require('fs');
 var mocha = require('gulp-mocha');
 var vulcanize = require('gulp-vulcanize');
+var open = require("gulp-open");
+var wait = require("gulp-wait");
+var os = require('os');
+var serverStarter = require( 'gulp-develop-server' );
 
+//is needed for pre-compiling all .coffe files
+// require('shelljs/global');
 require('coffee-script/register');
 
-var DotenvHelper = require('./_platform/helpers/gulp_helpers/dotenv-helper');
+var gulpHelper = require('./_platform/helpers/gulp_helpers/gulp-helper');
+var utils = gulpHelper.utils;
 
-var dotenvHelper = new DotenvHelper()
-    dotenvHelper.getEnv();
+var DotenvHelper = gulpHelper.dotenvHelper;
+var dotenvHelper = new DotenvHelper();
+// Initing platform .env file to get env vars
+dotenvHelper.getEnv();
 
 var clientName,
     serverName,
@@ -58,12 +68,12 @@ var AUTOPREFIXER_BROWSERS = [
 //runs tests for node_app
 gulp.task('test-node', ['jshint-server'], function () {
     return gulp.src('./spec/_server/' + serverName + '/**/**.coffee')
-        .pipe(mocha({reporter: 'nyan'}));
+        .pipe(mocha({reporter: 'dot'}));
 });
 //runs tests for client app
 gulp.task('test-client', ['jshint-client'], function () {
     return gulp.src('./spec/_client/client_app/' + clientName + '/**/**.coffee')
-        .pipe(mocha({reporter: 'nyan'}));
+        .pipe(mocha({reporter: 'dot'}));
 });
 //runs tests for client app and server
 gulp.task('test', ['test-node', 'test-client']);
@@ -78,28 +88,6 @@ gulp.task('images', function () {
     .pipe(gulp.dest(clientBuildPath + '/images'))
     .pipe($.size({title: 'images'}));
 });
-
-// copy to _client/dist
-gulp.task('copy-client', function () {
-  return gulp.src([
-    clientAppPath + '/**/*',
-    sharedClientResourcesPath + '/**/*'
-  ], {
-    dot: true
-  }).pipe(gulp.dest(clientBuildPath))
-    .pipe($.size({title: 'copy'}));
-});
-
-// copy to _server/dist
-gulp.task('copy-server', function () {
-  return gulp.src([
-    serverAppPath + '/**/*'
-  ], {
-    dot: true
-  }).pipe(gulp.dest(serverBuildPath))
-    .pipe($.size({title: 'copy'}));
-});
-
 
 //install libs for client
 gulp.task('install-client',  shell.task([
@@ -167,44 +155,45 @@ gulp.task('vulcanize', function(){
     .pipe(gulp.dest(clientBuildPath + '/elements'));
 });
 
+//TODO: do an appropriate html/js/css uglification task
 // Scan Your HTML For Assets & Optimize Them
 // TODO: It does not work with web components - investigate
-gulp.task('html', function () {
-  //TODO: it does not uglifies js and css
-  var assets = $.useref.assets({searchPath: '{.tmp,app}'});
+// gulp.task('html', function () {
+//   //TODO: it does not uglifies js and css
+//   var assets = $.useref.assets({searchPath: '{.tmp,app}'});
 
-  return gulp.src([
-    clientBuildPath + '/**/*.html',
-    clientBuildPath + '/**/*.js',
-    clientBuildPath + '/**/*.css'])
-    .pipe(assets)
-    // Concatenate And Minify JavaScript
-    .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
-    // Remove Any Unused CSS
-    // .pipe($.if('*.css', $.uncss({
-    //   html: [
-    //     'app/index.html',
-    //     'app/styleguide.html'
-    //   ],
-    //   // CSS Selectors for UnCSS to ignore
-    //   ignore: [
-    //     /.navdrawer-container.open/,
-    //     /.app-bar.open/
-    //   ]
-    // })))
-    // Concatenate And Minify Styles
-    // In case you are still using useref build blocks
-    .pipe($.if('*.css', $.csso()))
-    .pipe(assets.restore())
-    .pipe($.useref())
-    // Update Production Style Guide Paths
-    //.pipe($.replace('components/components.css', 'components/main.min.css'))
-    // Minify Any HTML
-    .pipe($.if('*.html', $.minifyHtml()))
-    // Output Files
-    .pipe(gulp.dest(clientBuildPath))
-    .pipe($.size({title: 'html'}));
-});
+//   return gulp.src([
+//     clientBuildPath + '/**/*.html',
+//     clientBuildPath + '/**/*.js',
+//     clientBuildPath + '/**/*.css'])
+//     .pipe(assets)
+//     // Concatenate And Minify JavaScript
+//     .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
+//     // Remove Any Unused CSS
+//     // .pipe($.if('*.css', $.uncss({
+//     //   html: [
+//     //     'app/index.html',
+//     //     'app/styleguide.html'
+//     //   ],
+//     //   // CSS Selectors for UnCSS to ignore
+//     //   ignore: [
+//     //     /.navdrawer-container.open/,
+//     //     /.app-bar.open/
+//     //   ]
+//     // })))
+//     // Concatenate And Minify Styles
+//     // In case you are still using useref build blocks
+//     .pipe($.if('*.css', $.csso()))
+//     .pipe(assets.restore())
+//     .pipe($.useref())
+//     // Update Production Style Guide Paths
+//     //.pipe($.replace('components/components.css', 'components/main.min.css'))
+//     // Minify Any HTML
+//     .pipe($.if('*.html', $.minifyHtml()))
+//     // Output Files
+//     .pipe(gulp.dest(clientBuildPath))
+//     .pipe($.size({title: 'html'}));
+// });
 
 //jshint for server and client
 gulp.task('jshint', ['jshint-client', 'jshint-server']);
@@ -212,13 +201,33 @@ gulp.task('jshint', ['jshint-client', 'jshint-server']);
 //copy for server and client
 gulp.task('copy', ['copy-client', 'copy-server']);
 
+// copy to _client/dist
+gulp.task('copy-client', function () {
+  return gulp.src([
+    clientAppPath + '/**/*',
+    sharedClientResourcesPath + '/**/*'
+  ], {
+    dot: true
+  }).pipe(gulp.dest(clientBuildPath))
+    .pipe($.size({title: 'copy'}));
+});
+
+// copy to _server/dist
+gulp.task('copy-server', function () {
+  return gulp.src([
+    serverAppPath + '/**/*'
+  ], {
+    dot: true
+  }).pipe(gulp.dest(serverBuildPath))
+    .pipe($.size({title: 'copy'}));
+});
+
 // Clean Output Directory
 gulp.task('clean', del.bind(null, ['.tmp', clientBuildPath, serverBuildPath, '.sass-cache']));
 
 
 gulp.task('browser-sync', function() {
     browserSync({
-        https: true,
         server: ['.tmp', clientAppPath],
     });
 });
@@ -229,11 +238,24 @@ gulp.task('reload', function() {
 });
 
 // Watch Files For Changes on CLIENT & Reload
-gulp.task('watch-client', ['styles', 'browser-sync'], function () {
-  gulp.watch([clientAppPath + '/**/*.html'], reload);
+gulp.task('watch-client',['browser-sync'] ,function () {
+  gulp.watch([clientAppPath + '/**/*.html'], ['copy-client', reload]);
   gulp.watch([sharedClientResourcesPath + '/stylesheets/**/*.{scss,css}'], ['styles', reload]);
   gulp.watch([clientAppPath + '/**/*.js'], ['jshint']);
   gulp.watch([sharedClientResourcesPath + '/images/**/*'], reload);
+});
+
+// Watch Files For Changes on CLIENT with production server
+gulp.task('watch-client-prod', ['start-dev'], function () {
+  gulp.watch([clientAppPath + '/**/*.html'], ['copy-client', 'restart-serv']);
+  gulp.watch([sharedClientResourcesPath + '/stylesheets/**/*.{scss,css}'], ['styles', 'restart-serv']);
+  gulp.watch([clientAppPath + '/**/*.js'], ['jshint']);
+  gulp.watch([sharedClientResourcesPath + '/images/**/*'], 'restart-serv');
+});
+
+// Watch Files For Changes on SERVER
+gulp.task('restart-serv', function () {
+  utils.killAndRestartServer('node', 'gulp start-serv');
 });
 
 // Watch Files For Changes on SERVER
@@ -249,7 +271,6 @@ gulp.task('def', ['clean'], function (cb) {
 gulp.task('dev-build', ['clean'], function (cb) {
   runSequence('copy', ['styles', 'images', 'fonts'], 'vulcanize' , cb);
 });
-
 
 // run proxy for application
 // TODO - create config for port, etc...
@@ -285,9 +306,36 @@ gulp.task('pagespeed', function(cb) {
 
 // Build Production Files and start server
 //TODO: add watch task
-gulp.task('start-dev', ['def'],   shell.task([
-  'cd ' + serverBuildPath + ' && node app.js --client ' + (optimist.argv.client_app || "angular")])
-);
+
+gulp.task('start-serv', function(){
+  var serverOptions = {
+      path: serverBuildPath + '/app.js',
+      execArgv: [ '--harmony' ]
+  };
+
+  var platform = os.platform();
+  //TODO: osx and ubunt have same platform, but in linux
+  // browser's name should be google-chrome
+  var chrome = platform === 'win32'?'chrome':'Google Chrome';
+
+  var browserOpenerOptions = {
+    //TODO: move port to config
+    url: "http://"+utils.getLocalIP()+":3000",
+    app: chrome
+  };
+
+// If server side's coffee files changed, compile these files,
+  gulp.src(serverBuildPath)
+      .pipe(serverStarter(serverOptions))
+      .pipe(gulp.src(clientBuildPath + '/index.html'))
+      .pipe(wait(1500))
+      .pipe(open("", browserOpenerOptions));
+});
+
+
+gulp.task('start-dev', function() {
+   runSequence('def', 'start-serv');
+});
 
 // Debug Production Server
 gulp.task('debug-dist', ['def'], shell.task([
