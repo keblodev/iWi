@@ -1,0 +1,69 @@
+@import 'core-variables';
+
+:host {
+  display: block;
+}
+
+h1 {
+  font-size: 3em;
+  font-weight: 300;
+}
+
+paper-button {
+  border-radius: 0;
+  padding: 1em 0;
+  margin: 0;
+
+  &::shadow {
+    paper-shadow::shadow {
+      .paper-shadow-bottom-z-1 {
+        box-shadow: $shadow;
+      }
+    }
+  }
+}
+
+.main {
+  display: inline-block !important;
+  min-width: 20em;
+  width: 100%;
+
+  #mainContainer {
+    margin-top: 30px;
+  }
+
+  paper-button {
+    color: $btn_font_clr;
+  }
+
+  core-animated-pages {
+    height: 42em;
+    width: 100%;
+
+    section > * {
+      height: 100%;
+    }
+  }
+
+  &.wide {
+    display: block;
+    margin: auto;
+    width: 99%;
+    max-width: 40em;
+
+    #mainPanel {
+      background: initial;
+    }
+
+    #mainContainer {
+      margin-top: 0px;
+    }
+
+    paper-button {
+      display: inline-block;
+      padding: 0;
+      position: relative;
+      border-radius: $border_radius;
+    }
+  }
+}

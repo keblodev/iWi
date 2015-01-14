@@ -1,0 +1,27 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<!-- <link rel="import" href="./iwish-login/iwish-login.html"> -->
+
+<polymer-element name="iwish-posts" attributes="">
+  <template>
+    <link rel="stylesheet" href="iwish-posts.css">
+
+    <div class="core-header" id="recent">
+      <h2>
+        some fresh
+      </h2>
+    </div>
+
+  </template>
+  <script>
+
+    Polymer('iwish-posts' , {
+      responsiveWidth: '33em',
+
+      publish: {
+        response: "ValuePassedBackToParent 1"
+      },
+    });
+
+  </script>
+</polymer-element>

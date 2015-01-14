@@ -1,0 +1,15 @@
+/* Shadow DOM CSS Cheat Sheet */
+/* http://robdodson.me/blog/2014/04/10/shadow-dom-css-cheat-sheet */
+
+@import '../iwish-labels-core';
+
+.core-header {
+  background: $label_button_bg;
+  padding: 0px 20px;
+  z-index: -1;
+
+  h1 {
+    color: $label_font_clr;
+    display: inline-table;
+  }
+}

@@ -1,0 +1,27 @@
+<link rel="import" href="./iwish-posts/iwish-posts.html">
+
+<polymer-element name="iwish-posts-board" attributes="">
+  <template>
+  <link rel="stylesheet" href="iwish-posts-board.css">
+
+    <div class="main {{ {wide: wide} | tokenList }}" flex layout vertical  >
+      <iwish-input-labeled labelText="I wish:" inputPlaceholderText="type in your wish..." isWide="{{wide}}"></iwish-input-labeled>
+
+      <iwish-posts></iwish-posts>
+    </div>
+
+    <core-media-query query="min-width: {{responsiveWidth}}" queryMatches="{{wide}}"></core-media-query>
+    <paper-button raised on-click="{{stuff}}" style="margin-bottom: 10px;">Next in login form</paper-button>
+  </template>
+  <script>
+
+    Polymer('iwish-posts-board' , {
+      responsiveWidth: '33em',
+
+      publish: {
+        response: "ValuePassedBackToParent 1"
+      },
+    });
+
+  </script>
+</polymer-element>

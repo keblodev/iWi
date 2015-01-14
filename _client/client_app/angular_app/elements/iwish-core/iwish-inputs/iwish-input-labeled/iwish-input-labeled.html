@@ -1,0 +1,21 @@
+<!-- TODO: fix relative routing with base -->
+<polymer-element name="iwish-input-labeled" attributes="labelText inputPlaceholderText isWide isRequired inputId inputValue">
+  <template>
+    <link rel="stylesheet" href="iwish-input-labeled.css">
+    <iwish-h1-blue labelText="{{labelText}}" isWide="{{isWide}}"></iwish-h1-blue>
+    <paper-input id="{{inputId}}" class="{{ {wide: isWide} | tokenList }}" label="{{inputPlaceholderText}}" required="{{isRequired}}" error="input is required!"  value="{{inputValue}}"></paper-input>
+  </template>
+  <script>
+
+    Polymer('iwish-input-labeled' , {
+      responsiveWidth: '33em',
+
+      isRequired: false,
+
+      publish: {
+        response: "iwish-input-labeled 1"
+      },
+    });
+
+  </script>
+</polymer-element>

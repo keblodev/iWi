@@ -1,6 +1,4 @@
-:host {
-  display: block;
-}
+@import '../core';
 
 body {
   font-family: Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -11,7 +9,6 @@ core-animated-pages {
   overflow: hidden;
   height: 42em;
 }
-
 
 core-animated-pages section > * {
   height: 100%;

@@ -1,0 +1,24 @@
+<!-- TODO: fix relative routing with base -->
+<polymer-element name="iwish-input-floating-label" attributes="inputPlaceholderText isWide isRequired inputId inputValue">
+  <template>
+    <link rel="stylesheet" href="iwish-input-floating-label.css">
+
+    <paper-input id="{{inputId}}" class="{{ {wide: isWide} | tokenList }}" floatingLabel label="{{inputPlaceholderText}}" required="{{isRequired}}" error="input is required!" value="{{inputValue}}"></paper-input>
+
+  </template>
+  <script>
+
+    Polymer('iwish-input-floating-label' , {
+      responsiveWidth: '33em',
+
+      inputValue: '',
+
+      isRequired: false,
+
+      publish: {
+        response: "iwish-input-floating-label 1"
+      },
+    });
+
+  </script>
+</polymer-element>

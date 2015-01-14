@@ -1,0 +1,26 @@
+<!-- TODO: fix relative routing with base -->
+<polymer-element name="iwish-h1-blue" attributes="labelText isWide">
+  <template>
+    <link rel="stylesheet" href="iwish-h1-blue.css">
+
+    <div class="core-header {{ {wide: isWide} | tokenList }}" slide-up>
+      <h1>
+        {{labelText}}
+      </h1>
+    </div>
+
+  </template>
+  <script>
+
+    Polymer('iwish-h1-blue' , {
+      responsiveWidth: '33em',
+
+      isRequired: false,
+
+      publish: {
+        response: "iwish-h1-blue 1"
+      },
+    });
+
+  </script>
+</polymer-element>

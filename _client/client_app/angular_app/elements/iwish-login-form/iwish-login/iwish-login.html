@@ -1,25 +1,15 @@
-<link rel="import" href="../../../bower_components/polymer/polymer.html">
-
-<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../../../bower_components/core-media-query/core-media-query.html">
-
-
 <polymer-element name="iwish-login" attributes="" extends="iwish-login-form">
   <template>
     <link rel="stylesheet" href="iwish-login.css">
 
     <div class="main {{ {wide: wide} | tokenList }}" flex layout vertical  >
-      <div class="core-header" slide-up>
-        <h1>
-          Hi there! Log in please:
-        </h1>
-      </div>
+      <iwish-h1-blue labelText="Hi there! Log in please:" isWide="{{wide}}"></iwish-h1-blue>
       <div id="mainPanel" flex layout vertical slide-down>
-        <paper-input id="loginEmail" label="email" floatingLabel required error="input is required!"></paper-input>
-        <paper-input id="loginPass" label="password" floatingLabel required error="input is required!"></paper-input>
+
+        <iwish-input-floating-label inputId="loginEmail" inputPlaceholderText="email" isRequired="true" isWide="{{wide}}" inputValue="{{loginEmailVal}}"></iwish-input-floating-label>
+        <iwish-input-floating-label inputId="loginPass" inputPlaceholderText="password" isRequired="true" isWide="{{wide}}" inputValue="{{loginPassVal}}"></iwish-input-floating-label>
         <div id="mainContainer" layout vertical?="{{!wide}}">
-          <paper-button raised id="login-button" auto-vertical disabled?="{{!$.loginPass.value.length || !$.loginEmail.value.length}}">login</paper-button>
+          <paper-button raised id="login-button" auto-vertical disabled?="{{!loginEmailVal.length || !loginPassVal.length}}">login</paper-button>
           <paper-button raised id="sign-up-button" auto-vertical>sign up</paper-button>
           <paper-button raised id="forgot-button" auto-vertical>forgot something?</paper-button>
         </div>
