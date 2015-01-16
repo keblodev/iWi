@@ -1,0 +1,55 @@
+@import '../iwish-core';
+
+paper-input {
+  height: 5em;
+  padding: 10px;
+  width: 95%;
+  z-index: 0;
+
+  &::shadow {
+   paper-input-decorator {
+      color: $input_font;
+
+      .label-text {
+        color: #ACABAB;
+      }
+
+      &[focused]::shadow {
+      .label-text {
+        color: orange;
+      }
+      .focused-underline {
+        background-color: orange;
+      }
+     }
+    }
+  }
+
+  &.wide {
+   margin: -50px 10px 20px 10px;
+   padding: 0px;
+   width: 97%;
+
+   &::before {
+      display: block;
+      background-color: white;
+      border: 0.6px solid white;
+      border-radius: 3px;
+      bottom: -4em;
+      box-shadow: $shadow;
+      content: '';
+      height: 2.3em;
+      left: -0.8em;
+      position: relative;
+      width: 104%;
+    }
+
+    &::shadow {
+      paper-input-decorator::shadow {
+        .underline {
+          display: none;
+        }
+      }
+    }
+  }
+}

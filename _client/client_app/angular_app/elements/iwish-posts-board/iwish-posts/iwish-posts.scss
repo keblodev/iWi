@@ -1,0 +1,22 @@
+/* Shadow DOM CSS Cheat Sheet */
+/* http://robdodson.me/blog/2014/04/10/shadow-dom-css-cheat-sheet */
+
+@import '../iwish-posts-board-core';
+
+h2 {
+  font-size: 2em;
+  font-weight: 100;
+  margin: 0.3em;
+}
+
+.core-header {
+  h2 {
+    color: $label_font_clr;
+    display: inline-table;
+  }
+
+  &#recent {
+    background: $recent_bg;
+    margin-top: 3em;
+  }
+}

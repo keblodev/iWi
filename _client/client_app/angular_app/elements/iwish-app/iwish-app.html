@@ -1,14 +1,7 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/core-drawer-panel/core-drawer-panel.html">
-<link rel="import" href="../../bower_components/core-animated-pages/core-animated-pages.html">
-<link rel="import" href="../../bower_components/core-animated-pages/transitions/slide-up.html">
-<link rel="import" href="../../bower_components/core-animated-pages/transitions/slide-down.html">
-<link rel="import" href="../../bower_components/core-animated-pages/transitions/scale-up.html">
-<link rel="import" href="../../bower_components/core-animated-pages/transitions/tile-cascade.html">
-<link rel="import" href="../../bower_components/core-animated-pages/transitions/hero-transition.html">
-<link rel="import" href="../../bower_components/core-media-query/core-media-query.html">
+<link rel="import" href="../core.html">
 
 <link rel="import" href="../iwish-login-form/iwish-login-form.html">
+<link rel="import" href="../iwish-posts-board/iwish-posts-board.html">
 
 <polymer-element name="iwish-app" attributes="">
   <template>
@@ -19,7 +12,7 @@
       <iwish-login-form layout vertical center center-justified slide-down response="{{out}}"></iwish-login-form>
     </section>
     <section>
-      <iwish-login-form layout vertical center center-justified slide-down></iwish-login-form>
+      <iwish-posts-board layout vertical center center-justified slide-down></iwish-posts-board>
     </section>
   </core-animated-pages>
     <paper-button raised on-click="{{stuff}}">Next view in app</paper-button>

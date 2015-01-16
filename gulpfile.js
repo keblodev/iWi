@@ -240,7 +240,8 @@ gulp.task('reload', function() {
 // Watch Files For Changes on CLIENT & Reload
 gulp.task('watch-client',['browser-sync'] ,function () {
   gulp.watch([clientAppPath + '/**/*.html'], ['copy-client', reload]);
-  gulp.watch([sharedClientResourcesPath + '/stylesheets/**/*.{scss,css}'], ['styles', reload]);
+  gulp.watch([sharedClientResourcesPath + '/stylesheets/**/*.{scss,css}',
+    clientAppPath + '/**/*.{scss,css}'], ['styles', reload]);
   gulp.watch([clientAppPath + '/**/*.js'], ['jshint']);
   gulp.watch([sharedClientResourcesPath + '/images/**/*'], reload);
 });

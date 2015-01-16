@@ -1,7 +1,7 @@
 /* Shadow DOM CSS Cheat Sheet */
 /* http://robdodson.me/blog/2014/04/10/shadow-dom-css-cheat-sheet */
 
-@import '../iwish-login-form';
+@import '../iwish-login-form-core';
 
 .main {
   width: 100%;
@@ -10,9 +10,10 @@
       background: white;
   }
 
-  &.wide {
-    #mainPanel {
-      background: initial;
+  #alldone-button {
+    background: $login_button_bg;
+    &[disabled] {
+      background-color: $disabled_login_button_bg;
     }
   }
 }
