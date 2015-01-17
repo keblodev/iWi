@@ -2,3 +2,7 @@
 /* http://robdodson.me/blog/2014/04/10/shadow-dom-css-cheat-sheet */
 
 @import 'iwish-posts-board-core';
+
+:host {
+  height: 100%;
+}

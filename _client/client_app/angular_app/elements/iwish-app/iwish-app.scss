@@ -5,11 +5,15 @@ body {
   margin: 0;
 }
 
-core-animated-pages {
-  overflow: hidden;
-  height: 42em;
+ #coreAppAnimationBlock {
+  position: absolute;
 }
 
-core-animated-pages section > * {
+core-animated-pages {
+  height: 100%;
+  width: 100%;
+}
+
+> core-animated-pages section > * {
   height: 100%;
 }

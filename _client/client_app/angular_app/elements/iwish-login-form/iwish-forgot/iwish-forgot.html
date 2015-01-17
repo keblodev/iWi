@@ -2,17 +2,40 @@
   <template>
     <link rel="stylesheet" href="iwish-forgot.css">
 
-    <div class="main {{ {wide: wide} | tokenList }}" flex layout vertical  >
-      <iwish-h1-blue labelText="No prob. S*it happens:" isWide="{{wide}}"></iwish-h1-blue>
-      <div id="mainPanel" flex layout vertical slide-down>
-        <iwish-input-floating-label inputId="loginEmail" inputPlaceholderText="email" isRequired="true" isWide="{{wide}}" inputValue="{{loginEmailVal}}"></iwish-input-floating-label>
+    <div
+      class="main {{ {wide: wide} | tokenList }}"
+      flex>
+      <iwish-h1-blue
+        labelText="No prob. S*it happens:"
+        isWide="{{wide}}">
+      </iwish-h1-blue>
+      <div id="mainPanel"
+        layout
+        vertical>
+        <iwish-input-floating-label
+          inputId="loginEmail"
+          inputPlaceholderText="email"
+          isRequired="true" isWide="{{wide}}"
+          inputValue="{{loginEmailVal}}">
+        </iwish-input-floating-label>
 
-        <div id="mainContainer" layout vertical?="{{!wide}}">
-          <paper-button raised id="justgiveme-button" auto-vertical disabled?="{{!loginEmailVal.length}}">just give me my pass</paper-button>
+        <div id="mainContainer"
+          layout
+          vertical?="{{!wide}}">
+          <paper-button
+              raised
+              id="justgiveme-button"
+              auto-vertical
+              disabled?="{{!loginEmailVal.length}}">
+            just give me my pass
+          </paper-button>
         </div>
       </div>
     </div>
-    <core-media-query query="min-width: {{responsiveWidth}}" queryMatches="{{wide}}"></core-media-query>
+    <core-media-query
+      query="min-width: {{responsiveWidth}}"
+      queryMatches="{{wide}}">
+    </core-media-query>
   </template>
   <script>
     Polymer('iwish-forgot' , {

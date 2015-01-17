@@ -1,0 +1,90 @@
+<polymer-element name="iwish-post" attributes="postName likesCount dislikesCount commentsCount isWide">
+  <template>
+    <link rel="stylesheet" href="iwish-post.css">
+    <!-- TODO: figure out something to move this dependecy from here -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <div class="post-long {{ {'table': isWide} | tokenList }}" cross-fade>
+      <div class="post-comments {{ {'table-cell': isWide} | tokenList }}">
+        <div class="table">
+          <core-item
+            label="{{commentsCount}}"
+            class="post-comments-count fa fa-comment-o table-cell" >
+          </core-item>
+        </div>
+      </div>
+      <core-item
+        label="{{postName}}"
+        class="post-name {{ {'table-cell': isWide} | tokenList }}">
+      </core-item>
+      <div class="post-thumbs {{ {'table-cell': isWide} | tokenList }}">
+        <div class="post-comments responsive {{ {'show': !isWide} | tokenList }}">
+          <div class="table">
+            <core-item
+              label="{{commentsCount}}"
+              class="post-comments-count fa fa-comment-o table-cell" >
+            </core-item>
+          </div>
+        </div>
+        <div class="table">
+          <core-item
+            label="{{likesCount}}"
+            class="fa fa-thumbs-o-up table-cell">
+          </core-item>
+          <i class="table-cell"> / </i>
+          <core-item
+            label="{{dislikesCount}}"
+            class="fa fa-thumbs-o-down table-cell">
+          </core-item>
+        </div>
+      </div>
+    </div>
+
+    <div cross-fade>
+        <core-scroll-threshold
+          id="threshold"
+          scrollTarget="{{$.scroller}}"
+          lowerThreshold="15"
+          on-lower-trigger="{{loadMore}}"
+          fit>
+        </core-scroll-threshold>
+        <div
+          class="core-header {{ {wide: isWide} | tokenList }}"
+          id="recent"
+          slide-down>
+            <h2>
+              comments:
+            </h2>
+        </div>
+
+        <div id="scroller" class="comments {{ {wide: isWide} | tokenList }}">
+          <template repeat="{{comments}}">
+            <core-item label="{{text}}"></core-item>
+          </template>
+          <div class="pad"
+            hidden?="{{!$.threshold.lowerTriggered}}">
+            <paper-spinner active></paper-spinner>
+            <div class="pad-left">Loading...</div>
+          </div>
+        </div>
+    </div>
+
+  </template>
+  <script>
+
+    Polymer('iwish-post' , {
+      responsiveWidth: '33em',
+
+      comments: [
+        {text:"Blaha1", userName:"blahblah", data:"10-10-10"},
+        {text:"Blaha2", userName:"blahblah", data:"10-10-10"},
+        {text:"Blaha3", userName:"blahblah", data:"10-10-10"}
+      ],
+
+      publish: {
+        response: "ValuePassedBackToParent 1"
+      },
+    });
+
+  </script>
+</polymer-element>

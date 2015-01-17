@@ -1,0 +1,119 @@
+/* Shadow DOM CSS Cheat Sheet */
+/* http://robdodson.me/blog/2014/04/10/shadow-dom-css-cheat-sheet */
+
+@import '../iwish-posts-board-core';
+
+$post_wide_body_width: 70%;
+
+.post-long {
+  margin: auto;
+  max-width: 58em;
+  min-height: 40px;
+  padding: 10px 0px;
+  width: 100%;
+
+  &.table {
+    padding: 30px 0px;
+    > .post-name {
+      border-radius: 3px;
+      width: $post_wide_body_width;
+    }
+    > .post-thumbs {
+      float: none;
+      position: initial;
+      width: 15%;
+      .table {
+        width: 80%;
+      }
+    }
+    > .post-comments {
+      display: block;
+    }
+  }
+}
+
+.show {
+  display: initial;
+}
+
+.hide {
+  display: none;
+}
+
+.table {
+  display: table;
+  margin: auto;
+}
+
+.table-cell {
+  display: table-cell !important;
+}
+
+.post-name {
+  background-color: white;
+  border: 0.6px solid white;
+  border-radius: 0px;
+  box-shadow: $shadow;
+  padding: 10px 10px 80px 10px;
+  vertical-align: middle;
+  width: 100%;
+}
+
+.post-thumbs {
+  float: right;
+  position: relative;
+  top: -30px;
+  vertical-align: middle;
+  width: 55%;
+
+  .table {
+    width: 55%;
+    > * {
+      color: $main_font_color;
+      width: 30%;
+      text-align: center;
+    }
+    i {
+      width: 20%;
+    }
+    .fa-thumbs-o-up, .fa-thumbs-o-down {
+      &::before {
+        float: left;
+        margin-right: 5px;
+      }
+    }
+  }
+}
+
+.comments {
+  width: $post_wide_body_width;
+  margin: auto;
+}
+
+.post-comments {
+  display: none;
+  vertical-align: middle;
+  width: 15%;
+
+  &.responsive {
+    display: none;
+    width: 20%;
+    &.show {
+      display: block;
+      float: left;
+    }
+  }
+
+  .table {
+    width: 40%;
+    .post-comments-count {
+      color: $main_font_color;
+      &.fa-comment-o {
+        &::before {
+          float: left;
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+}

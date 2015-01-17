@@ -5,8 +5,12 @@
 }
 
 h1 {
-  font-size: 3em;
+  font-size: $h1-font-size;
   font-weight: 300;
+}
+
+h1, h2 {
+  user-select: none;
 }
 
 paper-button {
@@ -19,6 +23,20 @@ paper-button {
       .paper-shadow-bottom-z-1 {
         box-shadow: $shadow;
       }
+    }
+  }
+  // TEMPORARY - REMOVE ONCE THE SWITCHER IS UNNEDED
+  &.view-switcher {
+    background-color: rgb(186, 186, 186);
+    bottom: 0;
+    font-size: 10px;
+    position: fixed;
+
+    &.main-switch {
+      left: 0;
+    }
+    &.sub-switch {
+      right: 0;
     }
   }
 }
@@ -36,7 +54,7 @@ paper-button {
     color: $btn_font_clr;
   }
 
-  core-animated-pages {
+  #mainPanel > core-animated-pages {
     height: 42em;
     width: 100%;
 
@@ -66,4 +84,9 @@ paper-button {
       border-radius: $border_radius;
     }
   }
+}
+
+.wide {
+  margin: auto;
+  max-width: $max_wide_width;
 }

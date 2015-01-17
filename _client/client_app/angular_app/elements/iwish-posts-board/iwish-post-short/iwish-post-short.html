@@ -1,0 +1,55 @@
+<polymer-element name="iwish-post-short" attributes="postName likesCount dislikesCount commentsCount isWide">
+  <template>
+    <link rel="stylesheet" href="iwish-post-short.css">
+    <!-- TODO: figure out something to move this dependecy from here -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <div class="post-short {{ {'table': isWide} | tokenList }}">
+      <div class="post-comments {{ {'table-cell': isWide} | tokenList }}">
+        <div class="table">
+          <core-item
+            label="{{commentsCount}}"
+            class="post-comments-count fa fa-comment-o table-cell" >
+          </core-item>
+        </div>
+      </div>
+      <core-item
+        label="{{postName}}"
+        class="post-name {{ {'table-cell': isWide} | tokenList }}">
+      </core-item>
+      <div class="post-thumbs {{ {'table-cell': isWide} | tokenList }}">
+        <div class="post-comments responsive {{ {'show': !isWide} | tokenList }}">
+          <div class="table">
+            <core-item
+              label="{{commentsCount}}"
+              class="post-comments-count fa fa-comment-o table-cell" >
+            </core-item>
+          </div>
+        </div>
+        <div class="table">
+          <core-item
+            label="{{likesCount}}"
+            class="fa fa-thumbs-o-up table-cell">
+          </core-item>
+          <i class="table-cell"> / </i>
+          <core-item
+            label="{{dislikesCount}}"
+            class="fa fa-thumbs-o-down table-cell">
+          </core-item>
+        </div>
+      </div>
+    </div>
+
+  </template>
+  <script>
+
+    Polymer('iwish-post-short' , {
+      responsiveWidth: '33em',
+
+      publish: {
+        response: "ValuePassedBackToParent 1"
+      },
+    });
+
+  </script>
+</polymer-element>

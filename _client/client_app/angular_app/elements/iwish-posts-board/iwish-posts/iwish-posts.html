@@ -1,22 +1,143 @@
-<link rel="import" href="../../../bower_components/polymer/polymer.html">
-
-<!-- <link rel="import" href="./iwish-login/iwish-login.html"> -->
-
 <polymer-element name="iwish-posts" attributes="">
   <template>
     <link rel="stylesheet" href="iwish-posts.css">
 
-    <div class="core-header" id="recent">
-      <h2>
-        some fresh
-      </h2>
-    </div>
+    <core-animated-pages
+      selected="{{page}}"
+      transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition"
+      flex
+      layout
+      vertical
+      >
+
+        <section name="allPosts">
+        <!-- inputs initialized before core-scroll-threshold will not be focusable - [POLYMER][BUG] -->
+          <div class="header-holder"
+            cross-fade>
+            <core-scroll-threshold
+                id="threshold"
+                scrollTarget="{{$.scroller}}"
+                lowerThreshold="250"
+                on-lower-trigger="{{loadMore}}"
+                fit>
+            </core-scroll-threshold>
+            <iwish-input-labeled
+              class="{{ {wide: wide} | tokenList }}"
+              labelText="I wish:"
+              inputPlaceholderText="type in your wish..."
+              isWide="{{wide}}">
+            </iwish-input-labeled>
+
+            <div
+              class="core-header {{ {wide: wide} | tokenList }}"
+              id="recent"
+              slide-down>
+                <h2>
+                  some fresh
+                </h2>
+            </div>
+          </div>
+          <div id="scroller" class="{{ {wide: wide} | tokenList }}">
+            <template repeat="{{item in items}}">
+              <iwish-post-short
+                postName="{{item.postName}}"
+                hero-id="{{item.postName}}"
+                hero
+                on-tap="{{transition}}"
+                data-to-transition-method="{{item.postName + '-big'}}"
+                likesCount="{{item.likesCount}}"
+                dislikesCount="{{item.dislikesCount}}"
+                commentsCount="{{item.commentsCount}}"
+                isWide="{{ wide }}"
+                vartical
+                layout
+                >
+              </iwish-post-short>
+            </template>
+            <div class="pad"
+              hidden?="{{!$.threshold.lowerTriggered}}">
+              <paper-spinner active></paper-spinner>
+              <div class="pad-left">Loading...</div>
+            </div>
+          </div>
+        </section>
+
+      <template repeat="{{item in items}}">
+        <section name="{{item.postName + '-big'}}">
+          <iwish-post
+            postName="{{item.postName}}"
+            likesCount="{{item.likesCount}}"
+            hero-id="{{item.postName}}"
+            hero
+            on-tap="{{transition}}"
+            dislikesCount="{{item.dislikesCount}}"
+            data-to-transition-method="allPosts"
+            commentsCount="{{item.commentsCount}}"
+            isWide="{{ wide }}">
+          </iwish-post>
+        </section>
+      </template>
+    </core-animated-pages>
+
+    <core-media-query query="min-width: {{responsiveWidth}}" queryMatches="{{wide}}"></core-media-query>
 
   </template>
   <script>
 
     Polymer('iwish-posts' , {
-      responsiveWidth: '33em',
+      responsiveWidth: '50em',
+
+      items: [
+        {postName: 'ps1', likesCount: 103, dislikesCount: 23, commentsCount: 10},
+        {postName: 'ps2', likesCount: 123, dislikesCount: 3, commentsCount: 5},
+        {postName: 'ps3', likesCount: 103, dislikesCount: 41, commentsCount: 34},
+        {postName: 'ps4', likesCount: 124, dislikesCount: 12, commentsCount: 2},
+        {postName: 'ps5', likesCount: 124, dislikesCount: 12, commentsCount: 2},
+        {postName: 'ps6', likesCount: 124, dislikesCount: 12, commentsCount: 2},
+        {postName: 'ps7', likesCount: 124, dislikesCount: 12, commentsCount: 2},
+        {postName: 'ps8', likesCount: 124, dislikesCount: 12, commentsCount: 2},
+        {postName: 'ps9', likesCount: 124, dislikesCount: 12, commentsCount: 2},
+        {postName: 'ps10', likesCount: 124, dislikesCount: 12, commentsCount: 2}
+      ],
+
+      page: 'allPosts',
+
+      load: function(moreCount) {
+        //TODO core-ajax methos goes here
+        var itemsLength = this.items.length,
+            count = 0;
+
+        do {
+          count++;
+          (function(count){
+            setTimeout(function(){
+              console.log('adding ' + count);
+              this.items.push(
+                {postName: 'ps'+(itemsLength + count), likesCount: 124, dislikesCount: 12, commentsCount: 2});
+              if (count === moreCount) {
+                this.$.threshold.clearLower(true);
+              }
+            }.bind(this),
+              2000 * count);
+          }.bind(this))(count);
+        } while(count <= moreCount);
+      },
+
+      loadMore: function() {
+        console.info('loadding');
+        this.load(3);
+      },
+
+      domReady: function(){
+        if (this.$.list) {
+          this.$.list.updateSize();
+        }
+      },
+
+      transition: function(event, detail, target) {
+        var transitTo = target.attributes['data-to-transition-method'].value;
+        this.page = transitTo;
+      },
 
       publish: {
         response: "ValuePassedBackToParent 1"
