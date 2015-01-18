@@ -3,7 +3,7 @@
       <link rel="stylesheet" href="iwish-signup.css">
 
       <div class="main {{ {wide: wide} | tokenList }}" flex layout vertical  >
-        <iwish-h1-blue labelText="Just fill in few fields:" isWide="{{wide}}"></iwish-h1-blue>
+        <iwish-h1-label labelColor="blue" labelText="Just fill in few fields:" isWide="{{wide}}"></iwish-h1-label>
         <div id="mainPanel" flex layout vertical slide-down>
           <iwish-input-floating-label inputId="newUserName" inputPlaceholderText="name" isRequired="true" isWide="{{wide}}" inputValue="{{newUserNameVal}}"></iwish-input-floating-label>
           <iwish-input-floating-label inputId="newUserEmail" inputPlaceholderText="email" isRequired="true" isWide="{{wide}}" inputValue="{{newUserEmailVal}}"></iwish-input-floating-label>

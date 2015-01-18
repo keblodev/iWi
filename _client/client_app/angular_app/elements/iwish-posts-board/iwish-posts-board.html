@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="iwish-posts-board.css">
 
     <div class="main {{ {wide: wide} | tokenList }}" flex layout vertical  >
-      <iwish-input-labeled labelText="I wish:" inputPlaceholderText="type in your wish..." isWide="{{wide}}"></iwish-input-labeled>
+      <iwish-input-labeled  labelText="I wish:" inputPlaceholderText="type in your wish..." isWide="{{wide}}"></iwish-input-labeled>
 
       <iwish-posts></iwish-posts>
     </div>
@@ -20,7 +20,7 @@
 
       publish: {
         response: "ValuePassedBackToParent 1"
-      },
+      }
     });
 
   </script>
