@@ -1,21 +1,37 @@
 <!-- TODO: fix relative routing with base -->
-<polymer-element name="iwish-input-labeled" attributes="labelText inputPlaceholderText isWide isRequired inputId inputValue">
-  <template>
-    <link rel="stylesheet" href="iwish-input-labeled.css">
-    <iwish-h1-blue labelText="{{labelText}}" isWide="{{isWide}}"></iwish-h1-blue>
-    <paper-input id="{{inputId}}" class="{{ {wide: isWide} | tokenList }}" label="{{inputPlaceholderText}}" required="{{isRequired}}" error="input is required!"  value="{{inputValue}}"></paper-input>
-  </template>
-  <script>
+<polymer-element name="iwish-input-labeled"
+                 attributes="labelText inputPlaceholderText isWide isRequired inputId inputValue labelColor labelTextColor iconName hintText">
+    <template>
+        <link rel="stylesheet" href="iwish-input-labeled.css">
+        <iwish-h1-label
+            labelColor="{{labelColor}}"
+            labelTextColor="{{labelTextColor}}"
+            labelText="{{labelText}}"
+            isWide="{{isWide}}"
+            iconName="{{iconName}}">
+        </iwish-h1-label>
+        <paper-input id="{{inputId}}" class="{{ {wide: isWide} | tokenList }}"
+            label="{{inputPlaceholderText}}"
+            required="{{isRequired}}"
+            error="input is required!"
+            value="{{inputValue}}">
+        </paper-input>
+        <template if="{{hintText}}">
+            <span class="hint">{{hintText}}</span>
+        </template>
 
-    Polymer('iwish-input-labeled' , {
-      responsiveWidth: '33em',
+    </template>
+    <script>
 
-      isRequired: false,
+        Polymer('iwish-input-labeled', {
+            responsiveWidth: '33em',
 
-      publish: {
-        response: "iwish-input-labeled 1"
-      },
-    });
+            isRequired: false,
 
-  </script>
+            publish: {
+                response: "iwish-input-labeled 1"
+            }
+        });
+
+    </script>
 </polymer-element>

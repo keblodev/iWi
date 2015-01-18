@@ -4,12 +4,21 @@
 @import '../iwish-labels-core';
 
 .core-header {
-  background: $label_button_bg;
+
   padding: 0px 20px;
   z-index: -1;
 
+  &.blue {
+    background: $label_button_bg;
+  }
+
   h1 {
-    color: $label_font_clr;
+    &.white {
+      color: $label_font_clr;
+    }
+    &.gray {
+      color: $input_font_gray;
+    }
     display: inline-table;
   }
 }
