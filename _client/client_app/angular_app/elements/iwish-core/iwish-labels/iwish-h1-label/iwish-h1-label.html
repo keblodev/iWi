@@ -1,0 +1,33 @@
+<!-- TODO: fix relative routing with base -->
+<polymer-element name="iwish-h1-label" attributes="labelText isWide labelColor labelTextColor hasIcon iconName">
+  <template>
+    <link rel="stylesheet" href="iwish-h1-label.css">
+
+    <div class="core-header {{ {wide: isWide} | tokenList}} {{labelColor}}" slide-up>
+        <core-field>
+            <template if="{{iconName}}">
+                <core-icon icon="{{iconName}}"></core-icon>
+            </template>
+            <h1 class="{{labelTextColor}}">{{labelText}}</h1>
+        </core-field>
+    </div>
+
+  </template>
+  <script>
+
+    Polymer('iwish-h1-label' , {
+
+      labelColor: "blue",
+      labelTextColor: "white",
+
+      responsiveWidth: '33em',
+
+      isRequired: false,
+
+      publish: {
+        response: "iwish-h1-blue 1"
+      }
+    });
+
+  </script>
+</polymer-element>
