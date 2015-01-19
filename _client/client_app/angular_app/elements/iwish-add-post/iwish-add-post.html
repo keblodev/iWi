@@ -1,0 +1,40 @@
+<polymer-element name="iwish-add-post" attributes="">
+  <template>
+    <link rel="stylesheet" href="iwish-add-post.css">
+      <div class="main {{ {wide: wide} | tokenList }}" flex layout vertical  >
+          <iwish-h1-label
+                  labelColor="blue"
+                  labelText="add new"
+                  isWide="{{wide}}"
+                  iconName="add"></iwish-h1-label>
+          <div  flex layout vertical slide-down>
+              <iwish-input-labeled
+                      labelTextColor="gray"
+                      labelColor=""
+                      labelText="Give it a name"
+                      inputId="wishName"
+                      isRequired="true"
+                      iconName = "create"
+                      hintText="* no more than 150 symbols"
+               isWide="{{wide}}" inputValue="{{wishName}}"></iwish-input-labeled>
+          </div>
+          <paper-button raised on-click="{{stuff}}">Wish</paper-button>
+      </div>
+
+      <core-media-query query="min-width: {{responsiveWidth}}" queryMatches="{{wide}}"></core-media-query>
+
+  </template>
+  <script>
+    (function () {
+
+      Polymer("iwish-add-post", {
+        responsiveWidth: '33em',
+
+        stuff: function () {
+            console.log("My Page");
+        }
+      });
+
+    })();
+  </script>
+</polymer-element>
