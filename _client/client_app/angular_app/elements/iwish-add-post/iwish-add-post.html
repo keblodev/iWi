@@ -1,6 +1,6 @@
-<polymer-element name="iwish-post" attributes="">
+<polymer-element name="iwish-add-post" attributes="">
   <template>
-    <link rel="stylesheet" href="iwish-post.css">
+    <link rel="stylesheet" href="iwish-add-post.css">
       <div class="main {{ {wide: wide} | tokenList }}" flex layout vertical  >
           <iwish-h1-label
                   labelColor="blue"
@@ -27,8 +27,7 @@
   <script>
     (function () {
 
-      Polymer("iwish-post", {
-        selected: 2,
+      Polymer("iwish-add-post", {
         responsiveWidth: '33em',
 
         stuff: function () {

@@ -2,7 +2,7 @@
 
 <link rel="import" href="../iwish-login-form/iwish-login-form.html">
 <link rel="import" href="../iwish-posts-board/iwish-posts-board.html">
-<link rel="import" href="../iwish-post/iwish-post.html">
+<link rel="import" href="../iwish-add-post/iwish-add-post.html">
 
 <polymer-element name="iwish-app" attributes="">
   <template>
@@ -16,7 +16,7 @@
       <iwish-posts-board layout vertical center center-justified slide-down></iwish-posts-board>
     </section>
     <section>
-        <iwish-post layout vertical center center-justified slide-down></iwish-post>
+        <iwish-add-post layout vertical center center-justified slide-down></iwish-add-post>
     </section>
   </core-animated-pages>
     <paper-button raised on-click="{{stuff}}">Next view in app</paper-button>
