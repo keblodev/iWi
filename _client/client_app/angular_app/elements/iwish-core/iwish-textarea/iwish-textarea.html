@@ -1,0 +1,29 @@
+<polymer-element name="iwish-textarea" attributes="textareaId labelColor labelText iconName labelTextColor hintText">
+    <template>
+        <link rel="stylesheet" href="iwish-textarea.css">
+        <iwish-h1-label
+                labelText="{{labelText}}"
+                labelTextColor="{{labelTextColor}}"
+                labelColor="{{labelColor}}"
+                iconName="{{iconName}}">
+        </iwish-h1-label>
+
+        <paper-autogrow-textarea class="textarea" rows="4" maxRows="4">
+            <textarea id="{{textareaId}}">
+            </textarea>
+        </paper-autogrow-textarea>
+
+        <template if="{{hintText}}">
+            <span class="hint">{{hintText}}</span>
+        </template>
+    </template>
+    <script>
+        (function () {
+            Polymer({
+                rows: 6,
+                maxRows:6
+            });
+
+        })();
+    </script>
+</polymer-element>
