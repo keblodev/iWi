@@ -1,0 +1,15 @@
+@import '../iwish-core';
+.textarea {
+  width: 100%;
+  margin-bottom: 20px;
+  textarea {
+    /* todo: temporary font size, move to variables */
+    font-size: 16px;
+    border-radius: 4px;
+  }
+}
+
+.hint {
+  float: right;
+  color: $color_font_gray;
+}
