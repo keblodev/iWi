@@ -1,9 +1,12 @@
 <polymer-element name="iwish-posts" attributes="">
   <template>
     <link rel="stylesheet" href="iwish-posts.css">
-
+<!--       on-core-animated-pages-transition-prepare="{{beforeTransition}}"  -->
     <core-animated-pages
+      id="postsPages"
       selected="{{page}}"
+
+      on-core-animated-pages-transition-end="{{beforeTransition}}"
       transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition"
       flex
       layout
@@ -11,12 +14,12 @@
       >
 
         <section name="allPosts">
-        <!-- inputs initialized before core-scroll-threshold will not be focusable - [POLYMER][BUG] -->
+        <!-- NOTICE: inputs initialized before core-scroll-threshold will not be focusable - [POLYMER][BUG] -->
           <div class="header-holder"
             cross-fade>
             <core-scroll-threshold
                 id="threshold"
-                scrollTarget="{{$.scroller}}"
+                scrollTarget="{{$.postsScroller}}"
                 lowerThreshold="250"
                 on-lower-trigger="{{loadMore}}"
                 fit>
@@ -37,42 +40,41 @@
                 </h2>
             </div>
           </div>
-          <div id="scroller" class="{{ {wide: wide} | tokenList }}">
+          <div id="postsScroller" class="scroller {{ {wide: wide} | tokenList }}" cross-fade>
             <template repeat="{{item in items}}">
-              <iwish-post-short
-                postName="{{item.postName}}"
+              <!-- Hero transitions don't quite work here
+                but can be added by addeing this attrs to element
                 hero-id="{{item.postName}}"
-                hero
+                hero -->
+              <iwish-post-short
+                inputObj = "{{item}}"
                 on-tap="{{transition}}"
                 data-to-transition-method="{{item.postName + '-big'}}"
-                likesCount="{{item.likesCount}}"
-                dislikesCount="{{item.dislikesCount}}"
-                commentsCount="{{item.commentsCount}}"
-                isWide="{{ wide }}"
+                isWide="{{ widePost }}"
                 vartical
                 layout
                 >
               </iwish-post-short>
             </template>
-            <div class="pad"
+            <div class="loading-pad"
               hidden?="{{!$.threshold.lowerTriggered}}">
               <paper-spinner active></paper-spinner>
-              <div class="pad-left">Loading...</div>
             </div>
           </div>
         </section>
 
       <template repeat="{{item in items}}">
         <section name="{{item.postName + '-big'}}">
-          <iwish-post
-            postName="{{item.postName}}"
-            likesCount="{{item.likesCount}}"
+
+          <!-- Hero transitions don't quite work here
+            but can be added by addeing this attrs to element
             hero-id="{{item.postName}}"
-            hero
+            hero -->
+          <iwish-post
+            inputObj = "{{item}}"
+            isVisible = "false"
             on-tap="{{transition}}"
-            dislikesCount="{{item.dislikesCount}}"
             data-to-transition-method="allPosts"
-            commentsCount="{{item.commentsCount}}"
             isWide="{{ wide }}">
           </iwish-post>
         </section>
@@ -80,24 +82,86 @@
     </core-animated-pages>
 
     <core-media-query query="min-width: {{responsiveWidth}}" queryMatches="{{wide}}"></core-media-query>
+    <core-media-query query="min-width: {{responsivePostWidth}}" queryMatches="{{widePost}}"></core-media-query>
 
   </template>
   <script>
 
     Polymer('iwish-posts' , {
       responsiveWidth: '33em',
+      responsivePostWidth: '60em',
 
       items: [
-        {postName: 'ps1', likesCount: 103, dislikesCount: 23, commentsCount: 10},
-        {postName: 'ps2', likesCount: 123, dislikesCount: 3, commentsCount: 5},
-        {postName: 'ps3', likesCount: 103, dislikesCount: 41, commentsCount: 34},
-        {postName: 'ps4', likesCount: 124, dislikesCount: 12, commentsCount: 2},
-        {postName: 'ps5', likesCount: 124, dislikesCount: 12, commentsCount: 2},
-        {postName: 'ps6', likesCount: 124, dislikesCount: 12, commentsCount: 2},
-        {postName: 'ps7', likesCount: 124, dislikesCount: 12, commentsCount: 2},
-        {postName: 'ps8', likesCount: 124, dislikesCount: 12, commentsCount: 2},
-        {postName: 'ps9', likesCount: 124, dislikesCount: 12, commentsCount: 2},
-        {postName: 'ps10', likesCount: 124, dislikesCount: 12, commentsCount: 2}
+        {postName: 'ps1', likesCount: 103, dislikesCount: 23, commentsCount: 10,
+        postText: 'lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum        lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum        lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum',
+        timeString: "10 days",
+        postTags: ['crazyhorsecrazyhorsecrazyhorsecrazyhorsecrazyhorsecrazyhorsecrazyhorsecrazyhorsecrazyhorsecrazyhorsecrazyhorsecrazyhorsecrazyhorsecrazyhorse', 'mokey', 'pool', 'crazyhorse', 'mokey', 'pool', 'crazyhorse', 'mokey', 'pool'],
+        posterName: 'supersanta',
+        avatarId: 1
+        },
+        {postName: 'ps2', likesCount: 123, dislikesCount: 3, commentsCount: 5,
+        postText: 'lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum        lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum        lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum',
+        timeString: "10 days",
+        postTags: ['crazyhorse', 'mokey', 'pool'],
+        posterName: 'supersanta1',
+        avatarId: 2
+        },
+        {postName: 'ps3', likesCount: 103, dislikesCount: 41, commentsCount: 34,
+        postText: 'lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum        lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum        lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum',
+        timeString: "10 days",
+        postTags: ['crazyhorse', 'mokey', 'pool'],
+        posterName: 'supersanta2',
+        avatarId: 3
+        },
+        {postName: 'ps4', likesCount: 124, dislikesCount: 12, commentsCount: 2,
+        postText: 'lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum        lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum        lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum',
+        timeString: "10 days",
+        postTags: ['crazyhorse', 'mokey', 'pool'],
+        posterName: 'supersanta3',
+        avatarId: 4
+        },
+        {postName: 'ps5', likesCount: 124, dislikesCount: 12, commentsCount: 2,
+        postText: 'lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum        lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum        lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum',
+        timeString: "10 days",
+        postTags: ['crazyhorse', 'mokey', 'pool'],
+        posterName: 'supersanta33',
+        avatarId: 5
+        },
+        {postName: 'ps6', likesCount: 124, dislikesCount: 12, commentsCount: 2,
+        postText: 'lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum        lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum        lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum',
+        timeString: "10 days",
+        postTags: ['crazyhorse', 'mokey', 'pool'],
+        posterName: 'supersanta4',
+        avatarId: 1
+        },
+        {postName: 'ps7', likesCount: 124, dislikesCount: 12, commentsCount: 2,
+        postText: 'lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum        lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum        lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum',
+        timeString: "10 days",
+        postTags: ['crazyhorse', 'mokey', 'pool'],
+        posterName: 'supersanta5',
+        avatarId: 2
+        },
+        {postName: 'ps8', likesCount: 124, dislikesCount: 12, commentsCount: 2,
+        postText: 'lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum        lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum        lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum',
+        timeString: "10 days",
+        postTags: ['crazyhorse', 'mokey', 'pool'],
+        posterName: 'supersanta6',
+        avatarId: 3
+        },
+        {postName: 'ps9', likesCount: 124, dislikesCount: 12, commentsCount: 2,
+        postText: 'lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum        lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum        lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum',
+        timeString: "10 days",
+        postTags: ['crazyhorse', 'mokey', 'pool'],
+        posterName: 'supersanta7',
+        avatarId: 4
+        },
+        {postName: 'ps10', likesCount: 124, dislikesCount: 12, commentsCount: 2,
+        postText: 'lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum        lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum        lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum',
+        timeString: "10 days",
+        postTags: ['crazyhorse', 'mokey', 'pool'],
+        posterName: 'supersanta8',
+        avatarId: 5
+        }
       ],
 
       page: 'allPosts',
@@ -113,7 +177,13 @@
             setTimeout(function(){
               console.log('adding ' + count);
               this.items.push(
-                {postName: 'ps'+(itemsLength + count), likesCount: 124, dislikesCount: 12, commentsCount: 2});
+                { postName: 'ps'+(itemsLength + count), likesCount: 124, dislikesCount: 12, commentsCount: 2,
+                  postText: 'lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum        lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum        lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum',
+                  timeString: "10 days",
+                  postTags: ['crazyhorse', 'mokey', 'pool'],
+                  posterName: 'supersanta' + count,
+                  avatarId: 2
+                });
               if (count === moreCount) {
                 this.$.threshold.clearLower(true);
               }
@@ -134,9 +204,24 @@
         }
       },
 
+      transitFromElem: null,
+      transitToElem: null,
+
+      beforeTransition: function(data) {
+        this.transitFromElem.isVisible = false;
+        this.transitToElem.isVisible = true;
+      },
+
       transition: function(event, detail, target) {
-        var transitTo = target.attributes['data-to-transition-method'].value;
+        this.transitFromElem = target;
+
+        var transitTo = this.transitFromElem.attributes['data-to-transition-method'].value;
+        this.transitToElem = this._getAnimatedItem('[name="' + transitTo + '"] > *');
         this.page = transitTo;
+      },
+
+      _getAnimatedItem: function(selector) {
+        return this.$.postsPages.querySelector(selector);
       },
 
       publish: {

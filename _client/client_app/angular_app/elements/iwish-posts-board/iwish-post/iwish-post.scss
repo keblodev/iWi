@@ -5,17 +5,31 @@
 
 $post_wide_body_width: 70%;
 
+#scrollHolder {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  top: 0px;
+  -webkit-overflow-scrolling: touch;
+}
+
 .post-long {
   margin: auto;
-  max-width: 58em;
   min-height: 40px;
-  padding: 10px 0px;
   width: 100%;
 
   &.table {
     padding: 30px 0px;
+    &.post-title {
+      box-shadow: none;
+      max-width: 57em;
+    }
     > .post-name {
       border-radius: 3px;
+      padding: 10px;
       width: $post_wide_body_width;
     }
     > .post-thumbs {
@@ -23,6 +37,7 @@ $post_wide_body_width: 70%;
       position: initial;
       width: 15%;
       .table {
+        margin: auto;
         width: 80%;
       }
     }
@@ -30,46 +45,115 @@ $post_wide_body_width: 70%;
       display: block;
     }
   }
-}
+  &.post-title {
+    box-shadow: $shadow;
+    max-width: 40em;
+    padding-bottom: 0px;
+    > .post-name {
+      border-bottom-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+      box-shadow: none;
+      padding: 10px;
+      white-space: inherit;
+    }
+    > .post-thumbs {
+      // box-shadow: 0px 2px 0px -1px rgba(0, 0, 0, 0.26);
+    }
+  }
+  &.post-body {
+    background: white;
+    box-shadow: $shadow;
+    margin-bottom: 1px;
+    max-width: 37.5em;
+    padding: 19px 19px 53px 19px;
+    width: initial;
 
-.show {
-  display: initial;
-}
+    > .poster {
+      color: rgb(133, 133, 133);
+      float: right;
+      font-size: 0.8em;
+      font-weight: 200;
+      margin-top: 5px;
+      .avatar {
+        margin-left: 10px;
+      }
+    }
 
-.hide {
-  display: none;
-}
+    > .post-text {
+      color: rgb(81, 81, 81);
+      line-height: 20px;
+      white-space: normal;
+    }
 
-.table {
-  display: table;
-  margin: auto;
-}
+    &.table {
+      max-width: 37.5em;
+    }
+  }
+  &.post-tags {
+    margin-bottom: 30px;
+    padding: 0px;
+    > .tags-body {
+      background: #F6F6F6;
+      border-top-right-radius: 0px;
+      border-top-left-radius: 0px;
+      box-shadow: $shadow;
+      color: #515151;
+      max-width: 33em;
+      line-height: 20px;
+      padding: 15px;
 
-.table-cell {
-  display: table-cell !important;
+      &.inner-shadow {
+        box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.26);
+      }
+      .tag-holder {
+        .tag-body {
+          display: inline-block;
+        }
+      }
+    }
+  }
 }
 
 .post-name {
-  background-color: white;
-  border: 0.6px solid white;
+  background-color: $blue;
   border-radius: 0px;
   box-shadow: $shadow;
-  padding: 10px 10px 80px 10px;
+  color: $white;
+  padding: 0 10px;
   vertical-align: middle;
-  width: 100%;
 }
 
 .post-thumbs {
-  float: right;
-  position: relative;
-  top: -30px;
-  vertical-align: middle;
-  width: 55%;
+  background: $blue;
+  margin-bottom: 1px;
+  min-height: 1em;
+  padding: 12px 0px;
+  width: 100%;
 
-  .table {
+  &.table-cell {
+    box-shadow: none !important;
+    background: none !important;
+    margin-bottom: 0px;
+    position: absolute;
+    padding: 0px;
+    top: 10px;
+    right: -10px;
+    vertical-align: middle;
     width: 55%;
+
+     .table {
+      width: 55%;
+      > * {
+        color: $main_font_color;
+      }
+     }
+  }
+  .table {
+    float: right;
+    margin-right: 10px;
+    width: 35%;
     > * {
-      color: $main_font_color;
+      color: $white;
       width: 30%;
       text-align: center;
     }
@@ -85,9 +169,51 @@ $post_wide_body_width: 70%;
   }
 }
 
+.post-scroller {
+  -webkit-transform: translate3d(0, 0, 0);
+  &.wide {
+
+  }
+}
+
+.main {
+  paper-button {
+    width: 100%;
+  }
+
+ &.wide {
+    paper-button {
+      width: initial;
+    }
+ }
+}
+.tag-icon {
+  font-size: 30px !important;
+  float: left;
+  margin-right: 10px;
+  padding: 5px;
+}
+
+.post-tag {
+  color: $white;
+  background-color: $dark_blue;
+  box-shadow: $shadow;
+  border-radius: $border_radius;
+  font-size: 1.3em;
+  font-weight: 100;
+  margin: 5px;
+  min-height: 30px;
+  padding: 0px 10px;
+
+  &::shadow #label {
+    max-width: 10em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
 .comments {
-  width: $post_wide_body_width;
-  margin: auto;
+  padding-top: 30px;
 }
 
 .post-comments {
@@ -97,14 +223,19 @@ $post_wide_body_width: 70%;
 
   &.responsive {
     display: none;
-    width: 20%;
+    width: 30%;
     &.show {
       display: block;
       float: left;
+      width: initial;
+    }
+    .post-comments-count {
+      color: $white !important;
     }
   }
 
   .table {
+    margin: auto;
     width: 40%;
     .post-comments-count {
       color: $main_font_color;

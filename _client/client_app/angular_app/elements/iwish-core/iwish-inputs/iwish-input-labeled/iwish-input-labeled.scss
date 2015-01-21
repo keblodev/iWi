@@ -4,7 +4,9 @@
 @import '../iwish-inputs-core';
 
 paper-input {
+  background-color: $white;
   &.wide {
+   background-color: initial;
    &::before {
       bottom: -3em;
     }

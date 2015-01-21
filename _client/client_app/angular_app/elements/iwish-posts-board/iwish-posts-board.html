@@ -1,6 +1,9 @@
 <link rel="import" href="./iwish-post/iwish-post.html">
 <link rel="import" href="./iwish-post-short/iwish-post-short.html">
 <link rel="import" href="./iwish-posts/iwish-posts.html">
+<link rel="import" href="./iwish-comment/iwish-comment.html">
+
+<link rel="import" href="./avatars.html">
 
 <polymer-element name="iwish-posts-board" attributes="">
   <template>
@@ -15,13 +18,6 @@
       query="min-width: {{responsiveWidth}}"
       queryMatches="{{wide}}">
     </core-media-query>
-    <paper-button
-      raised
-      cross-fade
-      class="view-switcher sub-switch"
-      on-click="{{stuff}}">
-        Next in login form
-    </paper-button>
   </template>
   <script>
 
