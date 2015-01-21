@@ -6,24 +6,44 @@
   <template>
   <link rel="stylesheet" href="iwish-login-form.css">
 
-    <div class="main {{ {wide: wide} | tokenList }}" flex layout vertical  >
-      <div id="mainPanel" flex layout vertical slide-down>
-        <core-animated-pages selected="{{selected}}" transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition">
+    <div class="main {{ {wide: wide} | tokenList }}" >
+      <div id="mainPanel"
+        slide-down>
+        <core-animated-pages
+          selected="{{selected}}"
+          transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition">
           <section>
-            <iwish-login layout vertical center center-justified slide-down response="{{out}}"></iwish-login>
+            <iwish-login
+              slide-down
+              response="{{out}}">
+            </iwish-login>
           </section>
           <section>
-            <iwish-signup layout vertical center center-justified slide-down response="{{out}}"></iwish-signup>
+            <iwish-signup
+              slide-down
+              response="{{out}}">
+            </iwish-signup>
           </section>
           <section>
-            <iwish-forgot layout vertical center center-justified slide-down response="{{out}}"></iwish-forgot>
+            <iwish-forgot
+              slide-down
+              response="{{out}}">
+            </iwish-forgot>
           </section>
         </core-animated-pages>
       </div>
 
     </div>
-    <core-media-query query="min-width: {{responsiveWidth}}" queryMatches="{{wide}}"></core-media-query>
-    <paper-button raised on-click="{{stuff}}" style="margin-bottom: 10px;">Next in login form</paper-button>
+    <core-media-query
+      query="min-width: {{responsiveWidth}}"
+      queryMatches="{{wide}}">
+    </core-media-query>
+    <paper-button
+      raised
+      cross-fade
+      class="view-switcher sub-switch"
+      on-click="{{stuff}}">Next in login form
+    </paper-button>
   </template>
   <script>
 

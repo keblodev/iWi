@@ -3,20 +3,73 @@
 
 @import '../iwish-posts-board-core';
 
+:host {
+  display: inline-block;
+  width: 100%;
+}
+
 h2 {
   font-size: 2em;
   font-weight: 100;
   margin: 0.3em;
 }
 
+.header-holder {
+  position: relative;
+  z-index: 1;
+}
+
 .core-header {
   h2 {
     color: $label_font_clr;
     display: inline-table;
+    margin-left: 0.5em;
   }
-
   &#recent {
     background: $recent_bg;
-    margin-top: 3em;
+  }
+
+  &.wide {
+    max-width: 100%;
+    &#recent {
+      margin-top: 3em;
+    }
+    h2 {
+      margin-left: 0.3em;
+    }
+  }
+}
+
+core-animated-pages {
+  max-width: initial;
+  section > {
+    height: 100%;
+    /* must have for iOS and overflow with touch */
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+}
+
+#scroller {
+  bottom: 0px;
+  display: block;
+  left: 0px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: absolute;
+  right: 0px;
+  top: 230px;
+  -webkit-overflow-scrolling: touch;
+  &.wide {
+    max-width: 100%;
+    top: 17.2em;
+  }
+}
+
+.pad {
+  display: block !important;
+  margin: auto;
+  width: 200px;
+  paper-spinner {
+    float: left;
   }
 }

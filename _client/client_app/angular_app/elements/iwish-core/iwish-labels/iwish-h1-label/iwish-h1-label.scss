@@ -20,5 +20,12 @@
       color: $color_font_gray;
     }
     display: inline-table;
+    font-size: $h1-font-size / 1.5;
+  }
+
+  &.wide {
+    h1 {
+      font-size: $h1-font-size;
+    }
   }
 }

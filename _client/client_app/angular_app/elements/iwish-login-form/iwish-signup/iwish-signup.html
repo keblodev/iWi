@@ -2,18 +2,55 @@
   <template>
       <link rel="stylesheet" href="iwish-signup.css">
 
-      <div class="main {{ {wide: wide} | tokenList }}" flex layout vertical  >
-        <iwish-h1-label labelColor="blue" labelText="Just fill in few fields:" isWide="{{wide}}"></iwish-h1-label>
-        <div id="mainPanel" flex layout vertical slide-down>
-          <iwish-input-floating-label inputId="newUserName" inputPlaceholderText="name" isRequired="true" isWide="{{wide}}" inputValue="{{newUserNameVal}}"></iwish-input-floating-label>
-          <iwish-input-floating-label inputId="newUserEmail" inputPlaceholderText="email" isRequired="true" isWide="{{wide}}" inputValue="{{newUserEmailVal}}"></iwish-input-floating-label>
-          <iwish-input-floating-label inputId="newUserPass" inputPlaceholderText="password" isRequired="true" isWide="{{wide}}" inputValue="{{newUserPassVal}}"></iwish-input-floating-label>
-          <div id="mainContainer" layout vertical?="{{!wide}}">
-            <paper-button raised id="alldone-button" auto-vertical disabled?="{{!newUserNameVal.length || !newUserEmailVal.length || !newUserPassVal.length}}">all done</paper-button>
+      <div
+        class="main {{ {wide: wide} | tokenList }}"
+        flex>
+        <iwish-h1-label
+          labelColor="blue"
+          labelText="Just fill in few fields:"
+          isWide="{{wide}}">
+        </iwish-h1-label>
+        <div id="mainPanel"
+          layout
+          vertical>
+          <iwish-input-floating-label
+            inputId="newUserName"
+            inputPlaceholderText="name"
+            isRequired="true"
+            isWide="{{wide}}"
+            inputValue="{{newUserNameVal}}">
+          </iwish-input-floating-label>
+          <iwish-input-floating-label
+            inputId="newUserEmail"
+            inputPlaceholderText="email"
+            isRequired="true"
+            isWide="{{wide}}"
+            inputValue="{{newUserEmailVal}}">
+          </iwish-input-floating-label>
+          <iwish-input-floating-label
+            inputId="newUserPass"
+            inputPlaceholderText="password"
+            isRequired="true"
+            isWide="{{wide}}"
+            inputValue="{{newUserPassVal}}">
+          </iwish-input-floating-label>
+          <div
+            id="mainContainer"
+            layout
+            vertical?="{{!wide}}">
+            <paper-button
+              raised
+              id="alldone-button"
+              disabled?="{{!newUserNameVal.length || !newUserEmailVal.length || !newUserPassVal.length}}">
+                all done
+            </paper-button>
           </div>
         </div>
       </div>
-    <core-media-query query="min-width: {{responsiveWidth}}" queryMatches="{{wide}}"></core-media-query>
+    <core-media-query
+      query="min-width: {{responsiveWidth}}"
+      queryMatches="{{wide}}">
+    </core-media-query>
   </template>
   <script>
     Polymer('iwish-signup' , {
