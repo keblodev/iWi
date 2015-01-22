@@ -11,7 +11,7 @@
 
     		<h2 horizontal layout>
   				<core-item icon="account-balance" label="filter" flex></core-item>
-  				<core-icon-button dismissive icon="close"></core-icon-button>
+  				<core-icon-button on-click="{{onClose}}" dismissive icon="close"></core-icon-button>
     		</h2>
 	  		<div>
 	    		<paper-radio-group selected="someFresh">
@@ -26,9 +26,9 @@
 	  		</div>
 	  		<div>
 	  			<core-item icon="find-in-page" label="word or phrase"></core-item>
-	  			<paper-input class="bar" layout></paper-input>
+	  			<paper-input layout></paper-input>
 	  		</div>
-    		<paper-button id="done" affirmative raised class="colored">done</paper-button>
+    		<paper-button id="done" on-click="{{onClose}}" affirmative raised class="colored">done</paper-button>
   		</paper-action-dialog>
 
 	</template>
@@ -41,7 +41,11 @@
 		    if (newVal) {
 		    	this.$.superDialog.toggle();	
 		    }		   
-			}
+			},
+
+			onClose: function() {
+				this.showDialog = false;
+	    }
 		});
 	</script>
 </polymer-element>
