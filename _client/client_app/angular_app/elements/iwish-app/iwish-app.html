@@ -16,7 +16,17 @@
     <link rel="stylesheet" href="iwish-app.css">
 
     <section>
-      <iwish-dialog layout vertical center center-justified slide-down></iwish-dialog>
+          <div on-tap="{{toggleDialog}}">
+            <button>dialog</button>
+          </div>
+      <iwish-dialog 
+        showDialog="{{showDialog}}" 
+        layout 
+        vertical 
+        center 
+        center-justified 
+        slide-down >
+      </iwish-dialog>
     </section>
     <core-animated-pages selected="{{selected}}" transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition">
       <section>
@@ -32,11 +42,17 @@
     Polymer('iwish-app', {
       selected: 1,
 
+      showDialog: false,
+
       out: null,
       up : true,
       max : 1,
 
-      stuff : function() {
+      toggleDialog: function () {
+        this.showDialog = !this.showDialog;
+      },
+
+      stuff: function() {
         console.log('OK = ' + this.out);
         if (this.up && this.selected === this.max || !this.up && this.selected === 0) {
           this.up = !this.up;
