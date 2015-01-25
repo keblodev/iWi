@@ -1,4 +1,4 @@
-<polymer-element name="iwish-textarea" attributes="textareaId labelColor labelText iconName labelTextColor hintText">
+<polymer-element name="iwish-textarea" attributes="textareaId labelColor isWide labelText iconName labelTextColor hintText">
     <template>
         <link rel="stylesheet" href="iwish-textarea.css">
         <iwish-h1-label
@@ -8,10 +8,12 @@
                 iconName="{{iconName}}">
         </iwish-h1-label>
 
-        <paper-autogrow-textarea class="textarea" rows="4" maxRows="4">
-            <textarea id="{{textareaId}}">
-            </textarea>
-        </paper-autogrow-textarea>
+        <paper-autogrow-textarea class="textarea {{ {wide: isWide} | tokenList}}" rows="4" maxRows="4">
+            <paper-input-decorator>
+                <textarea id="{{textareaId}}">
+                </textarea>
+            </paper-input-decorator>
+        </paper-autogrow-textarea >
 
         <template if="{{hintText}}">
             <span class="hint">{{hintText}}</span>
@@ -20,6 +22,7 @@
     <script>
         (function () {
             Polymer({
+                responsiveWidth: '33em',
                 rows: 6,
                 maxRows:6
             });
