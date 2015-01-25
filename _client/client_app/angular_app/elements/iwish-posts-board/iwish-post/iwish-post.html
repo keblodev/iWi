@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="iwish-post.css">
     <!-- TODO: figure out something to move this dependecy from here -->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <div id="scrollHolder" cross-fade>
+    <div id="scrollHolder" class="pageHolder" cross-fade>
       <div class="post-long post-title {{ {'table': titleWide} | tokenList }} ">
         <div class="post-comments {{ {'table-cell': titleWide} | tokenList }}"
           cross-fade>
@@ -82,7 +82,7 @@
 
         <div id="commentsHolder" cross-fade>
         <paper-button
-          class="{{ {'table': isWide} | tokenList }}"
+          class="green {{ {'table': isWide} | tokenList }}"
           raised
           id="comment-button"
           auto-vertical>

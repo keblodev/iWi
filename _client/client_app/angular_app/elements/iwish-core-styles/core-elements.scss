@@ -18,14 +18,26 @@ h1, h2, h3, h4, h5 {
   overflow: hidden;
 }
 
-#comment-button {
-  background-color: $green_ocean;
+
+.pageHolder {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  top: 0px;
+  -webkit-overflow-scrolling: touch;
 }
 
 paper-button {
   border-radius: 0;
   padding: 1em 0;
   margin: 0;
+
+  &.green {
+  background-color: $green_ocean;
+  }
 
   &::shadow {
     paper-shadow::shadow {
