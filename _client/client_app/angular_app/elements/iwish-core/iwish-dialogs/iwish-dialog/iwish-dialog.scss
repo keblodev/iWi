@@ -2,23 +2,91 @@
 
 $modal_width: 500px;
 
+:host {
+  background-color: $grey;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  box-shadow: $shadow;
+}
 
-.main {
-  min-width: 20em;
-  max-width: $modal_width;
+.dialogHolder {
+
+  padding-top: 42px;
+  padding-bottom: 72px;
+
+
+  #scroller {
+    padding: 0px;
+    overflow-x:hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #done {
+    background-color: #21d0c6;
+    bottom: 0px;
+    box-shadow: $shadow;
+    color: white;
+    position: absolute;
+    right: 0px;
+    width: 100%;
+    height: 60px;
+    margin: 0px;
+    &::shadow core-icon {
+      height: 50px;
+      width: 100%;
+    }
+  }
+  paper-radio-group {
+    margin-top: 10px;
+    paper-radio-button {
+      display: block;
+
+      &::shadow {
+        #onRadio {
+          background-color: $dark_grey;
+        }
+      }
+    }
+  }
+
+  &.wide {
+
+    padding-bottom: 10px;
+    min-width: 40em;
+    #scroller {
+      overflow:visible;
+    }
+
+    #done {
+      border-radius: 40px;
+      margin-top: 10px;
+      position: absolute;
+      margin-top: 10px;
+      left: 0px;
+      bottom: -70px;
+      width: 60px;
+      // width: 100%;
+    }
+  }
 
   .dialog-title {
+    background: $purple;
+    color: $white;
+    font-weight: 200;
     left: 0px;
     position: absolute;
     right: 0px;
-    top: -80px;
-    width: 100%;
-  }
+    top: -20px;
 
-  &::shadow {
-    #scroller {
-      overflow: visible;
-
+    z-index: 1;
+    core-item {
+      float:left;
+    }
+    core-icon-button {
+      float:right;
+      stroke: white;
+      stroke-width: 5px;
     }
   }
 }

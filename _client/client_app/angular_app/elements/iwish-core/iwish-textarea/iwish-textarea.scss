@@ -2,14 +2,49 @@
 .textarea {
   width: 100%;
   margin-bottom: 20px;
+
   textarea {
-    /* todo: temporary font size, move to variables */
-    font-size: 16px;
-    border-radius: 4px;
+    background-color: none;
+    display: block;
   }
+
+  &.wide {
+    textarea {
+      background-color: white;
+      border: 0.6px solid white;
+      border-radius: 3px;
+      box-shadow: $shadow;
+      height: 4em;
+    }
+
+    paper-input-decorator {
+      width: 100%;
+
+      &::shadow {
+        .underline {
+          display: none;
+        }
+      }
+    }
+  }
+
+  paper-input-decorator {
+    margin: 0 auto;
+    width: 95%;
+    &::shadow {
+      color: $input_font;
+        .focused-underline {
+          background-color: orange;
+        }
+    }
+  }
+
 }
 
 .hint {
   float: right;
   color: $color_font_gray;
+  margin-right: 5px;
 }
+
+

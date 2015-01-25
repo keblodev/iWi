@@ -3,10 +3,10 @@
 <polymer-element name="iwish-dialog" attributes="showDialog" extends="paper-action-dialog">
 	<template>
         <link rel="stylesheet" href="iwish-dialog.css">
-        <div class="">
+        <div class="main dialogHolder {{ {wide: isWide} | tokenList }}" >
           <h2 class="dialog-title">
     				<core-item
-              icon="account-balance"
+              icon="filter-list"
               label="filter" flex>
             </core-item>
     				<core-icon-button
@@ -15,64 +15,114 @@
               icon="close">
             </core-icon-button>
       		</h2>
+          <div id="scroller">
   	  		<div>
-  	    		<paper-radio-group
-              selected="someFresh">
-  	    			<paper-radio-button
-                name="someFresh"
-                label="some fresh">
-              </paper-radio-button>
-  	    			<paper-radio-button
-                name="mostVoted"
-                label="most voted">
-              </paper-radio-button>
-  	    			<paper-radio-button
-                name="mostCommented"
-                label="most commented">
-              </paper-radio-button>
+  	    		<paper-radio-group selected="{{selectedCategory}}">
+              <template repeat="{{category in categories}}">
+                <paper-radio-button
+                  name="{{category.name}}"
+                  label="{{category.name}}"
+                  selected="{{category.selected}}">
+                </paper-radio-button>
+              </template>
   	    		</paper-radio-group>
   	  		</div>
   	  		<div>
-  	  			<core-item
-              icon="label"
-              label="tag">
-            </core-item>
+            <iwish-input-floating-label
+              inputPlaceholderText="#Tags"
+              isWide="{{isWide}}"
+              layout>
+            </iwish-input-floating-label>
   <!-- 	  			<iwish-tags></iwish-tags> -->
   	  		</div>
   	  		<div>
-  	  			<core-item
-              icon="find-in-page"
-              label="word or phrase">
-            </core-item>
-  	  			<paper-input
+  	  			<iwish-input-floating-label
+              inputPlaceholderText="Word or phrase"
+              isWide="{{isWide}}"
               layout>
-            </paper-input>
+            </iwish-input-floating-label>
   	  		</div>
-      		<paper-button
-            class="green"
-            id="done"
-            on-click="{{onClose}}"
-            affirmative
-            raised
-            class="colored">
-              done
-          </paper-button>
+
+          </div>
+          <div layout vertical?="{{!isWide}}">
+            <!-- for some reason with paper-button in safari dialog is unpredictable after press -->
+            <core-icon-button
+              class="green"
+              id="done"
+              on-click="{{onClose}}"
+              dismissive
+              label="loool"
+              icon="done">
+            </core-icon-button>
+          </div>
         </div>
 
+        <core-media-query query="min-width: {{responsiveWidth}}" queryMatches="{{isWide}}"></core-media-query>
 	</template>
 	<script>
 
 		Polymer('iwish-dialog', {
+      responsiveWidth:    '50em',
+
+      heading: 'looool',
+
 			showDialog:         false,
 
       backdrop:           true,
       autoclosedisabled:  true,
 
+      selectedCategory: 0,
+
+      closeSelector: '[affirmative],[dismissive]',
+
+      data: [
+            {id: 1, name: "some fresh", selected: true},
+            {id: 2, name: "most voted", selected: false},
+            {id: 3, name: "most commented", selected: false},
+            {id: 4, name: "my own", selected: false}
+          ],
+
+      categories: [],
+
+      openedState: false,
+
+      attached: function() {
+        this.resizerAttachedHandler();
+
+        this.openedState = this.opened;
+        this.categories = this.data;
+        this._setSelectedCategory(this.categories);
+      },
+
+      detached: function() {
+        this.resizerDetachedHandler();
+      },
+
+      _setSelectedCategory: function(categories) {
+        var selectedCategoryObj = categories.filter(
+            function(item, index){
+              item.index = index;
+              return item.selected;
+            })[0];
+        this.selectedCategory = selectedCategoryObj.index;
+      },
+
 			showDialogChanged: function(oldVal, newVal) {
+        console.log('changed');
 		    if (newVal) {
 		    	this.toggle();
 		    }
+        else {
+          this.close();
+        }
 			},
+
+      openedStateChanged: function(oldVal, newVal) {
+        if(!newVal) {
+          // debugger;
+          this.onClose();
+        }
+      },
 
 			onClose: function() {
 				this.showDialog = false;

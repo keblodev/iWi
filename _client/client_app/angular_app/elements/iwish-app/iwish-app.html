@@ -15,7 +15,8 @@
       Show dialog
   </paper-button>
   <iwish-dialog
-    showDialog="{{showDialog}}">
+    showDialog="{{showDialog}}"
+    transition="core-transition-center">
     <!-- {{showDialog}} -->
   </iwish-dialog>
 
@@ -51,7 +52,7 @@
     <paper-button
       raised
       class="iwish-test-button view-switcher main-switch"
-      on-click="{{stuff}}">
+      on-click="{{stuff}}" vertical>
         Next view in app
     </paper-button>
   </template>

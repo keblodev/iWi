@@ -4,7 +4,6 @@
 @import '../iwish-inputs-core';
 
 paper-input {
-  background-color: $white;
   &.wide {
    background-color: initial;
    &::before {
@@ -16,4 +15,5 @@ paper-input {
 .hint{
   float: right;
   color: $color_font_gray;
+  margin-right: 5px;
 }
