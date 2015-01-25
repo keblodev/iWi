@@ -1,0 +1,35 @@
+/* Shadow DOM CSS Cheat Sheet */
+/* http://robdodson.me/blog/2014/04/10/shadow-dom-css-cheat-sheet */
+
+@import '../iwish-posts-board-core';
+
+:host {
+  margin-bottom: 20px;
+}
+
+h4 {
+  font-weight: 200;
+  margin: 10px 0px;
+}
+
+.comment-body {
+  display: block;
+  padding: 5px;
+  .avatar-holder {
+    float: left;
+  }
+  .text-conetent-holder {
+    margin-left: 50px;
+    .user-name {
+
+    }
+    .comment-text {
+      background: $white;
+      box-shadow: $shadow;
+      padding: 10px;
+      border-radius: $border_radius;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

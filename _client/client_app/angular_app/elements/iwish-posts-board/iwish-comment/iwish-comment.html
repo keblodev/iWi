@@ -1,11 +1,23 @@
-<polymer-element name="iwish-post-short" attributes="inputObj isWide">
+<polymer-element name="iwish-comment" attributes="inputObj isWide">
   <template>
-    <link rel="stylesheet" href="iwish-post-short.css">
+    <link rel="stylesheet" href="iwish-comment.css">
     <!-- TODO: figure out something to move this dependecy from here -->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <div class="post-short {{ {'table': isWide} | tokenList }}">
-      <div class="post-comments {{ {'table-cell': isWide} | tokenList }}">
+    <div class="comment-body {{ {'table': isWide} | tokenList }}">
+      <span class="avatar-holder">
+        <core-icon class="avatar" icon="avatars:avatar-{{inputObj.avatarId}}"></core-icon>
+      </span>
+      <div class="text-conetent-holder">
+        <div class='user-name'>
+          <h4>{{inputObj.userName}}:</h4>
+        </div>
+        <div class='comment-text'>
+          {{inputObj.text}}
+        </div>
+      </div>
+
+<!--       <div class="post-comments {{ {'table-cell': isWide} | tokenList }}">
         <div class="table">
           <core-item
             label="{{inputObj.commentsCount}}"
@@ -37,13 +49,13 @@
             class="fa fa-thumbs-o-down table-cell">
           </core-item>
         </div>
-      </div>
+      </div> -->
     </div>
 
   </template>
   <script>
 
-    Polymer('iwish-post-short' , {
+    Polymer('iwish-comment' , {
       responsiveWidth: '33em',
 
       publish: {

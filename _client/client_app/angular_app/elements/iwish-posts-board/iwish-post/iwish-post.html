@@ -1,85 +1,199 @@
-<polymer-element name="iwish-post" attributes="postName likesCount dislikesCount commentsCount isWide">
+<polymer-element name="iwish-post" attributes="inputObj isVisible isWide">
   <template>
     <link rel="stylesheet" href="iwish-post.css">
     <!-- TODO: figure out something to move this dependecy from here -->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
-    <div class="post-long {{ {'table': isWide} | tokenList }}" cross-fade>
-      <div class="post-comments {{ {'table-cell': isWide} | tokenList }}">
-        <div class="table">
-          <core-item
-            label="{{commentsCount}}"
-            class="post-comments-count fa fa-comment-o table-cell" >
-          </core-item>
-        </div>
-      </div>
-      <core-item
-        label="{{postName}}"
-        class="post-name {{ {'table-cell': isWide} | tokenList }}">
-      </core-item>
-      <div class="post-thumbs {{ {'table-cell': isWide} | tokenList }}">
-        <div class="post-comments responsive {{ {'show': !isWide} | tokenList }}">
+    <div id="scrollHolder" cross-fade>
+      <div class="post-long post-title {{ {'table': titleWide} | tokenList }} ">
+        <div class="post-comments {{ {'table-cell': titleWide} | tokenList }}"
+          cross-fade>
           <div class="table">
             <core-item
-              label="{{commentsCount}}"
+              label="{{inputObj.commentsCount}}"
               class="post-comments-count fa fa-comment-o table-cell" >
             </core-item>
           </div>
         </div>
-        <div class="table">
-          <core-item
-            label="{{likesCount}}"
-            class="fa fa-thumbs-o-up table-cell">
-          </core-item>
-          <i class="table-cell"> / </i>
-          <core-item
-            label="{{dislikesCount}}"
-            class="fa fa-thumbs-o-down table-cell">
-          </core-item>
-        </div>
-      </div>
-    </div>
+        <core-item
+          label="{{inputObj.postName}}"
+          class="post-name {{ {'table-cell': titleWide} | tokenList }}">
+        </core-item>
 
-    <div cross-fade>
-        <core-scroll-threshold
-          id="threshold"
-          scrollTarget="{{$.scroller}}"
-          lowerThreshold="15"
-          on-lower-trigger="{{loadMore}}"
-          fit>
-        </core-scroll-threshold>
-        <div
-          class="core-header {{ {wide: isWide} | tokenList }}"
-          id="recent"
+        <div class="post-thumbs {{ {'table-cell': titleWide} | tokenList }}"
           slide-down>
-            <h2>
-              comments:
-            </h2>
-        </div>
-
-        <div id="scroller" class="comments {{ {wide: isWide} | tokenList }}">
-          <template repeat="{{comments}}">
-            <core-item label="{{text}}"></core-item>
-          </template>
-          <div class="pad"
-            hidden?="{{!$.threshold.lowerTriggered}}">
-            <paper-spinner active></paper-spinner>
-            <div class="pad-left">Loading...</div>
+          <div class="post-comments responsive {{ {'show': !titleWide} | tokenList }}">
+            <div class="table">
+              <core-item
+                label="{{inputObj.commentsCount}}"
+                class="post-comments-count fa fa-comment-o table-cell" >
+              </core-item>
+            </div>
+          </div>
+          <div class="table">
+            <core-item
+              label="{{inputObj.likesCount}}"
+              class="fa fa-thumbs-o-up table-cell">
+            </core-item>
+            <i class="table-cell"> / </i>
+            <core-item
+              label="{{inputObj.dislikesCount}}"
+              class="fa fa-thumbs-o-down table-cell">
+            </core-item>
           </div>
         </div>
-    </div>
+      </div>
 
+      <div class="main {{ {wide: isWide} | tokenList }}">
+        <div class="post-long post-body" slide-down>
+          <core-item
+            label="{{inputObj.postText}}"
+            class="post-text table">
+          </core-item>
+          <div class="poster table">
+            <div class="post-date table-cell">
+              {{inputObj.timeString}} ago, by {{inputObj.posterName}}
+            </div>
+            <div class="poster-avatar table-cell">
+              <core-icon class="avatar" icon="avatars:avatar-{{inputObj.avatarId}}"></core-icon>
+            </div>
+          </div>
+        </div>
+
+        <div class="post-long post-tags {{ {'table': isWide} | tokenList }} "
+          slide-up>
+          <div class="tags-body  {{ {'table-cell': isWide} | tokenList }}">
+            <span class="fa fa-slack tag-icon">
+
+            </span>
+            <div
+              class="tag-holder">
+              <template repeat="{{tag in inputObj.postTags}}">
+                <div
+                  class="tag-body">
+                  <core-item
+                    label="{{tag}}"
+                    class="post-tag inner-shadow">
+                  </core-item>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+
+        <div id="commentsHolder" cross-fade>
+        <paper-button
+          class="{{ {'table': isWide} | tokenList }}"
+          raised
+          id="comment-button"
+          auto-vertical>
+            comment
+        </paper-button>
+            <core-scroll-threshold
+              id="threshold"
+              scrollTarget="{{$.scrollHolder}}"
+              lowerThreshold="1500"
+              on-lower-trigger="{{loadMore}}"
+              fit>
+            </core-scroll-threshold>
+
+            <div id="postScroller" class="post-scroller comments {{ {wide: isWide} | tokenList }}">
+              <template repeat="{{comment in comments}}">
+                <iwish-comment inputObj="{{comment}}"></iwish-comment>
+              </template>
+              <div class="loading-pad"
+                hidden?="{{!showLoading && !$.threshold.lowerTriggered}}">
+                <paper-spinner active></paper-spinner>
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <core-media-query query="min-width: {{responsiveTitleWidth}}" queryMatches="{{titleWide}}"></core-media-query>
+    </div>
   </template>
   <script>
 
+  //core-animated-pages-transition-prepare
+  //on-core-animated-pages-transition-end="{{transitionEnd}}"
     Polymer('iwish-post' , {
-      responsiveWidth: '33em',
+      responsiveTitleWidth: '60em',
 
-      comments: [
-        {text:"Blaha1", userName:"blahblah", data:"10-10-10"},
-        {text:"Blaha2", userName:"blahblah", data:"10-10-10"},
-        {text:"Blaha3", userName:"blahblah", data:"10-10-10"}
+      isVisible: false,
+      showLoading: false,
+
+      data: [
+        {text:"Bla Bla Blah 1 Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1 Bla Bla Blah 1 Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1Bla Bla Blah 1", userName:"sanches sanchessanchessanchessanchessanchessanchessanches sanchessanchessanches sanchessanchessanches sanchessanches sanchessanchessanchessanches sanchessanchessanches  sanches sanches sanchessanchessanchessanchessanchessanchessanches sanchessanchessanches sanchessanchessanches sanchessanches sanchessanchessanchessanches sanchessanchessanches  sanches", date:"10-10-10", avatarId: 2},
+        {text:"Bla Bla Blah 2", userName:"drake", date:"10-10-10", avatarId: 3},
+        {text:"Bla Bla Blah 3", userName:"anonymous", date:"10-10-10", avatarId: 5},
+        {text:"Bla Bla Blah 3", userName:"You", date:"10-10-10", avatarId: 1},
+        {text:"Bla Bla Blah 2", userName:"drake", date:"10-10-10", avatarId: 6},
+        {text:"Bla Bla Blah 3", userName:"anonymous", date:"10-10-10", avatarId: 7},
+        {text:"Bla Bla Blah 3", userName:"You", date:"10-10-10", avatarId: 4}
       ],
+
+      scrollTarget: this,
+
+      comments: [],
+
+      domReady: function() {
+        // this.isVisible = true;
+      },
+
+      isVisibleChanged: function(oldVal, newVal) {
+        this.showLoading = true;
+        this._reset();
+
+        if(newVal) {
+          console.info('Imitating data request')
+          setTimeout(function(){
+            if(this.isVisible) {
+              this.comments = this.data;
+              this.showLoading = false;
+            }
+            else {
+              this._reset();
+            }
+          }.bind(this), 2000);
+        }
+      },
+
+      _reset: function() {
+        this.comments = [];
+      },
+
+      inTransition: function() {
+        console.info('Me Ining');
+      },
+
+      outTransition: function() {
+        console.info('Me outing');
+      },
+
+      load: function(moreCount) {
+        //TODO core-ajax methos goes here
+        var itemsLength = this.data.length,
+            count = 0;
+
+        do {
+          count++;
+          (function(count){
+            setTimeout(function(){
+              console.log('adding ' + count);
+              this.data.push(
+                {text:"Bla Bla Blah " + count, userName:"candy" + count, date:"10-10-10", avatarId: 2});
+              if (count === moreCount) {
+                this.$.threshold.clearLower(true);
+              }
+            }.bind(this),
+              2000 * count);
+          }.bind(this))(count);
+        } while(count <= moreCount);
+      },
+
+      loadMore: function() {
+        console.info('loadding');
+        this.load(3);
+      },
 
       publish: {
         response: "ValuePassedBackToParent 1"

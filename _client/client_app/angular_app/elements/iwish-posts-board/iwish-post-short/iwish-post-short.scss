@@ -5,16 +5,17 @@
 
 .post-short {
   margin: auto;
-  max-width: 58em;
+  max-width: 40em;
   min-height: 40px;
   padding: 10px 0px;
   width: 100%;
 
   &.table {
+    max-width: 58em;
     padding: 30px 0px;
     > .post-name {
       border-radius: 3px;
-      padding: 0 10px;
+      padding: 10px;
       width: 70%;
     }
     > .post-thumbs {
@@ -53,9 +54,10 @@
   border: 0.6px solid white;
   border-radius: 0px;
   box-shadow: $shadow;
-  padding: 40px 10px;
+  padding: 50px 10px;
   vertical-align: middle;
-  width: 100%;
+  white-space: inherit;
+  width: 99%;
 }
 
 .post-thumbs {
@@ -63,10 +65,11 @@
   position: relative;
   top: -30px;
   vertical-align: middle;
-  width: 55%;
+  width: 100%;
 
   .table {
-    width: 55%;
+    float: right;
+    width: 35%;
     > * {
       color: $main_font_color;
       width: 30%;
@@ -95,6 +98,7 @@
     &.show {
       display: block;
       float: left;
+      width: initial;
     }
   }
 

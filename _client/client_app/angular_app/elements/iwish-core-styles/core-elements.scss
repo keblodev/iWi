@@ -13,6 +13,15 @@ h1, h2 {
   user-select: none;
 }
 
+h1, h2, h3, h4, h5 {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+#comment-button {
+  background-color: $green_ocean;
+}
+
 paper-button {
   border-radius: 0;
   padding: 1em 0;
@@ -48,7 +57,6 @@ paper-button {
 }
 
 .main {
-  display: inline-block !important;
   min-width: 20em;
   width: 100%;
 
@@ -95,4 +103,39 @@ paper-button {
 .wide {
   margin: auto;
   max-width: $max_wide_width;
+}
+
+.table {
+  display: table !important;
+}
+
+.table-cell {
+  display: table-cell !important;
+}
+
+.table-row {
+  display: table-row !important;
+}
+
+.show {
+  display: initial;
+}
+
+.hide {
+  display: none;
+}
+
+.avatar {
+  height: 40px;
+  width: 40px;
+  svg {
+    border: 1px solid rgb(196, 196, 196);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+}
+
+.loading-pad {
+  margin: auto;
+  width: 30px;
 }

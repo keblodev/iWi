@@ -1,9 +1,15 @@
 /* General */
 $border_radius: 3px;
 
+/* Colors */
+$blue: #19CCFF;
+$white: white;
+$green_ocean: #21D0C6;
+$dark_blue: darken($blue, 15%);
+
 /* Login buttons colors*/
 
-$login_button_bg: #21D0C6;
+$login_button_bg: $green_ocean;
 $sign_up_button_bg: #219CD0;
 $forgot_button_bg: #D04E21;
 $btn_font_clr: white;
@@ -11,7 +17,7 @@ $disabled_login_button_bg: rgb(157, 157, 157);;
 
 /* Label colors*/
 
-$label_button_bg: #19CCFF;
+$label_button_bg: $blue;
 $label_font_clr: white;
 $recent_bg: #34D6A3;
 
