@@ -1,0 +1,17 @@
+
+
+<polymer-element name="iwish-tags" atributes="">
+	<template>
+		<div class="iwish-tags">
+			<link rel="stylesheet" href="iwish-tags.css">
+			<paper-input inputValue="{{value}}" layout></paper-input>
+		</div>
+	</template>
+	<script>
+		Polymer('iwish-tags', {
+			valueChanged: function () {
+				console.log(this.value);
+			}
+		});
+	</script>
+</polymer-element>

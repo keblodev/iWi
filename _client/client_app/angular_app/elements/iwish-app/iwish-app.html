@@ -3,23 +3,22 @@
 <link rel="import" href="../iwish-login-form/iwish-login-form.html">
 <link rel="import" href="../iwish-posts-board/iwish-posts-board.html">
 <link rel="import" href="../iwish-add-post/iwish-add-post.html">
+<link rel="import" href="../iwish-dialog/iwish-dialog.html">
 
 <polymer-element name="iwish-app" attributes="">
   <template>
     <link rel="stylesheet" href="iwish-app.css">
+
+  <section>
+
+  </section>
 
   <core-animated-pages
     selected="{{selected}}"
     id="coreAppAnimationBlock"
     transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition">
     <section>
-<!--  <iwish-posts-board
-        layout
-        vertical
-        slide-down
-        responsiveWidth="{{responsiveWidth}}">
-      </iwish-posts-board>
- -->      <iwish-login-form
+      <iwish-login-form
         layout
         vertical
         slide-down
@@ -28,14 +27,21 @@
       </iwish-login-form>
     </section>
     <section>
-<!--       <iwish-login-form
+      <paper-button
+        raised
+        class="iwish-test-button show-dialog"
+        on-click="{{toggleDialog}}">
+          Show dialog
+      </paper-button>
+      <iwish-dialog
+        showDialog="{{showDialog}}"
         layout
         vertical
-        slide-down
-        response="{{out}}"
-        responsiveWidth="{{responsiveWidth}}">
-        </iwish-login-form>
- -->      <iwish-posts-board
+        center
+        center-justified
+        slide-down >
+      </iwish-dialog>
+      <iwish-posts-board
         layout
         vertical
         slide-down
@@ -48,7 +54,7 @@
   </core-animated-pages>
     <paper-button
       raised
-      class="view-switcher main-switch"
+      class="iwish-test-button view-switcher main-switch"
       on-click="{{stuff}}">
         Next view in app
     </paper-button>
@@ -59,11 +65,17 @@
 
       selected: 1,
 
+      showDialog: false,
+
       out: null,
       up : true,
       max : 2,
 
-      stuff : function() {
+      toggleDialog: function () {
+        this.showDialog = !this.showDialog;
+      },
+
+      stuff: function() {
         console.log('OK = ' + this.out);
         if (this.up && this.selected === this.max || !this.up && this.selected === 0) {
           this.up = !this.up;

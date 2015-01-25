@@ -26,11 +26,17 @@ paper-button {
     }
   }
   // TEMPORARY - REMOVE ONCE THE SWITCHER IS UNNEDED
-  &.view-switcher {
+  &.iwish-test-button {
     background-color: rgb(186, 186, 186);
     bottom: 0;
     font-size: 10px;
     position: fixed;
+
+    &.show-dialog {
+      left: 12em;
+      position: fixed;
+      z-index: 1;
+    }
 
     &.main-switch {
       left: 0;
