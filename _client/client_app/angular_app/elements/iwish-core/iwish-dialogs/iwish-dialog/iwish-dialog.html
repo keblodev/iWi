@@ -1,0 +1,82 @@
+<!-- <link rel="import" href="../iwish-tags/iwish-tags.html"> -->
+
+<polymer-element name="iwish-dialog" attributes="showDialog" extends="paper-action-dialog">
+	<template>
+        <link rel="stylesheet" href="iwish-dialog.css">
+        <div class="">
+          <h2 class="dialog-title">
+    				<core-item
+              icon="account-balance"
+              label="filter" flex>
+            </core-item>
+    				<core-icon-button
+              on-click="{{onClose}}"
+              dismissive
+              icon="close">
+            </core-icon-button>
+      		</h2>
+  	  		<div>
+  	    		<paper-radio-group
+              selected="someFresh">
+  	    			<paper-radio-button
+                name="someFresh"
+                label="some fresh">
+              </paper-radio-button>
+  	    			<paper-radio-button
+                name="mostVoted"
+                label="most voted">
+              </paper-radio-button>
+  	    			<paper-radio-button
+                name="mostCommented"
+                label="most commented">
+              </paper-radio-button>
+  	    		</paper-radio-group>
+  	  		</div>
+  	  		<div>
+  	  			<core-item
+              icon="label"
+              label="tag">
+            </core-item>
+  <!-- 	  			<iwish-tags></iwish-tags> -->
+  	  		</div>
+  	  		<div>
+  	  			<core-item
+              icon="find-in-page"
+              label="word or phrase">
+            </core-item>
+  	  			<paper-input
+              layout>
+            </paper-input>
+  	  		</div>
+      		<paper-button
+            class="green"
+            id="done"
+            on-click="{{onClose}}"
+            affirmative
+            raised
+            class="colored">
+              done
+          </paper-button>
+        </div>
+
+	</template>
+	<script>
+
+		Polymer('iwish-dialog', {
+			showDialog:         false,
+
+      backdrop:           true,
+      autoclosedisabled:  true,
+
+			showDialogChanged: function(oldVal, newVal) {
+		    if (newVal) {
+		    	this.toggle();
+		    }
+			},
+
+			onClose: function() {
+				this.showDialog = false;
+	    }
+		});
+	</script>
+</polymer-element>

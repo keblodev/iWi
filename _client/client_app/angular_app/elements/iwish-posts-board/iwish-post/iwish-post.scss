@@ -5,17 +5,6 @@
 
 $post_wide_body_width: 70%;
 
-#scrollHolder {
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  top: 0px;
-  -webkit-overflow-scrolling: touch;
-}
-
 .post-long {
   margin: auto;
   min-height: 40px;
@@ -132,7 +121,7 @@ $post_wide_body_width: 70%;
 
   &.table-cell {
     box-shadow: none !important;
-    background: none !important;
+    background: inherit;
     margin-bottom: 0px;
     position: absolute;
     padding: 0px;

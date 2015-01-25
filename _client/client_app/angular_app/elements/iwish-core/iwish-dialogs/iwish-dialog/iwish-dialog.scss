@@ -1,0 +1,24 @@
+@import '../iwish-dialogs';
+
+$modal_width: 500px;
+
+
+.main {
+  min-width: 20em;
+  max-width: $modal_width;
+
+  .dialog-title {
+    left: 0px;
+    position: absolute;
+    right: 0px;
+    top: -80px;
+    width: 100%;
+  }
+
+  &::shadow {
+    #scroller {
+      overflow: visible;
+
+    }
+  }
+}
