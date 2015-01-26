@@ -31,13 +31,11 @@
                             hintText="* no more than 500 symbols">
                     </iwish-textarea>
                 </div>
-                <!-- todo: create iwish-button -->
-                <paper-button
-                    raised
-                    on-click="{{stuff}}"
-                    class="green {{ {wide: wide} | tokenList }}">
+                <div class="btn-container" layout vertical?="{{!wide}}">
+                    <paper-button raised class="green {{ {wide: wide} | tokenList }}">
                         Make A Wish
-                </paper-button>
+                    </paper-button>
+                </div>
             </div>
         </div>
 
