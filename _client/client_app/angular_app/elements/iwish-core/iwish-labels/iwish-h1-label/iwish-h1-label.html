@@ -1,12 +1,12 @@
 <!-- TODO: fix relative routing with base -->
-<polymer-element name="iwish-h1-label" attributes="labelText isWide labelColor labelTextColor iconName">
+<polymer-element name="iwish-h1-label" attributes="labelText isWide labelColor labelTextColor iconName isWide">
   <template>
     <link rel="stylesheet" href="iwish-h1-label.css">
 
     <div class="core-header {{ {wide: isWide} | tokenList}} {{labelColor}}" slide-up>
         <core-field>
             <template if="{{iconName}}">
-                <core-icon icon="{{iconName}}"></core-icon>
+                <core-icon icon="{{iconName}}" class="{{labelTextColor}}"></core-icon>
             </template>
             <h1 class="{{labelTextColor}}">{{labelText}}</h1>
         </core-field>
