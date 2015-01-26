@@ -1,1 +1,95 @@
 @import '../core';
+
+
+.table {
+  margin: auto;
+}
+
+.post-short, .post-long {
+  margin: auto;
+  min-height: 40px;
+  width: 100%;
+
+  &.table {
+    padding: 30px 0px;
+    > .post-name {
+      border-radius: $border_radius;
+      padding: 10px;
+      width: 70%;
+    }
+    > .post-thumbs {
+      float: none;
+      position: initial;
+      width: 15%;
+      .table {
+        margin: auto;
+        width: 80%;
+      }
+    }
+    > .post-comments {
+      display: block;
+    }
+  }
+}
+
+.post-name {
+  border: none;
+  border-radius: 0px;
+  box-shadow: $shadow;
+  vertical-align: middle;
+}
+
+.post-thumbs {
+  .table {
+    float: right;
+    margin-right: 10px;
+    width: 35%;
+    > * {
+      width: 30%;
+      text-align: center;
+    }
+    i {
+      width: 20%;
+    }
+    .fa-thumbs-o-up, .fa-thumbs-o-down {
+      &::before {
+        float: left;
+        margin-right: 5px;
+      }
+    }
+  }
+}
+
+.post-comments {
+  display: none;
+  vertical-align: middle;
+  width: 15%;
+
+  &.responsive {
+    display: none;
+    width: 20%;
+    &.show {
+      display: block;
+      margin-left: 15px;
+      float: left;
+      width: initial;
+    }
+  }
+
+  .table {
+    width: 40%;
+    .post-comments-count {
+      color: $main_font_color;
+      &.fa-comment-o {
+        &::before {
+          float: left;
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+}
+
+.post-thumbs {
+  width: 100%;
+}

@@ -64,8 +64,6 @@
 		Polymer('iwish-dialog', {
       responsiveWidth:    '50em',
 
-      heading: 'looool',
-
 			showDialog:         false,
 
       backdrop:           true,
@@ -88,7 +86,7 @@
 
       attached: function() {
         this.resizerAttachedHandler();
-
+        //TODO: this works only in chrome
         this.openedState = this.opened;
         this.categories = this.data;
         this._setSelectedCategory(this.categories);
@@ -108,7 +106,6 @@
       },
 
 			showDialogChanged: function(oldVal, newVal) {
-        console.log('changed');
 		    if (newVal) {
 		    	this.toggle();
 		    }
@@ -119,7 +116,6 @@
 
       openedStateChanged: function(oldVal, newVal) {
         if(!newVal) {
-          // debugger;
           this.onClose();
         }
       },

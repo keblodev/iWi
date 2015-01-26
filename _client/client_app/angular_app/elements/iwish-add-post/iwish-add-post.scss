@@ -12,7 +12,6 @@
       .core-header {
         core-field {
           core-icon {
-            color: $white;
             stroke-width: 2px;
             stroke: white;
           }
@@ -25,26 +24,7 @@
     padding: 20px;
     background: white;
 
-    iwish-input-labeled {
-      &::shadow {
-        iwish-h1-label {
-          &::shadow {
-            .core-header {
-              padding-left: 0;
-              h1 {
-                color: gray;
-                font-size: 2em;
-              }
-              core-field {
-                core-icon {
-                  color: gray;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+    iwish-input-labeled,
     iwish-textarea {
       &::shadow {
         iwish-h1-label {
@@ -52,22 +32,9 @@
             .core-header {
               padding-left: 0;
               h1 {
-                color: gray;
                 font-size: 2em;
               }
-              core-field {
-                core-icon {
-                  color: gray;
-                }
-              }
             }
-          }
-        }
-        paper-autogrow-textarea {
-          margin-bottom: 40px;
-          textarea {
-            padding: 10px 0px 10px 10px;
-            width: 98%;
           }
         }
       }
@@ -76,7 +43,7 @@
 
   &.wide {
     .add-post-form-holder {
-      background: none;
+      background: inherit;
     }
   }
 }

@@ -15,6 +15,7 @@ h2 {
 }
 
 .header-holder {
+  height: 290px;
   position: relative;
   z-index: 1;
 }
@@ -27,6 +28,10 @@ h2 {
   }
   &#recent {
     background: $recent_bg;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
   }
 
   &.wide {
@@ -57,11 +62,10 @@ core-animated-pages {
   overflow-y: auto;
   position: absolute;
   right: 0px;
-  top: 230px;
+  top: 290px;
   -webkit-overflow-scrolling: touch;
   &.wide {
     max-width: 100%;
-    top: 260px;
   }
 }
 
