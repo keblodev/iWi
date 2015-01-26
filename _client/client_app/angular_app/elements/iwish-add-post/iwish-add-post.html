@@ -32,13 +32,16 @@
                 </iwish-textarea>
             </div>
             <!-- todo: create iwish-button -->
-            <paper-button
-                raised
-                on-click="{{stuff}}"
-                class="green {{ {wide: wide} | tokenList }}"
-                cross-fade>
-                    Make A Wish
-            </paper-button>
+            <div layout vertical?="{{!wide}}">
+                <paper-button
+                    raised
+                    on-click="{{stuff}}"
+                    class="green {{ {wide: wide} | tokenList }}"
+                    cross-fade>
+                        Make A Wish
+                </paper-button>
+            </div>
+
             </div>
 
 
