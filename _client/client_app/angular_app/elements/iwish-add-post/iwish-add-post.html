@@ -1,44 +1,49 @@
 <polymer-element name="iwish-add-post" attributes="">
     <template>
         <link rel="stylesheet" href="iwish-add-post.css">
-        <div class="pageHolder">
-            <div class="main {{ {wide: wide} | tokenList }}" >
-                <iwish-h1-label
-                        labelColor="blue"
-                        labelText="add new"
-                        isWide="{{wide}}"
-                        iconName="add"></iwish-h1-label>
-                <div  flex layout vertical slide-down>
-                    <iwish-input-labeled
-                            labelTextColor="gray"
-                            labelColor=""
-                            labelText="Give it a name"
-                            inputId="wishName"
-                            isRequired="true"
-                            iconName = "create"
-                            hintText="* no more than 150 symbols"
-                            isWide="{{wide}}"
-                            inputValue="{{wishName}}">
-                    </iwish-input-labeled>
 
-                    <iwish-textarea
-                            textareaId="wishDetails"
-                            iconName="create"
-                            labelText="Write some details"
-                            labelColor=""
-                            labelTextColor="gray"
-                            hintText="* no more than 500 symbols">
-                    </iwish-textarea>
-                </div>
-                <!-- todo: create iwish-button -->
+        <div class="main {{ {wide: wide} | tokenList }}" >
+            <iwish-h1-label
+                    labelColor="blue"
+                    labelText="add new"
+                    isWide="{{wide}}"
+                    iconName="add"></iwish-h1-label>
+            <div class="add-post-form-holder" flex layout vertical slide-down>
+                <iwish-input-labeled
+                        labelTextColor="gray"
+                        labelColor=""
+                        labelText="Give it a name"
+                        inputId="wishName"
+                        isRequired="true"
+                        iconName = "create"
+                        hintText="* no more than 150 symbols"
+                        isWide="{{wide}}"
+                        inputValue="{{wishName}}">
+                </iwish-input-labeled>
+
+                <iwish-textarea
+                        textareaId="wishDetails"
+                        iconName="create"
+                        labelText="Write some details"
+                        labelColor=""
+                        isWide="{{wide}}"
+                        labelTextColor="gray"
+                        hintText="* no more than 500 symbols">
+                </iwish-textarea>
+            </div>
+            <!-- todo: create iwish-button -->
+            <div layout vertical?="{{!wide}}">
                 <paper-button
                     raised
                     on-click="{{stuff}}"
-                    class="green {{ {wide: wide} | tokenList }}">
+                    class="green {{ {wide: wide} | tokenList }}"
+                    cross-fade>
                         Make A Wish
                 </paper-button>
             </div>
-        </div>
+
+            </div>
+
 
         <core-media-query query="min-width: {{responsiveWidth}}" queryMatches="{{wide}}"></core-media-query>
 

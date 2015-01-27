@@ -8,6 +8,16 @@
   padding: 0px 20px;
   z-index: -1;
 
+  core-icon {
+    &.white {
+      color: white;
+    }
+
+    &.gray {
+      color: #808080
+    }
+  }
+
   &.blue {
     background: $label_button_bg;
   }

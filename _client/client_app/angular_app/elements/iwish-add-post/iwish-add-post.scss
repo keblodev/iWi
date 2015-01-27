@@ -6,4 +6,44 @@
 
 .main {
   display: block;
+
+  iwish-h1-label {
+    &::shadow {
+      .core-header {
+        core-field {
+          core-icon {
+            stroke-width: 2px;
+            stroke: white;
+          }
+        }
+      }
+    }
+  }
+
+  .add-post-form-holder {
+    padding: 20px;
+    background: white;
+
+    iwish-input-labeled,
+    iwish-textarea {
+      &::shadow {
+        iwish-h1-label {
+          &::shadow {
+            .core-header {
+              padding-left: 0;
+              h1 {
+                font-size: 2em;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.wide {
+    .add-post-form-holder {
+      background: inherit;
+    }
+  }
 }

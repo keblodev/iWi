@@ -4,58 +4,18 @@
 @import '../iwish-posts-board-core';
 
 .post-short {
-  margin: auto;
   max-width: 40em;
-  min-height: 40px;
   padding: 10px 0px;
-  width: 100%;
 
   &.table {
     max-width: 58em;
-    padding: 30px 0px;
-    > .post-name {
-      border-radius: 3px;
-      padding: 10px;
-      width: 70%;
-    }
-    > .post-thumbs {
-      float: none;
-      position: initial;
-      width: 15%;
-      .table {
-        width: 80%;
-      }
-    }
-    > .post-comments {
-      display: block;
-    }
   }
 }
 
-.show {
-  display: initial;
-}
-
-.hide {
-  display: none;
-}
-
-.table {
-  display: table;
-  margin: auto;
-}
-
-.table-cell {
-  display: table-cell !important;
-}
-
 .post-name {
-  background-color: white;
-  border: 0.6px solid white;
-  border-radius: 0px;
-  box-shadow: $shadow;
+  background-color: $white;
+  border: 0.6px solid $white;
   padding: 50px 10px;
-  vertical-align: middle;
   white-space: inherit;
   width: 99%;
 }
@@ -65,54 +25,10 @@
   position: relative;
   top: -30px;
   vertical-align: middle;
-  width: 100%;
 
   .table {
-    float: right;
-    width: 35%;
     > * {
       color: $main_font_color;
-      width: 30%;
-      text-align: center;
-    }
-    i {
-      width: 20%;
-    }
-    .fa-thumbs-o-up, .fa-thumbs-o-down {
-      &::before {
-        float: left;
-        margin-right: 5px;
-      }
-    }
-  }
-}
-
-.post-comments {
-  display: none;
-  vertical-align: middle;
-  width: 15%;
-
-  &.responsive {
-    display: none;
-    width: 20%;
-    &.show {
-      display: block;
-      float: left;
-      width: initial;
-    }
-  }
-
-
-  .table {
-    width: 40%;
-    .post-comments-count {
-      color: $main_font_color;
-      &.fa-comment-o {
-        &::before {
-          float: left;
-          margin-right: 5px;
-        }
-      }
     }
   }
 }
