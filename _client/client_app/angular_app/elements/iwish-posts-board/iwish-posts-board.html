@@ -14,15 +14,13 @@
       layout
       vertical>
     </iwish-posts>
-    <core-media-query
-      query="min-width: {{responsiveWidth}}"
-      queryMatches="{{wide}}">
-    </core-media-query>
+
+    <iwish-media-query queryMatches="{{wide}}"></iwish-media-query>
+
   </template>
   <script>
 
     Polymer('iwish-posts-board' , {
-      responsiveWidth: '33em',
 
       publish: {
         response: "ValuePassedBackToParent 1"

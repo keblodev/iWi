@@ -57,12 +57,11 @@
           </div>
         </div>
 
-        <core-media-query query="min-width: {{responsiveWidth}}" queryMatches="{{isWide}}"></core-media-query>
+        <iwish-media-query queryMatches="{{isWide}}" selectedQuery='mid'></iwish-media-query>
 	</template>
 	<script>
 
 		Polymer('iwish-dialog', {
-      responsiveWidth:    '50em',
 
 			showDialog:         false,
 

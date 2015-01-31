@@ -5,8 +5,16 @@ body {
   margin: 0;
 }
 
- #coreAppAnimationBlock {
+#coreAppAnimationBlock {
   position: absolute;
+}
+
+core-drawer-panel {
+  &::shadow {
+    #drawer {
+      z-index: 100;
+    }
+  }
 }
 
 core-animated-pages {
@@ -16,4 +24,20 @@ core-animated-pages {
 
 > core-animated-pages section > * {
   height: 100%;
+}
+
+[drawer] {
+  background-color: $main_bg_color;
+  border-right: 1px solid #ccc;
+  z-index: 100;
+}
+
+[main] {
+}
+
+button {
+  width: 160px;
+  height: 40px;
+  font-size: 16px;
+  margin: 8px;
 }

@@ -1,0 +1,25 @@
+<!-- TODO: fix relative routing with base -->
+<polymer-element name="iwish-header" attributes="isWide searchVisible">
+  <template>
+    <link rel="stylesheet" href="iwish-header.css">
+
+    <div class="main {{ {wide: isWide} | tokenList }}">
+      <content></content>
+    </div>
+
+  </template>
+  <script>
+
+    Polymer('iwish-header' , {
+
+      isWide: false,
+
+      searchVisible: false,
+
+      publish: {
+        response: "iwish-header 1"
+      }
+    });
+
+  </script>
+</polymer-element>

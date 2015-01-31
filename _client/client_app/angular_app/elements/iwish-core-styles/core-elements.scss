@@ -18,6 +18,34 @@ h1, h2, h3, h4, h5 {
   overflow: hidden;
 }
 
+.white {
+  background-color: $white;
+}
+
+.gray {
+  background-color: $grey;
+}
+
+.green {
+  background-color: $green_ocean;
+}
+
+.white-font {
+  color: $white;
+}
+
+.gray-font {
+  color: $color_font_gray;
+}
+
+.green-font {
+  color: $green_ocean;
+}
+
+.centered {
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
 
 .pageHolder {
   position: absolute;
@@ -149,5 +177,6 @@ paper-button {
 
 .loading-pad {
   margin: auto;
+  height: 50px;
   width: 30px;
 }

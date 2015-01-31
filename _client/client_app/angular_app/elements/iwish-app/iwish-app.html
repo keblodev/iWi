@@ -8,57 +8,136 @@
   <template>
     <link rel="stylesheet" href="iwish-app.css">
 
-  <paper-button
-    raised
-    class="iwish-test-button show-dialog"
-    on-click="{{toggleDialog}}">
-      Show dialog
-  </paper-button>
-  <iwish-dialog
-    showDialog="{{showDialog}}"
-    transition="core-transition-center">
-    <!-- {{showDialog}} -->
-  </iwish-dialog>
+  <core-drawer-panel forceNarrow>
 
-  <core-animated-pages
-    selected="{{selected}}"
-    id="coreAppAnimationBlock"
-    transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition">
-    <section>
-     <iwish-login-form
-        layout
-        vertical
-        slide-down
-        response="{{out}}"
-        responsiveWidth="{{responsiveWidth}}">
-      </iwish-login-form>
-    </section>
-    <section>
-      <iwish-posts-board
-        layout
-        vertical
-        slide-down
-        responsiveWidth="{{responsiveWidth}}">
-      </iwish-posts-board>
-    </section>
-    <section>
-        <iwish-add-post
+  <div main>
+    <iwish-header
+    isWide="{{wide}}"
+    searchVisible="{{ selected | isPostsPage}}">
+      <div class="header-left {{ {'table': wide} | tokenList }}">
+        <paper-icon-button
+          core-drawer-toggle
+          id="sidemenu-toggel"
+          class="{{ {'table-cell': !wide} | tokenList }}"
+          icon="menu"
+          role="button"
+          tabindex="0"
+          aria-label="menu">
+        </paper-icon-button>
+        <paper-icon-button
+          id="go-back-toggel"
+          class="{{ {'table-cell': wide} | tokenList }}"
+          icon="arrow-back"
+          role="button"
+          tabindex="0"
+          aria-label="menu">
+        </paper-icon-button>
+        <paper-icon-button
+          id="add-post-toggel"
+          class="{{ {'table-cell': wide} | tokenList }}"
+          icon="add"
+          role="button"
+          tabindex="0"
+          aria-label="menu">
+        </paper-icon-button>
+
+      </div>
+
+      <div class="header-right {{ {'table': wide} | tokenList }}">
+        <div class="table-cell">
+          super_user
+        </div>
+        <span class="avatar-holder table-cell">
+          <core-icon class="avatar" icon="avatars:avatar-1"></core-icon>
+        </span>
+        <paper-icon-button
+          id="logout-toggel"
+          class="table-cell"
+          icon="cancel"
+          role="button"
+          tabindex="0"
+          aria-label="menu">
+        </paper-icon-button>
+
+      </div>
+
+    </iwish-header>
+
+    <paper-button
+      raised
+      class="iwish-test-button show-dialog"
+      on-click="{{toggleDialog}}">
+        Show dialog
+    </paper-button>
+    <iwish-dialog
+      showDialog="{{showDialog}}"
+      transition="core-transition-center">
+    </iwish-dialog>
+
+    <core-animated-pages
+      selected="{{selected}}"
+      id="coreAppAnimationBlock"
+      transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition">
+      <section>
+       <iwish-login-form
           layout
           vertical
           slide-down
-          slide-down></iwish-add-post>
-    </section>
-  </core-animated-pages>
-    <paper-button
-      raised
-      class="iwish-test-button view-switcher main-switch"
-      on-click="{{stuff}}" vertical>
-        Next view in app
-    </paper-button>
+          response="{{out}}"
+          >
+        </iwish-login-form>
+      </section>
+      <section>
+        <iwish-posts-board
+          layout
+          vertical
+          slide-down
+          >
+        </iwish-posts-board>
+      </section>
+      <section>
+          <iwish-add-post
+            layout
+            vertical
+            slide-down
+            slide-down></iwish-add-post>
+      </section>
+    </core-animated-pages>
+      <paper-button
+        raised
+        class="iwish-test-button view-switcher main-switch"
+        on-click="{{stuff}}" vertical>
+          Next view in app
+      </paper-button>
+    </div>
+      <div drawer>
+        <core-menu selected="0">
+
+        <core-submenu icon="avatars:avatar-1" label="super_user">
+
+          <core-item label="Settings"></core-item>
+          <core-item label="Log out"></core-item>
+
+        </core-submenu>
+
+        <core-submenu icon="settings" label="Favorites">
+
+          <core-item label="Favorite 1"></core-item>
+          <core-item label="Favorite 2"></core-item>
+          <core-item label="Favorite 3"></core-item>
+
+        </core-submenu>
+
+      </core-menu>
+    </div>
+
+  </core-drawer-panel>
+
+  <iwish-media-query queryMatches="{{wide}}" selectedQuery="upmid"></iwish-media-query>
+
   </template>
   <script>
     Polymer('iwish-app', {
-      responsiveWidth: '43em',
 
       selected: 1,
 
@@ -67,6 +146,11 @@
       out: null,
       up : true,
       max : 2,
+
+      isPostsPage: function() {
+        console.log('okss');
+        return this.selected === 1;
+      },
 
       toggleDialog: function () {
         this.showDialog = !this.showDialog;

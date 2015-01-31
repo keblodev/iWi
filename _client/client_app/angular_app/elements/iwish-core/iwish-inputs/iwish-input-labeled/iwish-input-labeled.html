@@ -3,13 +3,13 @@
                  attributes="labelText inputPlaceholderText isWide isRequired inputId inputValue labelColor labelTextColor iconName hintText">
     <template>
         <link rel="stylesheet" href="iwish-input-labeled.css">
-        <iwish-h1-label
+        <iwish-label
             labelColor="{{labelColor}}"
             labelTextColor="{{labelTextColor}}"
             labelText="{{labelText}}"
             isWide="{{isWide}}"
             iconName="{{iconName}}">
-        </iwish-h1-label>
+        </iwish-label>
         <paper-input id="{{inputId}}" class="{{ {wide: isWide} | tokenList }}"
             label="{{inputPlaceholderText}}"
             required="{{isRequired}}"
@@ -24,7 +24,6 @@
     <script>
 
         Polymer('iwish-input-labeled', {
-            responsiveWidth: '33em',
 
             isRequired: false,
 

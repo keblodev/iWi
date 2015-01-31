@@ -12,10 +12,12 @@
       vertical
       >
 
-        <section name="allPosts">
+        <section name="allPosts" >
         <!-- NOTICE: inputs initialized before core-scroll-threshold will not be focusable - [POLYMER][BUG] -->
-          <div class="header-holder"
-            cross-fade>
+          <div
+            class="header-holder {{ {'all-posts-wide ': wide} | tokenList }}"
+            cross-fade
+            >
             <core-scroll-threshold
                 id="threshold"
                 scrollTarget="{{$.postsScroller}}"
@@ -23,21 +25,23 @@
                 on-lower-trigger="{{loadMore}}"
                 fit>
             </core-scroll-threshold>
-            <iwish-input-labeled
+
+            <iwish-input-main-search
               class="{{ {wide: wide} | tokenList }}"
-              labelText="I wish:"
+              labelText="I wish"
               inputPlaceholderText="type in your wish..."
               isWide="{{wide}}">
-            </iwish-input-labeled>
+            </iwish-input-main-search>
 
-            <div
-              class="core-header {{ {wide: wide} | tokenList }}"
-              id="recent"
-              slide-down>
-                <h2>
-                  some fresh
-                </h2>
-            </div>
+            <iwish-label
+              labelColor="green"
+              labelTextColor="white"
+              labelText="some fresh"
+              isWide="{{wide}}"
+              iconName="{{iconName}}"
+              fontSize="mid"
+              id="recent">
+            </iwish-label>
           </div>
           <div id="postsScroller" class="scroller {{ {wide: wide} | tokenList }}" cross-fade>
             <template repeat="{{item in items}}">
@@ -80,15 +84,13 @@
       </template>
     </core-animated-pages>
 
-    <core-media-query query="min-width: {{responsiveWidth}}" queryMatches="{{wide}}"></core-media-query>
-    <core-media-query query="min-width: {{responsivePostWidth}}" queryMatches="{{widePost}}"></core-media-query>
+    <iwish-media-query queryMatches="{{wide}}"></iwish-media-query>
+    <iwish-media-query queryMatches="{{widePost}}" selectedQuery="upmid"></iwish-media-query>
 
   </template>
   <script>
 
     Polymer('iwish-posts' , {
-      responsiveWidth: '33em',
-      responsivePostWidth: '60em',
 
       items: [
         {postName: 'ps1', likesCount: 103, dislikesCount: 23, commentsCount: 10,

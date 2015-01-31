@@ -1,0 +1,56 @@
+/* Shadow DOM CSS Cheat Sheet */
+/* http://robdodson.me/blog/2014/04/10/shadow-dom-css-cheat-sheet */
+
+@import '../iwish-headers-core';
+
+.main {
+  background-color: $blue;
+  height: 40px;
+  width: 100%;
+  ::content {
+    .header-left {
+      float: left;
+      paper-icon-button {
+        display: none;
+        &#sidemenu-toggel {
+          color: white;
+          display: inherit;
+        }
+      }
+      > * {
+        z-index: 1;
+      }
+    }
+
+    .header-right {
+      display: none;
+      float:right;
+      > * {
+        z-index: 1;
+      }
+    }
+  }
+  &.mid {
+    height: inherit;
+  }
+  &.wide {
+    background-color: inherit;
+    height: inherit;
+    max-width: inherit;
+    ::content {
+      .header-left {
+        paper-icon-button {
+          &#sidemenu-toggel {
+            display:none;
+          }
+        }
+      }
+
+      .header-right {
+        display: inherit;
+      }
+    }
+  }
+}
+
+

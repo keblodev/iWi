@@ -33,10 +33,9 @@
         </core-animated-pages>
       </div>
     </div>
-    <core-media-query
-      query="min-width: {{responsiveWidth}}"
-      queryMatches="{{wide}}">
-    </core-media-query>
+
+    <iwish-media-query queryMatches="{{wide}}"></iwish-media-query>
+
     <paper-button
       raised
       cross-fade
@@ -47,7 +46,6 @@
   <script>
 
     Polymer('iwish-login-form' , {
-      responsiveWidth: '33em',
 
       publish: {
         response: "ValuePassedBackToParent 1"

@@ -3,11 +3,11 @@
         <link rel="stylesheet" href="iwish-add-post.css">
 
         <div class="main {{ {wide: wide} | tokenList }}" >
-            <iwish-h1-label
+            <iwish-label
                     labelColor="blue"
                     labelText="add new"
                     isWide="{{wide}}"
-                    iconName="add"></iwish-h1-label>
+                    iconName="add"></iwish-label>
             <div class="add-post-form-holder" flex layout vertical slide-down>
                 <iwish-input-labeled
                         labelTextColor="gray"
@@ -44,15 +44,13 @@
 
             </div>
 
-
-        <core-media-query query="min-width: {{responsiveWidth}}" queryMatches="{{wide}}"></core-media-query>
+        <iwish-media-query queryMatches="{{wide}}"></iwish-media-query>
 
     </template>
     <script>
         (function () {
 
             Polymer("iwish-add-post", {
-                responsiveWidth: '33em',
 
                 stuff: function () {
                     console.log("My Page");

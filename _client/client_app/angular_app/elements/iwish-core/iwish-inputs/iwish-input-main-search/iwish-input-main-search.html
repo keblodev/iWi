@@ -1,0 +1,68 @@
+<!-- TODO: fix relative routing with base -->
+<polymer-element name="iwish-input-main-search"
+                 attributes="labelText inputPlaceholderText isWide isRequired inputId inputValue labelColor labelTextColor iconName hintText">
+    <template>
+        <link rel="stylesheet" href="iwish-input-main-search.css">
+        <iwish-label
+            id="label"
+            class="{{ {'wide-label': isWide} | tokenList }}"
+            labelColor="{{labelColor}}"
+            labelTextColor="{{labelTextColor}}"
+            labelText="{{labelText}}"
+            isWide="{{isWide}}"
+            alignRight="{{hideInput && !isWide}}"
+            iconName="{{ {'search': hideInput && !isWide} | tokenList }}"
+            on-click="{{toggleSearch}}">
+        </iwish-label>
+        <paper-input
+            id="input"
+            class="{{ {wide: isWide} | tokenList }}"
+            label="{{inputPlaceholderText}}"
+            required="{{isRequired}}"
+            error="input is required!"
+            value="{{inputValue}}"
+            hidden?="{{hideInput && !isWide}}">
+        </paper-input>
+        <template if="{{hintText}}">
+            <span class="hint">{{hintText}}</span>
+        </template>
+
+    </template>
+    <script>
+
+        Polymer('iwish-input-main-search', {
+
+            isRequired: false,
+
+            hideInput: true,
+
+            inputId: "input",
+
+            isWide: false,
+
+            toggleSearch:function(e, detail, sender) {
+                if (this.isWide) {
+                    return;
+                }
+
+                if (e) {
+                    e.stopPropagation();
+                }
+
+                if (e.target===this.$.input ) {
+                    return
+                }
+
+                this.hideInput = !this.hideInput;
+                this.async(function() {
+                    this.$.input.focus();
+                });
+            },
+
+            publish: {
+                response: "iwish-input-main-search 1"
+            }
+        });
+
+    </script>
+</polymer-element>

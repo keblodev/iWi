@@ -5,11 +5,11 @@
     <div
       class="main {{ {wide: wide} | tokenList }}"
       flex>
-      <iwish-h1-label
+      <iwish-label
         labelColor="blue"
         labelText="No prob. S*it happens:"
         isWide="{{wide}}">
-      </iwish-h1-label>
+      </iwish-label>
       <div id="mainPanel"
         layout
         vertical>
@@ -33,14 +33,12 @@
         </div>
       </div>
     </div>
-    <core-media-query
-      query="min-width: {{responsiveWidth}}"
-      queryMatches="{{wide}}">
-    </core-media-query>
+
+    <iwish-media-query queryMatches="{{wide}}"></iwish-media-query>
+
   </template>
   <script>
     Polymer('iwish-forgot' , {
-      responsiveWidth: '33em',
 
       publish: {
         response: "ValuePassedBackToParent ok2 " + Math.random(10)

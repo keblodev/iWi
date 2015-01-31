@@ -1,0 +1,46 @@
+/* Shadow DOM CSS Cheat Sheet */
+/* http://robdodson.me/blog/2014/04/10/shadow-dom-css-cheat-sheet */
+
+@import '../iwish-labels-core';
+
+.core-header {
+
+  padding: 0px 20px;
+  z-index: -1;
+
+  core-field {
+    &.relative-right {
+      margin-left: auto;
+      width: 80px;
+    }
+  }
+
+  &.blue {
+    background: $label_button_bg;
+  }
+
+  p {
+    display: inline-table;
+    margin: 8px 0;
+
+    font-weight: 200;
+
+    font-size: $h1-font-size / 2.5;
+  }
+
+  &.wide {
+    max-width: inherit;
+    p {
+      margin: 0.67em 0;
+      &.big {
+        font-size: $h1-font-size;
+      }
+      &.mid {
+        font-size: $h2-font-size;
+      }
+      &.pre-mid {
+        font-size: $h3-font-size;
+      }
+    }
+  }
+}

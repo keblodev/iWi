@@ -6,6 +6,7 @@
 :host {
   display: inline-block;
   width: 100%;
+  z-index: 0;
 }
 
 h2 {
@@ -15,33 +16,11 @@ h2 {
 }
 
 .header-holder {
-  height: 290px;
+  margin-top: -40px;
   position: relative;
   z-index: 1;
-}
-
-.core-header {
-  h2 {
-    color: $label_font_clr;
-    display: inline-table;
-    margin-left: 0.5em;
-  }
-  &#recent {
-    background: $recent_bg;
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-  }
-
-  &.wide {
-    max-width: 100%;
-    &#recent {
-      margin-top: 3em;
-    }
-    h2 {
-      margin-left: 0.3em;
-    }
+  &.all-posts-wide {
+    margin-top: 0px;
   }
 }
 
@@ -54,18 +33,26 @@ core-animated-pages {
   }
 }
 
+iwish-input-main-search {
+  &.wide {
+    margin-bottom: 20px;
+  }
+}
+
 .scroller {
-  bottom: 0px;
+  bottom: 40px;
   display: block;
   left: 0px;
   overflow-x: hidden;
   overflow-y: auto;
   position: absolute;
   right: 0px;
-  top: 290px;
+  top: 35px;
   -webkit-overflow-scrolling: touch;
   &.wide {
+    bottom: 0px;
     max-width: 100%;
+    top: 241px;
   }
 }
 
