@@ -1,0 +1,33 @@
+@import '../iwish-core';
+:host {
+  display: block;
+}
+
+paper-checkbox {
+  &.gray {
+    color: $color_font_gray;
+  }
+
+  &::shadow {
+    & #checkbox.checked {
+      border-radius: 0;
+    }
+    & #checkbox {
+      border-radius: 4px;
+    }
+  }
+}
+
+paper-checkbox.gray::shadow {
+  & #checkbox,
+  & #ink,
+  & #ink[checked] {
+    border-color: $color_font_gray;
+  }
+}
+
+
+
+
+
+

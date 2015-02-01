@@ -1,0 +1,20 @@
+
+<polymer-element name="iwish-checkbox" attributes="label checked color">
+  <template>
+    <link rel="stylesheet" href="iwish-checkbox.css">
+    <paper-checkbox
+        class="{{color}}"
+        checked?="{{checked}}"
+        label="{{label}}">
+      </paper-checkbox>
+  </template>
+  <script>
+    (function () {
+
+      Polymer("iwish-checkbox", {
+        // define element prototype here
+      });
+
+    })();
+  </script>
+</polymer-element>
