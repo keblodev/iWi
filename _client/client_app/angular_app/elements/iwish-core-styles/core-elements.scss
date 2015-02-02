@@ -9,7 +9,7 @@ h1 {
   font-weight: 300;
 }
 
-h1, h2 {
+h1, h2, h3, h4, h5 {
   user-select: none;
 }
 
@@ -27,7 +27,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .green {
-  background-color: $green_ocean;
+  background-color: $recent_bg;
 }
 
 .white-font {
@@ -82,7 +82,6 @@ paper-button {
     position: fixed;
 
     &.show-dialog {
-      left: 12em;
       position: fixed;
       z-index: 1;
     }
@@ -150,6 +149,7 @@ paper-button {
 }
 
 .table-cell {
+  vertical-align: middle;
   display: table-cell !important;
 }
 

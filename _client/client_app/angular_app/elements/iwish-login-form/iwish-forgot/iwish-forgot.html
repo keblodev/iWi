@@ -1,4 +1,4 @@
-<polymer-element name="iwish-forgot" attributes="">
+<polymer-element name="iwish-forgot" attributes="selectedSubView">
   <template>
     <link rel="stylesheet" href="iwish-forgot.css">
 
@@ -27,6 +27,7 @@
               raised
               id="justgiveme-button"
               auto-vertical
+              on-click="{{backToLoginPress}}"
               disabled?="{{!loginEmailVal.length}}">
             just give me my pass
           </paper-button>
@@ -39,6 +40,12 @@
   </template>
   <script>
     Polymer('iwish-forgot' , {
+
+      selectedSubView: '',
+
+      backToLoginPress: function() {
+        this.selectedSubView = "login"
+      },
 
       publish: {
         response: "ValuePassedBackToParent ok2 " + Math.random(10)

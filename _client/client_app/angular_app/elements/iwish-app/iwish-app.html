@@ -2,135 +2,166 @@
 
 <link rel="import" href="../iwish-login-form/iwish-login-form.html">
 <link rel="import" href="../iwish-posts-board/iwish-posts-board.html">
-<link rel="import" href="../iwish-add-post/iwish-add-post.html">
 
 <polymer-element name="iwish-app" attributes="">
   <template>
     <link rel="stylesheet" href="iwish-app.css">
 
-  <core-drawer-panel forceNarrow>
-
-  <div main>
-    <iwish-header
-    isWide="{{wide}}"
-    searchVisible="{{ selected | isPostsPage}}">
-      <div class="header-left {{ {'table': wide} | tokenList }}">
-        <paper-icon-button
-          core-drawer-toggle
-          id="sidemenu-toggel"
-          class="{{ {'table-cell': !wide} | tokenList }}"
-          icon="menu"
-          role="button"
-          tabindex="0"
-          aria-label="menu">
-        </paper-icon-button>
-        <paper-icon-button
-          id="go-back-toggel"
-          class="{{ {'table-cell': wide} | tokenList }}"
-          icon="arrow-back"
-          role="button"
-          tabindex="0"
-          aria-label="menu">
-        </paper-icon-button>
-        <paper-icon-button
-          id="add-post-toggel"
-          class="{{ {'table-cell': wide} | tokenList }}"
-          icon="add"
-          role="button"
-          tabindex="0"
-          aria-label="menu">
-        </paper-icon-button>
-
-      </div>
-
-      <div class="header-right {{ {'table': wide} | tokenList }}">
-        <div class="table-cell">
-          super_user
-        </div>
-        <span class="avatar-holder table-cell">
-          <core-icon class="avatar" icon="avatars:avatar-1"></core-icon>
-        </span>
-        <paper-icon-button
-          id="logout-toggel"
-          class="table-cell"
-          icon="cancel"
-          role="button"
-          tabindex="0"
-          aria-label="menu">
-        </paper-icon-button>
-
-      </div>
-
-    </iwish-header>
-
-    <paper-button
-      raised
-      class="iwish-test-button show-dialog"
-      on-click="{{toggleDialog}}">
-        Show dialog
-    </paper-button>
-    <iwish-dialog
-      showDialog="{{showDialog}}"
-      transition="core-transition-center">
-    </iwish-dialog>
-
-    <core-animated-pages
-      selected="{{selected}}"
-      id="coreAppAnimationBlock"
-      transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition">
-      <section>
-       <iwish-login-form
-          layout
-          vertical
-          slide-down
-          response="{{out}}"
-          >
-        </iwish-login-form>
-      </section>
-      <section>
-        <iwish-posts-board
-          layout
-          vertical
-          slide-down
-          >
-        </iwish-posts-board>
-      </section>
-      <section>
-          <iwish-add-post
-            layout
-            vertical
-            slide-down
-            slide-down></iwish-add-post>
-      </section>
-    </core-animated-pages>
-      <paper-button
-        raised
-        class="iwish-test-button view-switcher main-switch"
-        on-click="{{stuff}}" vertical>
-          Next view in app
-      </paper-button>
-    </div>
+  <core-drawer-panel
+    disableEdgeSwipe
+    disableSwipe
+    forceNarrow
+    id="menuPanel"
+    >
       <div drawer>
-        <core-menu selected="0">
+        <core-menu selected="1">
 
-        <core-submenu icon="avatars:avatar-1" label="super_user">
+        <core-submenu class="user-menu" icon="avatars:avatar-{{userData.avatarId}}" label="{{userData.userName}}">
 
-          <core-item label="Settings"></core-item>
-          <core-item label="Log out"></core-item>
+<!--           <core-item
+            icon="settings"
+            label="Settings">
+          </core-item> -->
+          <core-item
+            icon="cancel"
+            label="Log out"
+            on-tap="{{logoutUser}}"
+            on-up="{{toggleMenu}}"
+            >
+          </core-item>
 
         </core-submenu>
 
         <core-submenu icon="settings" label="Favorites">
 
-          <core-item label="Favorite 1"></core-item>
-          <core-item label="Favorite 2"></core-item>
-          <core-item label="Favorite 3"></core-item>
+          <core-item
+            label="Add Post"
+            icon="add"
+            on-tap="{{addPostPress}}"
+            on-up="{{toggleMenu}}"
+            >
+          </core-item>
+          <core-item
+            label="Filter"
+            icon="filter-list"
+            on-tap="{{getBackDialogAction}}"
+            on-up="{{toggleMenu}}"
+          ></core-item>
 
         </core-submenu>
 
       </core-menu>
     </div>
+    <div main>
+      <iwish-header
+      isWide="{{wide}}"
+      hidden?="{{ selectedView === 'login-form' }}"
+      >
+        <div class="header-left {{ {'table': wide} | tokenList }}">
+          <paper-icon-button
+            core-drawer-toggle?="{{ isPostsView(selectedView, selectedSubView) }}"
+            id="sidemenu-toggel"
+            class="{{ {'table-cell': !wide} | tokenList }}"
+            icon="{{ getIcon(['menu', 'arrow-back'], selectedView, selectedSubView)}}"
+            role="button"
+            tabindex="0"
+            aria-label="menu"
+            on-click="{{getMenuButtonAction}}">
+          </paper-icon-button>
+          <paper-icon-button
+            id="go-back-toggel"
+            class="{{ {'table-cell': wide} | tokenList }}"
+            icon="{{ getIcon(['filter-list', 'arrow-back'], selectedView, selectedSubView) }}"
+            role="button"
+            tabindex="0"
+            aria-label="menu"
+            on-click="{{getBackDialogAction}}"
+            >
+          </paper-icon-button>
+          <paper-icon-button
+            id="add-post-toggel"
+            class="{{ {'table-cell': wide} | tokenList }}"
+            icon="add"
+            role="button"
+            tabindex="0"
+            aria-label="menu"
+            on-click="{{addPostPress}}">
+          </paper-icon-button>
 
+        </div>
+
+        <div class="header-right {{ {'table': wide} | tokenList }}">
+          <span class="avatar-holder table-cell">
+            <core-icon class="avatar" icon="avatars:avatar-{{userData.avatarId}}"></core-icon>
+          </span>
+          <paper-icon-button
+            id="logout-toggel"
+            class="table-cell"
+            icon="cancel"
+            role="button"
+            tabindex="0"
+            aria-label="menu"
+            on-click="{{logoutUser}}">
+          </paper-icon-button>
+          <div class="table-row">
+            <p class='user-name'>
+              {{userData.userName}}
+            </p>
+          </div>
+
+        </div>
+
+      </iwish-header>
+
+      <paper-button
+        raised
+        class="iwish-test-button show-dialog"
+        on-click="{{toggleDialog}}">
+          Show dialog
+      </paper-button>
+      <iwish-dialog
+        showDialog="{{showDialog}}"
+        transition="core-transition-center">
+      </iwish-dialog>
+
+      <core-animated-pages
+        selected="{{selectedView}}"
+        id="coreAppAnimationBlock"
+        transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition">
+        <section name="login-form">
+         <iwish-login-form
+            layout
+            vertical
+            slide-down
+            selectedView="{{selectedView}}"
+            response="{{out}}"
+            >
+          </iwish-login-form>
+        </section>
+        <section name="posts">
+          <iwish-posts-board
+            layout
+            vertical
+            slide-down
+            selectedSubView="{{selectedSubView}}"
+            >
+          </iwish-posts-board>
+        </section>
+        <section>
+            <iwish-add-post
+              layout
+              vertical
+              slide-down
+              slide-down></iwish-add-post>
+        </section>
+      </core-animated-pages>
+<!--         <paper-button
+          raised
+          class="iwish-test-button view-switcher main-switch"
+          on-click="{{stuff}}" vertical>
+            Next view in app
+        </paper-button> -->
+    </div>
   </core-drawer-panel>
 
   <iwish-media-query queryMatches="{{wide}}" selectedQuery="upmid"></iwish-media-query>
@@ -139,34 +170,84 @@
   <script>
     Polymer('iwish-app', {
 
-      selected: 1,
+      selectedView: 'login-form',
+
+      selectedSubView: '',
 
       showDialog: false,
+      showFilter: false,
 
-      out: null,
-      up : true,
-      max : 2,
+      //TODO: move usergetting info functionality to separate component
+      data: {
+        id: 1,
+        userName: 'super_user25',
+        avatarId: 1
+      },
 
-      isPostsPage: function() {
-        console.log('okss');
-        return this.selected === 1;
+      userData: null,
+
+      requestUser: function() {
+        console.info('getting user simulation');
+        setTimeout(function(){
+          console.info('got user simulation');
+          this.userData = this.data;
+        }.bind(this), 1000);
+      },
+
+      attached: function() {
+        //TODO: should be triggered on login
+        this.requestUser();
+      },
+
+      toggleMenu: function() {
+        this.$.menuPanel.togglePanel();
+      },
+
+      logoutUser: function() {
+        this.selectedView = "login-form";
+      },
+
+      addPostPress: function() {
+        this.asyncFire('core-signal', {name: "add-post", data: this.selectedView});
+      },
+
+      backPress: function() {
+        this.asyncFire('core-signal', {name: "go-back", data: this.selectedView});
+      },
+
+      getMenuButtonAction: function() {
+        if (!this.isPostsView()) {
+          this.backPress();
+        }
+      },
+
+      getBackDialogAction: function() {
+        if (this.isPostsView()) {
+          this.toggleDialog();
+        }
+        else {
+          this.backPress();
+        }
+      },
+
+      isPostsView: function() {
+        return  this.selectedView === 'posts' &&
+                this.selectedSubView === 'allPosts';
+      },
+
+      getIcon: function(iconNameArr) {
+        // showFilter == 'posts' ? 'filter-list' : 'arrow-back'
+        if (this.isPostsView()) {
+          return iconNameArr[0];
+        }
+        else {
+          return iconNameArr[1];
+        }
       },
 
       toggleDialog: function () {
         this.showDialog = !this.showDialog;
       },
-
-      stuff: function() {
-        console.log('OK = ' + this.out);
-        if (this.up && this.selected === this.max || !this.up && this.selected === 0) {
-          this.up = !this.up;
-        }
-        if (this.up) {
-          this.selected += 1;
-        } else {
-          this.selected -= 1;
-        }
-      }
     });
   </script>
 </polymer-element>

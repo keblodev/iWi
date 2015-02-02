@@ -2,17 +2,20 @@
 <link rel="import" href="./iwish-post-short/iwish-post-short.html">
 <link rel="import" href="./iwish-posts/iwish-posts.html">
 <link rel="import" href="./iwish-comment/iwish-comment.html">
+<link rel="import" href="./iwish-add-post/iwish-add-post.html">
 
 <link rel="import" href="./avatars.html">
 
-<polymer-element name="iwish-posts-board" attributes="">
+<polymer-element name="iwish-posts-board" attributes="selectedSubView">
   <template>
     <link rel="stylesheet" href="iwish-posts-board.css">
 
     <iwish-posts
       flex
       layout
-      vertical>
+      vertical
+      selectedSubView="{{selectedSubView}}"
+      >
     </iwish-posts>
 
     <iwish-media-query queryMatches="{{wide}}"></iwish-media-query>

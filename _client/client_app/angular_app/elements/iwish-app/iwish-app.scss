@@ -10,6 +10,7 @@ body {
 }
 
 core-drawer-panel {
+  overflow: auto;
   &::shadow {
     #drawer {
       z-index: 100;
@@ -30,9 +31,26 @@ core-animated-pages {
   background-color: $main_bg_color;
   border-right: 1px solid #ccc;
   z-index: 100;
-}
-
-[main] {
+  core-submenu  {
+    &.user-menu {
+      &::shadow {
+        core-item {
+          &::shadow {
+            core-icon {
+              border: 1px solid rgb(196, 196, 196);
+              border-radius: 100px;
+              overflow: hidden;
+            }
+            #label {
+              max-width: 150px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 button {

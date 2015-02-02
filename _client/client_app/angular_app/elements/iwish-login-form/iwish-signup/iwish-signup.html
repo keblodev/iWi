@@ -1,4 +1,4 @@
-<polymer-element name="iwish-signup" attributes="">
+<polymer-element name="iwish-signup" attributes="selectedSubView">
   <template>
       <link rel="stylesheet" href="iwish-signup.css">
 
@@ -41,6 +41,7 @@
             <paper-button
               raised
               id="alldone-button"
+              on-click="{{backToLoginPress}}"
               disabled?="{{!newUserNameVal.length || !newUserEmailVal.length || !newUserPassVal.length}}">
                 all done
             </paper-button>
@@ -51,6 +52,12 @@
   </template>
   <script>
     Polymer('iwish-signup' , {
+
+      selectedSubView: '',
+
+      backToLoginPress: function() {
+        this.selectedSubView = "login"
+      },
 
       publish: {
         response: "ValuePassedBackToParent ok " + Math.random(10)

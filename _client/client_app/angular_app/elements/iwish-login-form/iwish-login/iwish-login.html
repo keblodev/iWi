@@ -1,4 +1,4 @@
-<polymer-element name="iwish-login" attributes="" extends="iwish-login-form">
+<polymer-element name="iwish-login" attributes="selectedSubView selectedView">
   <template>
     <link rel="stylesheet" href="iwish-login.css">
 
@@ -36,18 +36,21 @@
             raised
             id="login-button"
             auto-vertical
+            on-click="{{loginPress}}"
             disabled?="{{!loginEmailVal.length || !loginPassVal.length}}">
               login
           </paper-button>
 
           <paper-button
             raised
+            on-click="{{signUpPress}}"
             id="sign-up-button"
             auto-vertical>
               sign up
             </paper-button>
           <paper-button
             raised
+            on-click="{{forgotPress}}"
             id="forgot-button"
             auto-vertical>
               forgot something?
@@ -61,6 +64,21 @@
   </template>
   <script>
     Polymer('iwish-login' , {
+
+      selectedView: '',
+      selectedSubView: '',
+
+      loginPress: function() {
+        this.selectedView = "posts"
+      },
+
+      signUpPress: function() {
+        this.selectedSubView = "sign-up"
+      },
+
+      forgotPress: function() {
+        this.selectedSubView = "forgot"
+      },
 
       publish: {
         response: "ValuePassedBackToParent ok1 " + Math.random(10)

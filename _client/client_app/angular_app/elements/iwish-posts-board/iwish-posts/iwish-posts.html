@@ -1,9 +1,9 @@
-<polymer-element name="iwish-posts" attributes="">
+<polymer-element name="iwish-posts" attributes="selectedSubView">
   <template>
     <link rel="stylesheet" href="iwish-posts.css">
     <core-animated-pages
       id="postsPages"
-      selected="{{page}}"
+      selected="{{selectedSubView}}"
 
       on-core-animated-pages-transition-end="{{beforeTransition}}"
       transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition"
@@ -76,16 +76,25 @@
           <iwish-post
             inputObj = "{{item}}"
             isVisible = "false"
-            on-tap="{{transition}}"
             data-to-transition-method="allPosts"
-            isWide="{{ wide }}">
+            isWide="{{ wide }}"
+            >
           </iwish-post>
         </section>
       </template>
+      <section name="addPost">
+       <iwish-add-post></iwish-add-post>
+      </section>
     </core-animated-pages>
 
     <iwish-media-query queryMatches="{{wide}}"></iwish-media-query>
     <iwish-media-query queryMatches="{{widePost}}" selectedQuery="upmid"></iwish-media-query>
+    <!-- TODO: the problem with core-signals is that it listens all the time
+    and not only when current view is active -->
+    <core-signals
+      on-core-signal-go-back="{{goBackSignal}}"
+      on-core-signal-add-post="{{showAddPostSignal}}">
+      </core-signals>
 
   </template>
   <script>
@@ -165,7 +174,16 @@
         }
       ],
 
-      page: 'allPosts',
+      selectedSubView: 'allPosts',
+
+      transitFromElem: null,
+      transitToElem: null,
+
+      selectedSubViewChanged: function(oldVal, newVal) {
+        if(!newVal) {
+         this.selectedSubView = oldVal;
+        }
+      },
 
       load: function(moreCount) {
         //TODO core-ajax methos goes here
@@ -205,24 +223,42 @@
         }
       },
 
-      transitFromElem: null,
-      transitToElem: null,
-
-      beforeTransition: function(data) {
+      beforeTransition: function() {
         this.transitFromElem.isVisible = false;
         this.transitToElem.isVisible = true;
       },
 
-      transition: function(event, detail, target) {
-        this.transitFromElem = target;
+      transition: function(event, detail, sender, targetElemName) {
+        this.transitFromElem = sender;
 
-        var transitTo = this.transitFromElem.attributes['data-to-transition-method'].value;
+        var transitTo = targetElemName ||
+          this.transitFromElem.attributes['data-to-transition-method'].value ||
+          'allPosts';
+
         this.transitToElem = this._getAnimatedItem('[name="' + transitTo + '"] > *');
-        this.page = transitTo;
+        this.selectedSubView = transitTo;
       },
 
       _getAnimatedItem: function(selector) {
         return this.$.postsPages.querySelector(selector);
+      },
+
+      isCurrentMainViewActive: function(selectedView) {
+        return selectedView === 'posts';
+      },
+
+      showAddPostSignal: function(e, detail, sender) {
+        if( this.isCurrentMainViewActive(detail)) {
+          var transitFromElem = this._getAnimatedItem('[name="' + this.selectedSubView + '"] > *');
+          this.transition(e, detail, transitFromElem , 'addPost');
+        }
+      },
+
+      goBackSignal: function(e, detail, sender) {
+        if( this.isCurrentMainViewActive(detail) ) {
+          var transitFromElem = this._getAnimatedItem('[name="' + this.selectedSubView + '"] > *');
+          this.transition(e, detail, transitFromElem, 'allPosts');
+        }
       },
 
       publish: {
