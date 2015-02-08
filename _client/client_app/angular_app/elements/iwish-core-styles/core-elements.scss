@@ -9,7 +9,7 @@ h1 {
   font-weight: 300;
 }
 
-h1, h2 {
+h1, h2, h3, h4, h5 {
   user-select: none;
 }
 
@@ -18,6 +18,34 @@ h1, h2, h3, h4, h5 {
   overflow: hidden;
 }
 
+.white {
+  background-color: $white;
+}
+
+.gray {
+  background-color: $grey;
+}
+
+.green {
+  background-color: $recent_bg;
+}
+
+.white-font {
+  color: $white;
+}
+
+.gray-font {
+  color: $color_font_gray;
+}
+
+.green-font {
+  color: $green_ocean;
+}
+
+.centered {
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
 
 .pageHolder {
   position: absolute;
@@ -54,7 +82,6 @@ paper-button {
     position: fixed;
 
     &.show-dialog {
-      left: 12em;
       position: fixed;
       z-index: 1;
     }
@@ -122,6 +149,7 @@ paper-button {
 }
 
 .table-cell {
+  vertical-align: middle;
   display: table-cell !important;
 }
 
@@ -149,5 +177,6 @@ paper-button {
 
 .loading-pad {
   margin: auto;
+  height: 50px;
   width: 30px;
 }

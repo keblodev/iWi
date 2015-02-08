@@ -2,7 +2,7 @@
 <link rel="import" href="./iwish-forgot/iwish-forgot.html">
 <link rel="import" href="./iwish-signup/iwish-signup.html">
 
-<polymer-element name="iwish-login-form" attributes="">
+<polymer-element name="iwish-login-form" attributes="selectedView">
   <template>
   <link rel="stylesheet" href="iwish-login-form.css">
 
@@ -10,64 +10,68 @@
       <div id="mainPanel"
         slide-down>
         <core-animated-pages
-          selected="{{selected}}"
+          selected="{{selectedSubView}}"
           transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition">
-          <section>
+          <section name="login">
             <iwish-login
               slide-down
+              selectedSubView="{{selectedSubView}}"
+              selectedView="{{selectedView}}"
               response="{{out}}">
             </iwish-login>
           </section>
-          <section>
+          <section name="sign-up">
             <iwish-signup
               slide-down
+              selectedSubView="{{selectedSubView}}"
               response="{{out}}">
             </iwish-signup>
           </section>
-          <section>
+          <section name="forgot">
             <iwish-forgot
               slide-down
+              selectedSubView="{{selectedSubView}}"
               response="{{out}}">
             </iwish-forgot>
           </section>
         </core-animated-pages>
       </div>
     </div>
-    <core-media-query
-      query="min-width: {{responsiveWidth}}"
-      queryMatches="{{wide}}">
-    </core-media-query>
-    <paper-button
+
+    <iwish-media-query queryMatches="{{wide}}"></iwish-media-query>
+
+<!--     <paper-button
       raised
       cross-fade
       class="iwish-test-button view-switcher sub-switch"
       on-click="{{stuff}}">Next in login form
-    </paper-button>
+    </paper-button> -->
   </template>
   <script>
 
     Polymer('iwish-login-form' , {
-      responsiveWidth: '33em',
 
       publish: {
         response: "ValuePassedBackToParent 1"
       },
 
-      selected: 0,
+      selectedView: '',
 
-      out: null,
-      up : true,
-      max : 2,
-      stuff : function() {
-        if (this.up && this.selected === this.max || !this.up && this.selected === 0) {
-          this.up = !this.up;
-        }
-        if (this.up) {
-          this.selected += 1;
-        } else {
-          this.selected -= 1;
-        }
-      }
+      selectedSubView: 0,
+
+      // out: null,
+      // up : true,
+      // max : 2,
+      // stuff : function() {
+      //   if (this.up && this.selectedSubView === this.max || !this.up && this.selectedSubView === 0) {
+      //     this.up = !this.up;
+      //   }
+      //   if (this.up) {
+      //     this.selectedSubView += 1;
+      //   } else {
+      //     this.selectedSubView -= 1;
+      //   }
+      // }
     });
 
   </script>

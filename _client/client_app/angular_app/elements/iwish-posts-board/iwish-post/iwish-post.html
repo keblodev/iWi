@@ -4,7 +4,7 @@
     <!-- TODO: figure out something to move this dependecy from here -->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <div id="scrollHolder" class="pageHolder" cross-fade>
+    <div id="scrollHolder" class="pageHolder {{ {pageWide: isWide} | tokenList }}" cross-fade>
       <div class="post-long post-title {{ {'table': titleWide} | tokenList }} ">
         <div class="post-comments {{ {'table-cell': titleWide} | tokenList }}"
           cross-fade>
@@ -109,7 +109,8 @@
         </div>
       </div>
 
-      <core-media-query query="min-width: {{responsiveTitleWidth}}" queryMatches="{{titleWide}}"></core-media-query>
+      <iwish-media-query queryMatches="{{titleWide}}" selectedQuery="upmid"></iwish-media-query>
+
     </div>
   </template>
   <script>
@@ -117,7 +118,6 @@
   //core-animated-pages-transition-prepare
   //on-core-animated-pages-transition-end="{{transitionEnd}}"
     Polymer('iwish-post' , {
-      responsiveTitleWidth: '60em',
 
       isVisible: false,
       showLoading: false,
@@ -135,10 +135,6 @@
       scrollTarget: this,
 
       comments: [],
-
-      domReady: function() {
-        // this.isVisible = true;
-      },
 
       isVisibleChanged: function(oldVal, newVal) {
         this.showLoading = true;

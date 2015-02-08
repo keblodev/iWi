@@ -16,47 +16,12 @@
           {{inputObj.text}}
         </div>
       </div>
-
-<!--       <div class="post-comments {{ {'table-cell': isWide} | tokenList }}">
-        <div class="table">
-          <core-item
-            label="{{inputObj.commentsCount}}"
-            class="post-comments-count fa fa-comment-o table-cell" >
-          </core-item>
-        </div>
-      </div>
-      <core-item
-        label="{{inputObj.postName}}"
-        class="post-name {{ {'table-cell': isWide} | tokenList }}">
-      </core-item>
-      <div class="post-thumbs {{ {'table-cell': isWide} | tokenList }}">
-        <div class="post-comments responsive {{ {'show': !isWide} | tokenList }}">
-          <div class="table">
-            <core-item
-              label="{{inputObj.commentsCount}}"
-              class="post-comments-count fa fa-comment-o table-cell" >
-            </core-item>
-          </div>
-        </div>
-        <div class="table">
-          <core-item
-            label="{{inputObj.likesCount}}"
-            class="fa fa-thumbs-o-up table-cell">
-          </core-item>
-          <i class="table-cell"> / </i>
-          <core-item
-            label="{{inputObj.dislikesCount}}"
-            class="fa fa-thumbs-o-down table-cell">
-          </core-item>
-        </div>
-      </div> -->
     </div>
 
   </template>
   <script>
 
     Polymer('iwish-comment' , {
-      responsiveWidth: '33em',
 
       publish: {
         response: "ValuePassedBackToParent 1"

@@ -1,0 +1,32 @@
+<polymer-element name="iwish-media-query" attributes="queryMatches query selectedQuery">
+    <template>
+
+        <core-media-query
+            query="min-width: {{ selectedQuery | getQuery }}"
+            queryMatches="{{queryMatches}}">
+        </core-media-query>
+
+    </template>
+    <script>
+// TODO : add user agent detection
+// landscape on all mobile must be mob
+    var proto = {
+        mediaQueries: {
+            mob:   '45em',
+            mid:  '50em',
+            upmid: '60em'
+        },
+
+        selectedQuery: 'mob',
+
+        getQuery: function (selectedQuery) {
+            return this.mediaQueries[selectedQuery];
+        },
+
+        queryMatches: ""
+    };
+
+    Polymer(proto);
+
+    </script>
+</polymer-element>

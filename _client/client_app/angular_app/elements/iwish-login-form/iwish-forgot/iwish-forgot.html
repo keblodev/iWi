@@ -1,15 +1,15 @@
-<polymer-element name="iwish-forgot" attributes="">
+<polymer-element name="iwish-forgot" attributes="selectedSubView">
   <template>
     <link rel="stylesheet" href="iwish-forgot.css">
 
     <div
       class="main {{ {wide: wide} | tokenList }}"
       flex>
-      <iwish-h1-label
+      <iwish-label
         labelColor="blue"
         labelText="No prob. S*it happens:"
         isWide="{{wide}}">
-      </iwish-h1-label>
+      </iwish-label>
       <div id="mainPanel"
         layout
         vertical>
@@ -27,20 +27,25 @@
               raised
               id="justgiveme-button"
               auto-vertical
+              on-click="{{backToLoginPress}}"
               disabled?="{{!loginEmailVal.length}}">
             just give me my pass
           </paper-button>
         </div>
       </div>
     </div>
-    <core-media-query
-      query="min-width: {{responsiveWidth}}"
-      queryMatches="{{wide}}">
-    </core-media-query>
+
+    <iwish-media-query queryMatches="{{wide}}"></iwish-media-query>
+
   </template>
   <script>
     Polymer('iwish-forgot' , {
-      responsiveWidth: '33em',
+
+      selectedSubView: '',
+
+      backToLoginPress: function() {
+        this.selectedSubView = "login"
+      },
 
       publish: {
         response: "ValuePassedBackToParent ok2 " + Math.random(10)

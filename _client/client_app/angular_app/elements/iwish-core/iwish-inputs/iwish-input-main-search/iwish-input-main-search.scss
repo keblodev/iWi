@@ -1,0 +1,61 @@
+/* Shadow DOM CSS Cheat Sheet */
+/* http://robdodson.me/blog/2014/04/10/shadow-dom-css-cheat-sheet */
+
+@import '../iwish-inputs-core';
+
+iwish-label {
+  &::shadow {
+    .core-header {
+      padding-left: 40px;
+    }
+    core-field {
+      height: 40px;
+      position: relative;
+    }
+  }
+  &:hover {
+    cursor: pointer;
+  }
+  &.wide-label {
+    &::shadow {
+    .core-header {
+      padding-left: 20px;
+    }
+      core-field {
+        height: inherit;
+      }
+    }
+    &:hover {
+      cursor: default;
+    }
+  }
+}
+
+paper-input {
+  height: inherit;
+  margin-left: 90px;
+  padding: 0px;
+  position: absolute;
+  top: 0;
+  width: 70%;
+
+  &::shadow {
+    paper-input-decorator {
+      padding: 0px;
+    }
+  }
+
+  &.wide {
+   background-color: initial;
+   position: inherit;
+   &::before {
+      bottom: -2.4em;
+    }
+  }
+}
+
+.hint{
+  float: right;
+  color: $color_font_gray;
+  margin-right: 5px;
+}

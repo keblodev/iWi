@@ -1,4 +1,4 @@
-@import '../core';
+@import '../iwish-posts-board-core';
 
 :host {
   height: 100%;
@@ -7,7 +7,7 @@
 .main {
   display: block;
 
-  iwish-h1-label {
+  iwish-label {
     &::shadow {
       .core-header {
         core-field {
@@ -27,7 +27,7 @@
     iwish-input-labeled,
     iwish-textarea {
       &::shadow {
-        iwish-h1-label {
+        iwish-label {
           &::shadow {
             .core-header {
               padding-left: 0;

@@ -1,9 +1,9 @@
-<polymer-element name="iwish-posts" attributes="">
+<polymer-element name="iwish-posts" attributes="selectedSubView">
   <template>
     <link rel="stylesheet" href="iwish-posts.css">
     <core-animated-pages
       id="postsPages"
-      selected="{{page}}"
+      selected="{{selectedSubView}}"
 
       on-core-animated-pages-transition-end="{{beforeTransition}}"
       transitions="cross-fade cross-fade-delayed scale-up slide-up slide-up-offscreen slide-down tile-cascade hero-transition"
@@ -12,10 +12,12 @@
       vertical
       >
 
-        <section name="allPosts">
+        <section name="allPosts" >
         <!-- NOTICE: inputs initialized before core-scroll-threshold will not be focusable - [POLYMER][BUG] -->
-          <div class="header-holder"
-            cross-fade>
+          <div
+            class="header-holder {{ {'all-posts-wide ': wide} | tokenList }}"
+            cross-fade
+            >
             <core-scroll-threshold
                 id="threshold"
                 scrollTarget="{{$.postsScroller}}"
@@ -23,21 +25,23 @@
                 on-lower-trigger="{{loadMore}}"
                 fit>
             </core-scroll-threshold>
-            <iwish-input-labeled
+
+            <iwish-input-main-search
               class="{{ {wide: wide} | tokenList }}"
-              labelText="I wish:"
+              labelText="I wish"
               inputPlaceholderText="type in your wish..."
               isWide="{{wide}}">
-            </iwish-input-labeled>
+            </iwish-input-main-search>
 
-            <div
-              class="core-header {{ {wide: wide} | tokenList }}"
-              id="recent"
-              slide-down>
-                <h2>
-                  some fresh
-                </h2>
-            </div>
+            <iwish-label
+              labelColor="green"
+              labelTextColor="white"
+              labelText="some fresh"
+              isWide="{{wide}}"
+              iconName="{{iconName}}"
+              fontSize="mid"
+              id="recent">
+            </iwish-label>
           </div>
           <div id="postsScroller" class="scroller {{ {wide: wide} | tokenList }}" cross-fade>
             <template repeat="{{item in items}}">
@@ -72,23 +76,30 @@
           <iwish-post
             inputObj = "{{item}}"
             isVisible = "false"
-            on-tap="{{transition}}"
             data-to-transition-method="allPosts"
-            isWide="{{ wide }}">
+            isWide="{{ wide }}"
+            >
           </iwish-post>
         </section>
       </template>
+      <section name="addPost">
+       <iwish-add-post></iwish-add-post>
+      </section>
     </core-animated-pages>
 
-    <core-media-query query="min-width: {{responsiveWidth}}" queryMatches="{{wide}}"></core-media-query>
-    <core-media-query query="min-width: {{responsivePostWidth}}" queryMatches="{{widePost}}"></core-media-query>
+    <iwish-media-query queryMatches="{{wide}}"></iwish-media-query>
+    <iwish-media-query queryMatches="{{widePost}}" selectedQuery="upmid"></iwish-media-query>
+    <!-- TODO: the problem with core-signals is that it listens all the time
+    and not only when current view is active -->
+    <core-signals
+      on-core-signal-go-back="{{goBackSignal}}"
+      on-core-signal-add-post="{{showAddPostSignal}}">
+      </core-signals>
 
   </template>
   <script>
 
     Polymer('iwish-posts' , {
-      responsiveWidth: '33em',
-      responsivePostWidth: '60em',
 
       items: [
         {postName: 'ps1', likesCount: 103, dislikesCount: 23, commentsCount: 10,
@@ -163,7 +174,16 @@
         }
       ],
 
-      page: 'allPosts',
+      selectedSubView: 'allPosts',
+
+      transitFromElem: null,
+      transitToElem: null,
+
+      selectedSubViewChanged: function(oldVal, newVal) {
+        if(!newVal) {
+         this.selectedSubView = oldVal;
+        }
+      },
 
       load: function(moreCount) {
         //TODO core-ajax methos goes here
@@ -203,24 +223,42 @@
         }
       },
 
-      transitFromElem: null,
-      transitToElem: null,
-
-      beforeTransition: function(data) {
+      beforeTransition: function() {
         this.transitFromElem.isVisible = false;
         this.transitToElem.isVisible = true;
       },
 
-      transition: function(event, detail, target) {
-        this.transitFromElem = target;
+      transition: function(event, detail, sender, targetElemName) {
+        this.transitFromElem = sender;
 
-        var transitTo = this.transitFromElem.attributes['data-to-transition-method'].value;
+        var transitTo = targetElemName ||
+          this.transitFromElem.attributes['data-to-transition-method'].value ||
+          'allPosts';
+
         this.transitToElem = this._getAnimatedItem('[name="' + transitTo + '"] > *');
-        this.page = transitTo;
+        this.selectedSubView = transitTo;
       },
 
       _getAnimatedItem: function(selector) {
         return this.$.postsPages.querySelector(selector);
+      },
+
+      isCurrentMainViewActive: function(selectedView) {
+        return selectedView === 'posts';
+      },
+
+      showAddPostSignal: function(e, detail, sender) {
+        if( this.isCurrentMainViewActive(detail)) {
+          var transitFromElem = this._getAnimatedItem('[name="' + this.selectedSubView + '"] > *');
+          this.transition(e, detail, transitFromElem , 'addPost');
+        }
+      },
+
+      goBackSignal: function(e, detail, sender) {
+        if( this.isCurrentMainViewActive(detail) ) {
+          var transitFromElem = this._getAnimatedItem('[name="' + this.selectedSubView + '"] > *');
+          this.transition(e, detail, transitFromElem, 'allPosts');
+        }
       },
 
       publish: {

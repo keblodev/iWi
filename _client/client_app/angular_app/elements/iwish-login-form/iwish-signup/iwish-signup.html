@@ -1,15 +1,15 @@
-<polymer-element name="iwish-signup" attributes="">
+<polymer-element name="iwish-signup" attributes="selectedSubView">
   <template>
       <link rel="stylesheet" href="iwish-signup.css">
 
       <div
         class="main {{ {wide: wide} | tokenList }}"
         flex>
-        <iwish-h1-label
+        <iwish-label
           labelColor="blue"
           labelText="Just fill in few fields:"
           isWide="{{wide}}">
-        </iwish-h1-label>
+        </iwish-label>
         <div id="mainPanel"
           layout
           vertical>
@@ -41,20 +41,23 @@
             <paper-button
               raised
               id="alldone-button"
+              on-click="{{backToLoginPress}}"
               disabled?="{{!newUserNameVal.length || !newUserEmailVal.length || !newUserPassVal.length}}">
                 all done
             </paper-button>
           </div>
         </div>
       </div>
-    <core-media-query
-      query="min-width: {{responsiveWidth}}"
-      queryMatches="{{wide}}">
-    </core-media-query>
+      <iwish-media-query queryMatches="{{wide}}"></iwish-media-query>
   </template>
   <script>
     Polymer('iwish-signup' , {
-      responsiveWidth: '33em',
+
+      selectedSubView: '',
+
+      backToLoginPress: function() {
+        this.selectedSubView = "login"
+      },
 
       publish: {
         response: "ValuePassedBackToParent ok " + Math.random(10)

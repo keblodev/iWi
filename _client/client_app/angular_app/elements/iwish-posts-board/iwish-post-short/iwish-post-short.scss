@@ -15,9 +15,15 @@
 .post-name {
   background-color: $white;
   border: 0.6px solid $white;
-  padding: 50px 10px;
+  padding: 50px 0px;
   white-space: inherit;
   width: 99%;
+
+  &::shadow {
+    #label {
+      margin: 0px 10px;
+    }
+  }
 }
 
 .post-thumbs {
