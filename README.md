@@ -1,4 +1,4 @@
-[![alt tag](https://travis-ci.org/romanfromrome/iwish.svg?branch=master)](https://travis-ci.org/romanfromrome/iwish)
+[![alt tag](https://travis-ci.org/ronanamsterdam/iwish.svg?branch=master)](https://travis-ci.org/ronanamsterdam/iwish)
 iWi platform
 =======
 
